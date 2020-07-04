@@ -1,10 +1,12 @@
 import { Box } from 'theme-ui'
+import Layout from '../components/layout'
 import Map from '../components/map'
 
+
 function Index () {
-  return <Box sx={{ ml: [4], mt: [4], fontSize: [5] }}>
+  return <Layout>
     <Map/>
-  </Box>
+  </Layout>
 }
 
 export default Index
