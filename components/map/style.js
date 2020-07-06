@@ -1,10 +1,10 @@
 const style = {
   version: 8,
   sources: {
-    ne_10m_land: {
+    combined: {
       type: 'vector',
       tiles: ['http://localhost:8080/{z}/{x}/{y}.pbf'],
-      maxzoom: 8,
+      maxzoom: 5,
     },
   },
   layers: [
@@ -17,15 +17,61 @@ const style = {
       },
     },
     {
-      id: 'ne_10m_land',
+      id: 'land',
       type: 'fill',
-      source: 'ne_10m_land',
+      source: 'combined',
       'source-layer': 'ne_10m_land',
       layout: { visibility: 'visible' },
       paint: {
         'fill-antialias': false,
         'fill-opacity': 0,
         'fill-color': 'black',
+      },
+    },
+    {
+      id: 'urban',
+      type: 'fill',
+      source: 'combined',
+      'source-layer': 'ne_10m_urban_areas',
+      layout: { visibility: 'visible' },
+      paint: {
+        'fill-antialias': false,
+        'fill-opacity': 0,
+        'fill-color': 'black',
+      },
+    },
+    {
+      id: 'countries',
+      type: 'line',
+      source: 'combined',
+      'source-layer': 'ne_10m_admin_0_countries',
+      layout: {
+        'line-cap': 'round',
+        'line-join': 'round',
+        visibility: 'visible',
+      },
+      paint: {
+        'line-blur': 0.4,
+        'line-color': 'black',
+        'line-opacity': 0,
+        'line-width': 0.8,
+      },
+    },
+    {
+      id: 'states',
+      type: 'line',
+      source: 'combined',
+      'source-layer': 'ne_10m_admin_1_states_provinces',
+      layout: {
+        'line-cap': 'round',
+        'line-join': 'round',
+        visibility: 'visible',
+      },
+      paint: {
+        'line-blur': 0.4,
+        'line-color': 'black',
+        'line-opacity': 0,
+        'line-width': 0.8,
       },
     },
   ],

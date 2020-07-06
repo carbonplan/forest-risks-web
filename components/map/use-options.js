@@ -1,5 +1,6 @@
 import { useState, useLayoutEffect } from 'react'
 import { useThemeUI } from 'theme-ui'
+import { darken } from '@theme-ui/color'
 
 function useOptions(map, options) {
   const context = useThemeUI()
@@ -11,9 +12,11 @@ function useOptions(map, options) {
     }
 
     if (options['reforestation']) {
-      map.setPaintProperty('ne_10m_land', 'fill-color', theme.colors.green)
+      map.setPaintProperty('land', 'fill-color', theme.colors.green)
+      map.setPaintProperty('land', 'fill-opacity', 1)
     } else {
-      map.setPaintProperty('ne_10m_land', 'fill-color', theme.colors.muted)
+      map.setPaintProperty('land', 'fill-color', theme.colors.muted)
+      map.setPaintProperty('land', 'fill-opacity', 0.5)
     }
   }, [map, context, options])
 }
