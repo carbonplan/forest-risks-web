@@ -1,25 +1,26 @@
-import { useEffect, useLayoutEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { Box } from 'theme-ui'
-import style from './style'
-import useTheme from '../hooks/use-theme'
 import mapboxgl from 'mapbox-gl'
-import { useThemeUI } from 'theme-ui'
+import useTheme from './use-theme'
+import useOptions from './use-options'
+import style from './style'
 
 mapboxgl.accessToken = ''
 
-function Map () {
+function Map({ options }) {
   const [loaded, setLoaded] = useState(false)
   const [map, setMap] = useState(null)
   const container = useRef(null)
-  
+
   useTheme(map)
+  useOptions(map, options)
 
   useEffect(() => {
     const map = new mapboxgl.Map({
       container: container.current,
       style: style,
-      center: [-120.7,37.6],
-      zoom: 2
+      center: [-120.7, 37.6],
+      zoom: 2,
     })
 
     map.on('load', () => {
@@ -33,10 +34,7 @@ function Map () {
     }
   }, [])
 
-  return <Box sx={{ ml: [4], mt: [4], fontSize: [5] }}>
-    Hello
-    <Box sx={{ width: 500, height: 300 }} ref={container}></Box>
-  </Box>
+  return <Box sx={{ flexBasis: '100%' }} ref={container}></Box>
 }
 
 export default Map

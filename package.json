@@ -8,7 +8,7 @@
     "dev": "next -p 1000",
     "build": "next build",
     "start": "next start",
-    "format": "prettier --write README.md '{components,pages}/**/*.js'"
+    "format": "prettier --write README.md '{components,hooks,pages}/**/*.js'"
   },
   "repository": {
     "type": "git",
@@ -28,6 +28,7 @@
   "homepage": "https://github.com/carbonplan/maps#readme",
   "dependencies": {
     "@carbonplan/theme": "^1.0.0",
+    "@theme-ui/color": "^0.3.1",
     "mapbox-gl": "^1.11.0",
     "next": "^9.4.4",
     "react": "^16.13.1",

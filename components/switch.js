@@ -29,7 +29,6 @@ const Switch = (props) => {
         transformOrigin: 'right',
         transform: 'rotate(90deg)',
         paddingBottom: '10px',
-        backgroundColor: 'background',
       }}
     >
       <Text

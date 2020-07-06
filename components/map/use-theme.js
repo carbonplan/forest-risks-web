@@ -10,10 +10,14 @@ function useTheme(map) {
       return
     }
 
-    map.setPaintProperty('background', 'background-color', theme.colors.background)
+    map.setPaintProperty(
+      'background',
+      'background-color',
+      theme.colors.background
+    )
     map.setPaintProperty('background', 'background-opacity', 1)
-    map.setPaintProperty('water', 'fill-color', theme.colors.primary)
-    map.setPaintProperty('water', 'fill-opacity', 1)
+    map.setPaintProperty('ne_10m_land', 'fill-color', theme.colors.muted)
+    map.setPaintProperty('ne_10m_land', 'fill-opacity', 1)
   }, [map, context])
 }
 

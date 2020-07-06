@@ -18,7 +18,7 @@ const Layout = ({ children }) => {
             flex: '1 1 auto',
           }}
         >
-        { children }
+          {children}
         </Box>
         <Box
           sx={{

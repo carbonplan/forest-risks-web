@@ -1,12 +1,13 @@
 import { Box } from 'theme-ui'
 import Layout from '../components/layout'
-import Map from '../components/map'
+import Viewer from '../components/viewer'
 
-
-function Index () {
-  return <Layout>
-    <Map/>
-  </Layout>
+function Index() {
+  return (
+    <Layout>
+      <Viewer />
+    </Layout>
+  )
 }
 
 export default Index
