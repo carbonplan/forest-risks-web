@@ -16,7 +16,7 @@ function useOptions(map, options) {
       map.setPaintProperty('land', 'fill-opacity', 1)
     } else {
       map.setPaintProperty('land', 'fill-color', theme.colors.muted)
-      map.setPaintProperty('land', 'fill-opacity', 0.5)
+      map.setPaintProperty('land', 'fill-opacity', 1)
     }
   }, [map, context, options])
 }

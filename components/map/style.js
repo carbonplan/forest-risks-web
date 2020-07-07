@@ -29,10 +29,10 @@ const style = {
       },
     },
     {
-      id: 'urban',
+      id: 'lakes',
       type: 'fill',
       source: 'combined',
-      'source-layer': 'ne_10m_urban_areas',
+      'source-layer': 'ne_10m_lakes',
       layout: { visibility: 'visible' },
       paint: {
         'fill-antialias': false,
