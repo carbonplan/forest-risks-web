@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/carbonplan/maps#readme",
   "dependencies": {
-    "@carbonplan/theme": "^1.0.0",
+    "@carbonplan/theme": "^1.1.0",
     "@theme-ui/color": "^0.3.1",
     "mapbox-gl": "^1.11.1",
     "next": "^9.4.4",
