@@ -6,7 +6,7 @@ import Map from './map'
 function Viewer() {
   const initialOptions = {
     'avoided conversion': false,
-    'reforestation': false
+    reforestation: false,
   }
 
   const [options, setOptions] = useState(initialOptions)
