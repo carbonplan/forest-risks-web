@@ -8,7 +8,7 @@ import Document, {
 import { Head } from '@carbonplan/components'
 import { InitializeColorMode } from 'theme-ui'
 
-class MyDocument extends Document {
+export default class MyDocument extends Document {
   render() {
     return (
       <Html className='no-focus-outline'>
@@ -24,5 +24,3 @@ class MyDocument extends Document {
     )
   }
 }
-
-export default MyDocument
