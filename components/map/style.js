@@ -1,9 +1,11 @@
+import config from '../../config'
+
 const style = {
   version: 8,
   sources: {
     combined: {
       type: 'vector',
-      tiles: ['http://localhost:8080/{z}/{x}/{y}.pbf'],
+      tiles: [`${config.basemap}/{z}/{x}/{y}.pbf`],
       maxzoom: 5,
     },
   },

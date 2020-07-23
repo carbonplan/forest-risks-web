@@ -16,7 +16,7 @@
 [build status]: https://flat.badgen.net/github/checks/carbonplan/maps
 [mit license]: https://flat.badgen.net/badge/license/MIT/blue
 
-## to build the site locally
+## building the site
 
 Assuming you already have `Node.js` installed, you can install the build dependencies as:
 
@@ -31,6 +31,13 @@ npm run dev
 ```
 
 and then visit `http://localhost:1000` in your browser.
+
+## map tiles
+
+To render the map itself, you need to either build the map tiles locally (so they can be served from the `tile` folder) or update `config.js` to point to the remote versions stored on Google Storage. Building the tiles locally requires 
+- Python 3
+- the Python dependencies specified in `tiles/requirements.txt` 
+- the command line tools `tippecanoe` `tile-join` and `mb-util`
 
 ## license
 
