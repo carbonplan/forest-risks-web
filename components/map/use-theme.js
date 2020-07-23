@@ -1,11 +1,11 @@
-import { useState, useLayoutEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useThemeUI } from 'theme-ui'
 
 function useTheme(map) {
   const context = useThemeUI()
   const theme = context.theme
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!map) {
       return
     }
