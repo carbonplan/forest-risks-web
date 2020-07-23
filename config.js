@@ -1,3 +1,3 @@
 export default {
-  'basemap': 'http://localhost:8080/basemap'
+  'basemap': 'https://storage.googleapis.com/carbonplan-data/tiles/basemap'
 }

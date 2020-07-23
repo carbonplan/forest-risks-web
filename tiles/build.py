@@ -22,7 +22,7 @@ def build_basemap():
     cmds.append(
         'tippecanoe '
         '-Z0 '
-        '-z3 '
+        '-z2 '
         '-o tmp/countries.mbtiles '
         '--no-feature-limit '
         '--no-tile-size-limit '
@@ -33,7 +33,7 @@ def build_basemap():
 
     cmds.append(
         'tippecanoe '
-        '-Z4 '
+        '-Z3 '
         '-z5 '
         '-o tmp/provinces.mbtiles '
         '--no-feature-limit '
