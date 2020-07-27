@@ -1,4 +1,4 @@
-const prefix = 'http://storage.googleapis.com/carbonplan-data/tiles/processed'
+const prefix = 'https://storage.googleapis.com/carbonplan-data/tiles/processed'
 
 export default {
   basemap: `${prefix}/basemap`,
