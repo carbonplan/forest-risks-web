@@ -17,7 +17,7 @@ const style = {
       type: 'vector',
       tiles: [`${config.fires}/{z}/{x}/{y}.pbf`],
       maxzoom: 5,
-    }
+    },
   },
   layers: [
     {
@@ -94,7 +94,7 @@ const style = {
       layout: { visibility: 'visible' },
       paint: {
         'circle-radius': 1.5,
-        'circle-color': '#7eb36a'
+        'circle-color': '#7eb36a',
       },
     },
     {
@@ -105,7 +105,7 @@ const style = {
       layout: { visibility: 'visible' },
       paint: {
         'circle-radius': 1.5,
-        'circle-color': '#ea9755'
+        'circle-color': '#ea9755',
       },
     },
   ],
