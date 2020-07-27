@@ -34,9 +34,10 @@ and then visit `http://localhost:1000` in your browser.
 
 ## map tiles
 
-To render the map itself, you need to either build the map tiles locally (so they can be served from the `tile` folder) or update `config.js` to point to the remote versions stored on Google Storage. Building the tiles locally requires 
+To render the map itself, you need to either build the map tiles locally (so they can be served from the `tile` folder) or update `config.js` to point to the remote versions stored on Google Storage. Building the tiles locally requires
+
 - Python 3
-- the Python dependencies specified in `tiles/requirements.txt` 
+- the Python dependencies specified in `tiles/requirements.txt`
 - the command line tools `tippecanoe` `tile-join` and `mb-util`
 
 ## license

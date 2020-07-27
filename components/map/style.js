@@ -3,9 +3,19 @@ import config from '../../config'
 const style = {
   version: 8,
   sources: {
-    combined: {
+    basemap: {
       type: 'vector',
       tiles: [`${config.basemap}/{z}/{x}/{y}.pbf`],
+      maxzoom: 5,
+    },
+    forests: {
+      type: 'vector',
+      tiles: [`${config.forests}/{z}/{x}/{y}.pbf`],
+      maxzoom: 5,
+    },
+    fires: {
+      type: 'vector',
+      tiles: [`${config.fires}/{z}/{x}/{y}.pbf`],
       maxzoom: 5,
     },
   },
@@ -21,7 +31,7 @@ const style = {
     {
       id: 'land',
       type: 'fill',
-      source: 'combined',
+      source: 'basemap',
       'source-layer': 'ne_10m_land',
       layout: { visibility: 'visible' },
       paint: {
@@ -33,7 +43,7 @@ const style = {
     {
       id: 'lakes',
       type: 'fill',
-      source: 'combined',
+      source: 'basemap',
       'source-layer': 'ne_10m_lakes',
       layout: { visibility: 'visible' },
       paint: {
@@ -45,7 +55,7 @@ const style = {
     {
       id: 'countries',
       type: 'line',
-      source: 'combined',
+      source: 'basemap',
       'source-layer': 'ne_10m_admin_0_countries',
       layout: {
         'line-cap': 'round',
@@ -62,7 +72,7 @@ const style = {
     {
       id: 'states',
       type: 'line',
-      source: 'combined',
+      source: 'basemap',
       'source-layer': 'ne_10m_admin_1_states_provinces',
       layout: {
         'line-cap': 'round',
@@ -74,6 +84,28 @@ const style = {
         'line-color': 'black',
         'line-opacity': 0,
         'line-width': 0.8,
+      },
+    },
+    {
+      id: 'forests',
+      type: 'circle',
+      source: 'forests',
+      'source-layer': 'forests',
+      layout: { visibility: 'visible' },
+      paint: {
+        'circle-radius': 1.5,
+        'circle-color': '#7eb36a',
+      },
+    },
+    {
+      id: 'fires',
+      type: 'circle',
+      source: 'fires',
+      'source-layer': 'fires',
+      layout: { visibility: 'visible' },
+      paint: {
+        'circle-radius': 1.5,
+        'circle-color': '#ea9755',
       },
     },
   ],

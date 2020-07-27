@@ -1,3 +1,7 @@
+const prefix = 'https://storage.googleapis.com/carbonplan-data/tiles/processed'
+
 export default {
-  'basemap': 'https://storage.googleapis.com/carbonplan-data/tiles/basemap'
+  basemap: `${prefix}/basemap`,
+  forests: `${prefix}/forests`,
+  fires: `${prefix}/fires`,
 }
