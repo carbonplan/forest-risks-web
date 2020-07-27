@@ -1,5 +1,66 @@
 import os
 
+def build_fires():
+
+    cmds = []
+
+    cmds.append('rm -rf processed/fires ')
+    cmds.append('rm -rf tmp ')
+    cmds.append('mkdir tmp ')
+
+    cmds.append(
+        'tippecanoe '
+        '-z5 '
+        '-o tmp/fires.mbtiles '
+        '--no-feature-limit '
+        '--no-tile-size-limit '
+        '--extend-zooms-if-still-dropping '
+        '--no-tile-compression '
+        'raw/fires.geojson '
+    )
+
+    cmds.append(
+        'mb-util '
+        '--image_format=pbf ' 
+        'tmp/fires.mbtiles '
+        'processed/fires'
+    )
+
+    cmds.append('rm -rf tmp ')
+
+    [os.system(cmd) for cmd in cmds]
+
+def build_forests():
+
+    cmds = []
+
+    cmds.append('rm -rf processed/forests ')
+    cmds.append('rm -rf tmp ')
+    cmds.append('mkdir tmp ')
+
+    cmds.append(
+        'tippecanoe '
+        '-z5 '
+        '-o tmp/forests.mbtiles '
+        '--no-feature-limit '
+        '--no-tile-size-limit '
+        '--extend-zooms-if-still-dropping '
+        '--no-tile-compression '
+        'raw/forests.geojson '
+    )
+
+    cmds.append(
+        'mb-util '
+        '--image_format=pbf ' 
+        'tmp/forests.mbtiles '
+        'processed/forests'
+    )
+
+    cmds.append('rm -rf tmp ')
+
+    [os.system(cmd) for cmd in cmds]
+
+
 def build_basemap():
 
     cmds = []
@@ -65,4 +126,4 @@ def build_basemap():
     [os.system(cmd) for cmd in cmds]
 
 if __name__ == '__main__':
-    build_basemap()
+    # TODO make buildset an argument
