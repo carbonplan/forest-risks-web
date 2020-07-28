@@ -4,6 +4,7 @@ import mapboxgl from 'mapbox-gl'
 import useTheme from './use-theme'
 import useOptions from './use-options'
 import style from './style'
+import { RulerButton, rulerStyles } from './ruler'
 
 mapboxgl.accessToken = ''
 
@@ -34,7 +35,11 @@ function Map({ options }) {
     }
   }, [])
 
-  return <Box sx={{ flexBasis: '100%' }} ref={container}></Box>
+  return (
+    <Box sx={{ flexBasis: '100%', ...rulerStyles }} ref={container}>
+      <RulerButton map={map} />
+    </Box>
+  )
 }
 
 export default Map

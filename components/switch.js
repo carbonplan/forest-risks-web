@@ -73,16 +73,9 @@ const Switch = (props) => {
         aria-label='Toggle dark mode'
         onClick={() => toggle()}
         sx={{
-          fill: 'background',
-          stroke: 'secondary',
-          cursor: 'pointer',
           position: 'relative',
           top: '8px',
           left: '7px',
-          transition: '0.25s all',
-          '&:hover': {
-            stroke: 'text',
-          },
         }}
       >
         <svg
