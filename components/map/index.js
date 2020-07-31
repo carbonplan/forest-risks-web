@@ -20,8 +20,14 @@ function Map({ options }) {
     const map = new mapboxgl.Map({
       container: container.current,
       style: style,
-      center: [-120.7, 37.6],
-      zoom: 2,
+      center: [-100, 40],
+      zoom: 3,
+      minZoom: 3,
+      maxZoom: 8,
+      maxBounds: [
+        [-155, 5],
+        [-45, 65],
+      ],
     })
 
     map.on('load', () => {
@@ -29,7 +35,7 @@ function Map({ options }) {
       setMap(map)
       console.log('loaded')
     })
-
+    
     return function cleanup() {
       map.remove()
     }

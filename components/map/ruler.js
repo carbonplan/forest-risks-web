@@ -14,7 +14,7 @@ const TICK_MARGIN = 2 // distance between gridlines and tick text
 
 export const rulerStyles = {
   '.ruler-axis': {
-    fontSize: 10,
+    fontSize: 14,
     fontFamily: 'faux',
   },
   '.ruler-grid': {
@@ -213,7 +213,8 @@ export const RulerButton = ({ map }) => {
         viewBox='0 0 24 24'
         width='24'
         height='24'
-        strokeWidth='2'
+        strokeWidth='1.75'
+        fill='none'
       >
         <circle cx='12' cy='12' r='10' />
         <line x1='9' x2='9' y1='2' y2='22' />

@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { Box, Flex } from 'theme-ui'
 import Sidebar from './sidebar'
+import Switch from './switch'
 import Map from './map'
 
 function Viewer() {
   const initialOptions = {
-    'avoided conversion': false,
-    reforestation: false,
+    forests: true,
+    fires: true,
   }
 
   const [options, setOptions] = useState(initialOptions)
@@ -25,6 +26,7 @@ function Viewer() {
       >
         <Sidebar options={options} setOptions={setOptions}></Sidebar>
         <Map options={options}></Map>
+        <Switch />
       </Flex>
     </Box>
   )

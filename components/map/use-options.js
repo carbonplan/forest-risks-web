@@ -11,12 +11,15 @@ function useOptions(map, options) {
       return
     }
 
-    if (options['reforestation']) {
-      map.setPaintProperty('land', 'fill-color', theme.colors.green)
-      map.setPaintProperty('land', 'fill-opacity', 1)
+    if (options['forests']) {
+      map.setPaintProperty('forests', 'circle-opacity', 0.8)
     } else {
-      map.setPaintProperty('land', 'fill-color', theme.colors.background)
-      map.setPaintProperty('land', 'fill-opacity', 1)
+      map.setPaintProperty('forests', 'circle-opacity', 0)
+    }
+    if (options['fires']) {
+      map.setPaintProperty('fires', 'circle-opacity', 0.8)
+    } else {
+      map.setPaintProperty('fires', 'circle-opacity', 0)
     }
   }, [map, context, options])
 }

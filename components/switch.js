@@ -25,50 +25,11 @@ const Switch = (props) => {
   return (
     <Box
       sx={{
-        float: 'right',
-        transformOrigin: 'right',
-        transform: 'rotate(90deg)',
-        paddingBottom: '10px',
+        position: 'absolute',
+        right: '20px',
+        bottom: '20px',
       }}
     >
-      <Text
-        sx={{
-          whiteSpace: 'nowrap',
-          display: 'inline-block',
-          ml: '15px',
-          fontFamily: 'monospace',
-          color: 'secondary',
-          fontSize: [1],
-          textTransform: 'normal',
-        }}
-      >
-        X,Y: {coords.x.toString().padStart(4, '0')},
-        {coords.y.toString().padStart(4, '0')}
-      </Text>
-      <IconButton aria-label='Current Color' sx={{ fill: 'secondary' }}>
-        <svg
-          xmlns='http://www.w3.org/2000/svg'
-          viewBox='0 0 24 24'
-          width='24'
-          height='24'
-        >
-          <circle r={5} cx={19} cy={19} />
-        </svg>
-      </IconButton>
-      <Text
-        variant='metric.units'
-        sx={{
-          whiteSpace: 'nowrap',
-          display: 'inline-block',
-          ml: [2],
-          fontFamily: 'monospace',
-          color: 'secondary',
-          fontSize: [1],
-          textTransform: 'normal',
-        }}
-      >
-        {color}
-      </Text>
       <IconButton
         aria-label='Toggle dark mode'
         onClick={() => toggle()}
@@ -84,6 +45,7 @@ const Switch = (props) => {
           width='24'
           height='24'
           strokeWidth='2'
+          fill='none'
         >
           <circle cx='12' cy='12' r='4.77' />
           <line x1='12' x2='12' y2='4.06' />
