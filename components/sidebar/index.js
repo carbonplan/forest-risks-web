@@ -44,7 +44,7 @@ function Sidebar({ options, setOptions }) {
             mb: [2],
           }}
         >
-          Pathways
+          Forests
         </Text>
         <Text
           sx={{
@@ -53,35 +53,62 @@ function Sidebar({ options, setOptions }) {
             pb: [3],
           }}
         >
-          These are different pathways to consider for forest carbon
-          oppurtunities
+          Which forest scenario to show
         </Text>
         <Badge
           variant='primary'
-          onClick={() => togglePathway('avoided conversion')}
+          onClick={() => togglePathway('forests')}
           sx={{
             mr: [3],
-            color: options['avoided conversion']
-              ? 'yellow'
-              : alpha('yellow', 0.2),
-            borderColor: options['avoided conversion']
-              ? 'yellow'
-              : alpha('yellow', 0.2),
+            color: options['forests'] ? 'green' : alpha('green', 0.2),
+            borderColor: options['forests'] ? 'green' : alpha('green', 0.2),
           }}
         >
           Avoided conversion
         </Badge>
-        <Badge
-          variant='primary'
-          onClick={() => togglePathway('reforestation')}
+      </Box>
+      <Box
+        sx={{
+          pl: [3],
+          pr: [3],
+          pt: [4],
+          pb: [4],
+          borderStyle: 'solid',
+          borderColor: 'muted',
+          borderWidth: '0px',
+          borderBottomWidth: '1px',
+          width: '100%',
+        }}
+      >
+        <Text
           sx={{
-            color: options['reforestation'] ? 'green' : alpha('green', 0.2),
-            borderColor: options['reforestation']
-              ? 'green'
-              : alpha('green', 0.2),
+            fontFamily: 'heading',
+            letterSpacing: 'wide',
+            textTransform: 'uppercase',
+            mb: [2],
           }}
         >
-          Reforestation
+          FIRES
+        </Text>
+        <Text
+          sx={{
+            fontFamily: 'faux',
+            pt: [3],
+            pb: [3],
+          }}
+        >
+          Which fire scenario to show
+        </Text>
+        <Badge
+          variant='primary'
+          onClick={() => togglePathway('fires')}
+          sx={{
+            mr: [3],
+            color: options['fires'] ? 'orange' : alpha('orange', 0.2),
+            borderColor: options['fires'] ? 'orange' : alpha('orange', 0.2),
+          }}
+        >
+          Future projection
         </Badge>
       </Box>
     </Box>

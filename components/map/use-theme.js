@@ -16,10 +16,8 @@ function useTheme(map) {
       theme.colors.background
     )
     map.setPaintProperty('background', 'background-opacity', 1)
-    map.setPaintProperty('land', 'fill-color', theme.colors.muted)
-    map.setPaintProperty('land', 'fill-opacity', 1)
-    map.setPaintProperty('lakes', 'fill-color', theme.colors.background)
-    map.setPaintProperty('lakes', 'fill-opacity', 1)
+    map.setPaintProperty('land', 'fill-opacity', 0)
+    map.setPaintProperty('lakes', 'fill-opacity', 0)
     map.setPaintProperty('countries', 'line-color', theme.colors.primary)
     map.setPaintProperty('countries', 'line-opacity', 1)
     map.setPaintProperty('states', 'line-color', theme.colors.primary)

@@ -20,18 +20,6 @@ const Layout = ({ children }) => {
         >
           {children}
         </Box>
-        <Box
-          sx={{
-            width: '100%',
-            position: 'sticky',
-            bottom: '0px',
-            display: ['none', 'none', 'inherit'],
-          }}
-        >
-          <Box sx={{ px: [4], width: '100%' }}>
-            <Switch />
-          </Box>
-        </Box>
       </Flex>
     </>
   )
