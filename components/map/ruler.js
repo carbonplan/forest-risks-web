@@ -180,7 +180,7 @@ function useRuler(map, mode = AXES) {
       removeRuler()
       map.off('resize', resetRuler)
     }
-  }, [map, mode])
+  }, [map, mode, theme])
 }
 
 export const RulerButton = ({ map }) => {
