@@ -35,7 +35,7 @@ function Map({ options }) {
       setMap(map)
       console.log('loaded')
     })
-    
+
     return function cleanup() {
       map.remove()
     }
