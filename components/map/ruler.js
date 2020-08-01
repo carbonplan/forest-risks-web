@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { useState, useEffect } from 'react'
 import * as d3 from 'd3'
-import { jsx, IconButton } from 'theme-ui'
+import { jsx, IconButton, useThemeUI } from 'theme-ui'
 
 // ruler modes
 const OFF = 0 // show nothing
@@ -12,19 +12,10 @@ const TICK_SEPARATION = 150 // target distance between ticks
 const TICK_SIZE = 6 // tick length
 const TICK_MARGIN = 2 // distance between gridlines and tick text
 
-export const rulerStyles = {
-  '.ruler-axis': {
-    fontSize: 14,
-    fontFamily: 'faux',
-  },
-  '.ruler-grid': {
-    stroke: 'currentColor',
-    strokeDasharray: '3,2',
-    strokeOpacity: 0.8,
-  },
-}
-
 function useRuler(map, mode = AXES) {
+  const context = useThemeUI()
+  const theme = context.theme
+
   useEffect(() => {
     if (!map || mode === OFF) {
       return
@@ -52,7 +43,11 @@ function useRuler(map, mode = AXES) {
         .style('pointer-events', 'none')
 
       // x-axis
-      const gx = rulerContainer.append('g').classed('ruler-axis', true)
+      const gx = rulerContainer
+        .append('g')
+        .classed('ruler-axis', true)
+        .style('font-size', '14px')
+        .style('font-family', theme.fonts.faux)
 
       const xAxis = (g, x) =>
         g
@@ -70,6 +65,8 @@ function useRuler(map, mode = AXES) {
         .append('g')
         .classed('ruler-axis', true)
         .attr('transform', `translate(${width},0)`)
+        .style('font-size', '14px')
+        .style('font-family', theme.fonts.faux)
 
       const yAxis = (g, y) =>
         g
@@ -86,7 +83,12 @@ function useRuler(map, mode = AXES) {
       const { gGrid, grid } =
         mode === GRID
           ? {
-              gGrid: rulerContainer.append('g').classed('ruler-grid', true),
+              gGrid: rulerContainer
+                .append('g')
+                .classed('ruler-grid', true)
+                .style('stroke', theme.colors.secondary)
+                .style('stroke-dasharray', '3,2')
+                .style('stroke-opacity', 0.8),
 
               grid: (g, x, y) => {
                 const xTickHeight = gx.node().getBoundingClientRect().height
@@ -178,7 +180,7 @@ function useRuler(map, mode = AXES) {
       removeRuler()
       map.off('resize', resetRuler)
     }
-  }, [map, mode])
+  }, [map, mode, theme])
 }
 
 export const RulerButton = ({ map }) => {
