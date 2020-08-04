@@ -3,7 +3,7 @@ import { Box, Flex } from 'theme-ui'
 import Sidebar from './sidebar'
 import Switch from './switch'
 import Map from './map'
-import Visualization from './Visualization'
+import Visualization from './visualization'
 
 function Viewer() {
   const initialOptions = {
