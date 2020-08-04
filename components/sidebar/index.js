@@ -2,7 +2,7 @@ import { Box, Badge, Text } from 'theme-ui'
 import { alpha } from '@theme-ui/color'
 import Header from './header'
 
-function Sidebar({ options, setOptions }) {
+function Sidebar({ options, setOptions, children }) {
   function togglePathway(name) {
     setOptions((options) => {
       return { ...options, [name]: !options[name] }
@@ -111,6 +111,7 @@ function Sidebar({ options, setOptions }) {
           Future projection
         </Badge>
       </Box>
+      {children}
     </Box>
   )
 }
