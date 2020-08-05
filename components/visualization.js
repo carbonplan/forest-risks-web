@@ -12,9 +12,8 @@ function getPointsInRegion(points, region) {
 function getAverageForYear(points, year) {
   if (!points.length) return null
 
-  const values = points.map((p) => p.properties[year])
-  const sum = values.reduce((p, c) => p + c, 0)
-  return sum / values.length
+  const sum = points.reduce((_sum, point) => _sum + point.properties[year], 0)
+  return sum / points.length
 }
 
 export default function Visualization({ mapData, filterRegion }) {

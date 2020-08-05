@@ -9,9 +9,9 @@ import {
 export function circle(
   center,
   radius = 1,
-  opts = { units: 'miles', steps: 128 }
+  options = { units: 'miles', steps: 128 }
 ) {
-  const c = turfCircle([center.lng, center.lat], radius, opts)
+  const c = turfCircle([center.lng, center.lat], radius, options)
   c.properties = {
     type: 'Circle',
     center,

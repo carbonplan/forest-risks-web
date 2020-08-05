@@ -158,9 +158,10 @@ export default function CircleRenderer({
         lng: e.lngLat.lng - center.lng,
         lat: e.lngLat.lat - center.lat,
       }
+
+      setCursor({ draggingCircle: true })
       map.on('mousemove', onMouseMove)
       map.once('mouseup', onMouseUp)
-      setCursor({ draggingCircle: true })
     }
 
     const onMouseEnter = (e) => {
