@@ -3,6 +3,7 @@ import { Box, Flex } from 'theme-ui'
 import Sidebar from './sidebar'
 import Switch from './switch'
 import Map from './map'
+import Visualization from './visualization'
 
 function Viewer() {
   const initialOptions = {
@@ -11,6 +12,8 @@ function Viewer() {
   }
 
   const [options, setOptions] = useState(initialOptions)
+  const [mapData, setMapData] = useState(null)
+  const [selectedRegion, setSelectedRegion] = useState(null)
 
   return (
     <Box>
@@ -24,8 +27,14 @@ function Viewer() {
           flexDirection: ['column', 'row', 'row'],
         }}
       >
-        <Sidebar options={options} setOptions={setOptions}></Sidebar>
-        <Map options={options}></Map>
+        <Sidebar options={options} setOptions={setOptions}>
+          <Visualization mapData={mapData} filterRegion={selectedRegion} />
+        </Sidebar>
+        <Map
+          options={options}
+          onChangeData={setMapData}
+          onChangeSelectedRegion={setSelectedRegion}
+        />
         <Switch />
       </Flex>
     </Box>
