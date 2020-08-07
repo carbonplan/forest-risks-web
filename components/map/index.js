@@ -43,7 +43,7 @@ the stats on zoom. This approach would also solve two other problems:
   from querySourceFeatures and queryRenderedFeatures. (see
   https://docs.mapbox.com/mapbox-gl-js/api/map/#map#querysourcefeatures)
 */
-const UPDATE_STATS_ON_ZOOM = false
+const UPDATE_STATS_ON_ZOOM = true
 
 function Map({
   options,
