@@ -4,6 +4,7 @@ import {
   destination as turfDestination,
   distance as turfDistance,
   booleanPointInPolygon,
+  bbox,
 } from '@turf/turf'
 
 export function circle(
@@ -39,4 +40,13 @@ export function distance(from, to, options = { units: 'miles' }) {
 
 export function isPointInPolygon(point, poly) {
   return booleanPointInPolygon(point, poly)
+}
+
+// returns southwest/northeast corners as [lng, lat]
+export function boundingBox(poly) {
+  const bounds = bbox(poly)
+  return [
+    [bounds[0], bounds[1]],
+    [bounds[2], bounds[3]],
+  ]
 }

@@ -1,24 +1,26 @@
 import { useState, useEffect } from 'react'
 import CircleRenderer from './circle-renderer'
 
-const CirclePicker = ({ map, center, radius, onChange, onIdle }) => {
+const CirclePicker = ({ map, center, radius, onIdle, onDrag, onSetRadius }) => {
   const [renderer, setRenderer] = useState(null)
 
   useEffect(() => {
-    if (!map) return
-
     const renderer = CircleRenderer({
       map,
-      onChange,
       onIdle,
+      onDrag,
+      onSetRadius,
       initialCenter: center,
       initialRadius: radius,
     })
 
     setRenderer(renderer)
 
-    return renderer.remove
-  }, [map])
+    return function cleanup() {
+      // need to check load state for fast-refresh purposes
+      if (map.loaded()) renderer.remove()
+    }
+  }, [])
 
   useEffect(() => {
     if (renderer) {

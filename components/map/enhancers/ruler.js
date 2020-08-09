@@ -17,7 +17,7 @@ function useRuler(map, mode = AXES) {
   const theme = context.theme
 
   useEffect(() => {
-    if (!map || mode === OFF) {
+    if (mode === OFF) {
       return
     }
 
@@ -180,7 +180,7 @@ function useRuler(map, mode = AXES) {
       removeRuler()
       map.off('resize', resetRuler)
     }
-  }, [map, mode, theme])
+  }, [mode, theme])
 }
 
 export const RulerButton = ({ map }) => {

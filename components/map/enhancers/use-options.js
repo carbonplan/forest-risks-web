@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useThemeUI } from 'theme-ui'
 import { darken } from '@theme-ui/color'
 
@@ -6,11 +6,7 @@ function useOptions(map, options) {
   const context = useThemeUI()
   const theme = context.theme
 
-  useLayoutEffect(() => {
-    if (!map) {
-      return
-    }
-
+  useEffect(() => {
     if (options['forests']) {
       map.setPaintProperty('forests', 'circle-opacity', 0.8)
     } else {
@@ -21,7 +17,7 @@ function useOptions(map, options) {
     } else {
       map.setPaintProperty('fires', 'circle-opacity', 0)
     }
-  }, [map, context, options])
+  }, [context, options])
 }
 
 export default useOptions
