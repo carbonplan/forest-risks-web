@@ -1,10 +1,11 @@
-import * as geo from '../../geo-utils'
+import * as geo from '../../../geo-utils'
 import CursorManager from './cursor-manager'
 
 export default function CircleRenderer({
   map,
-  onChange = () => {},
-  onIdle = () => {},
+  onIdle = (circle) => {},
+  onDrag = (circle) => {},
+  onSetRadius = (circle) => {},
   initialCenter = { lat: 0, lng: 0 },
   initialRadius = 0,
 }) {
@@ -94,6 +95,7 @@ export default function CircleRenderer({
     const onMouseMove = (e) => {
       const r = geo.distance(map.unproject(e.point), center)
       setRadius(r)
+      onDrag(circle)
     }
 
     const onMouseUp = (e) => {
@@ -138,6 +140,7 @@ export default function CircleRenderer({
         lng: e.lngLat.lng - offset.lng,
         lat: e.lngLat.lat - offset.lat,
       })
+      onDrag(circle)
     }
 
     const onMouseUp = (e) => {
@@ -209,8 +212,6 @@ export default function CircleRenderer({
     map.getSource('circle').setData(circle)
     map.getSource('circle-mask').setData(mask)
     map.getSource('drag-handle').setData(handle)
-
-    onChange(circle)
   }
 
   //// INIT ////
@@ -226,10 +227,12 @@ export default function CircleRenderer({
 
   return {
     setCenter,
-    setRadius,
+    setRadius: (radius) => {
+      setRadius(radius)
+      onSetRadius(circle)
+    },
     remove: () => {
       removers.reverse().forEach((remove) => remove())
-      onChange(null)
       onIdle(null)
     },
   }

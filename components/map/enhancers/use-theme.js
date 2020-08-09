@@ -1,15 +1,11 @@
-import { useState, useLayoutEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useThemeUI } from 'theme-ui'
 
 function useTheme(map) {
   const context = useThemeUI()
   const theme = context.theme
 
-  useLayoutEffect(() => {
-    if (!map) {
-      return
-    }
-
+  useEffect(() => {
     map.setPaintProperty(
       'background',
       'background-color',
@@ -22,7 +18,7 @@ function useTheme(map) {
     map.setPaintProperty('countries', 'line-opacity', 1)
     map.setPaintProperty('states', 'line-color', theme.colors.primary)
     map.setPaintProperty('states', 'line-opacity', 1)
-  }, [map, context])
+  }, [context])
 }
 
 export default useTheme

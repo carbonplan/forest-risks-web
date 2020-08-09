@@ -1,13 +1,4 @@
 import { Box } from 'theme-ui'
-import { isPointInPolygon } from './geo-utils'
-
-function getPointsInRegion(points, region) {
-  if (!region) return points
-
-  return points.filter((p) =>
-    isPointInPolygon([p.properties.lon, p.properties.lat], region)
-  )
-}
 
 function getAverageForYear(points, year) {
   if (!points.length) return null
@@ -16,39 +7,48 @@ function getAverageForYear(points, year) {
   return sum / points.length
 }
 
-export default function Visualization({ mapData, filterRegion }) {
-  if (!mapData) return null
+export default function Visualization({ data }) {
+  if (!data) return null
 
-  const types = ['forests', 'fires']
+  const { region, points } = data
+
   const years = [2015, 2050, 2085]
+  const types = Object.keys(points)
 
   const stats = {}
   types.forEach((type) => {
-    const points = mapData[type]
-    const filteredPoints = getPointsInRegion(points, filterRegion)
-
+    const pointsForType = points[type]
     stats[type] = {
-      count: filteredPoints.length,
+      count: pointsForType.length,
       averages: {},
     }
-
     years.forEach((year) => {
-      stats[type].averages[year] = getAverageForYear(filteredPoints, year)
+      stats[type].averages[year] = getAverageForYear(pointsForType, year)
     })
   })
 
   return (
     <Box sx={{ padding: 16 }}>
       <Box sx={{ textTransform: 'uppercase' }}>Location</Box>
-      {filterRegion ? (
-        <>
-          <Box>Lng: {filterRegion.properties.center.lng}</Box>
-          <Box>Lat: {filterRegion.properties.center.lat}</Box>
-          <Box>Radius: {filterRegion.properties.radius.toFixed(2)} miles</Box>
-        </>
-      ) : (
-        <Box>United States</Box>
-      )}
+      {(() => {
+        switch(region.type) {
+          case 'Circle': return (
+            <>
+              <Box>Lng: {region.center.lng}</Box>
+              <Box>Lat: {region.center.lat}</Box>
+              <Box>Radius: {region.radius.toFixed(2)} miles</Box>
+            </>
+          )
+          case 'Viewport': return (
+            <>
+              <Box>Viewport</Box>
+              <Box>SW: {region.bounds[0][0].toFixed(8)} / {region.bounds[0][1].toFixed(8)}</Box>
+              <Box>NE: {region.bounds[1][0].toFixed(8)} / {region.bounds[1][1].toFixed(8)}</Box>
+            </>
+          )
+          default: return null
+        }
+      })()}
       {types.map((type) => (
         <Box key={type}>
           <Box
