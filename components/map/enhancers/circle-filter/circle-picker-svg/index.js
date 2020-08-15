@@ -38,63 +38,56 @@ const CirclePicker = ({ map, center, radius, onIdle, onDrag, onSetRadius }) => {
 
   return (
     <svg
-      id="circle-picker"
+      id='circle-picker'
       style={{
         position: 'absolute',
         top: 0,
         left: 0,
         width: '100%',
         height: '100%',
-      }}>
+      }}
+    >
       <path
-        id="circle"
+        id='circle'
         stroke={theme.colors.primary}
         strokeWidth={3}
-        fill="transparent"
-        cursor="move"
+        fill='transparent'
+        cursor='move'
       />
-      <circle
-        id="circle-center"
-        fill={theme.colors.primary}
-        r={4}
-      />
-      <mask id="circle-mask">
-        <rect x="0" y="0" width="100%" height="100%" fill="#FFFFFF" />
-        <path id="circle-mask-cutout" fill="#000000" />
+      <circle id='circle-center' fill={theme.colors.primary} r={4} />
+      <mask id='circle-mask'>
+        <rect x='0' y='0' width='100%' height='100%' fill='#FFFFFF' />
+        <path id='circle-mask-cutout' fill='#000000' />
       </mask>
       <rect
-        x="0"
-        y="0"
-        width="100%"
-        height="100%"
-        mask="url(#circle-mask)"
+        x='0'
+        y='0'
+        width='100%'
+        height='100%'
+        mask='url(#circle-mask)'
         fill={theme.colors.primary}
         fillOpacity={0.2}
       />
       <circle
-        id="handle"
+        id='handle'
         r={8}
         fill={theme.colors.primary}
-        cursor="ew-resize"
+        cursor='ew-resize'
       />
       <line
-        id="radius-guideline"
+        id='radius-guideline'
         stroke={theme.colors.primary}
         strokeOpacity={0}
         strokeWidth={2}
-        strokeDasharray="3,2"
+        strokeDasharray='3,2'
       />
-      <text
-        id="radius-text"
-        fill={theme.colors.primary}
-        fillOpacity={0}
-      />
+      <text id='radius-text' fill={theme.colors.primary} fillOpacity={0} />
       <circle
-        id="circle-xy"
-        stroke="red"
+        id='circle-xy'
+        stroke='red'
         strokeWidth={3}
         strokeOpacity={0}
-        fill="transparent"
+        fill='transparent'
       />
     </svg>
   )

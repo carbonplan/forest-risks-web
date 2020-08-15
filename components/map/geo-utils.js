@@ -21,7 +21,7 @@ export function circle(
       type: 'Circle',
       center,
       radius,
-    }
+    },
   })
 
   // need to rewind or svg fill is inside-out
@@ -54,7 +54,7 @@ export function boundingBox(poly) {
   const bounds = bbox(poly)
   return [
     [bounds[0], bounds[1]],
-    [bounds[2], bounds[3]]
+    [bounds[2], bounds[3]],
   ]
 }
 
@@ -66,7 +66,7 @@ export function getPathMaker(map) {
   const { width, height } = map.getContainer().getBoundingClientRect()
   const center = map.getCenter()
   const zoom = map.getZoom()
-  const scale = 512 * 0.5 / Math.PI * Math.pow(2, zoom)
+  const scale = ((512 * 0.5) / Math.PI) * Math.pow(2, zoom)
 
   const projection = d3
     .geoMercator()

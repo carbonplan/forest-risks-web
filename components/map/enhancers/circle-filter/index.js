@@ -11,11 +11,7 @@ import {
   UPDATE_STATS_ON_ZOOM,
 } from '../../settings'
 
-function CircleFilter({
-  map,
-  options,
-  onChangeSelectedData,
-}) {
+function CircleFilter({ map, options, onChangeSelectedData }) {
   const initialized = useRef(false)
   const circleRef = useRef(null)
 
@@ -50,7 +46,7 @@ function CircleFilter({
       return
     }
 
-    const layers = Object.keys(options).filter(key => options[key])
+    const layers = Object.keys(options).filter((key) => options[key])
     const selectedData = getSelectedData(map, layers, circle)
     onChangeSelectedData(selectedData)
   }, [zoom, bounds, options, circle])
@@ -74,11 +70,10 @@ function CircleFilter({
             map={map}
             center={INITIAL_CENTER}
             radius={radius}
-            onSetRadius={(circle) => circleRef.current = circle}
+            onSetRadius={(circle) => (circleRef.current = circle)}
             onDrag={(circle) => {
               setRadius(circle.properties.radius)
-              if (UPDATE_STATS_ON_DRAG)
-                setCircle(circle)
+              if (UPDATE_STATS_ON_DRAG) setCircle(circle)
             }}
             onIdle={setCircle}
           />

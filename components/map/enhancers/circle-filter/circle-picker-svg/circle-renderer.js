@@ -21,7 +21,9 @@ export default function CircleRenderer({
   let radius = initialRadius
 
   const svg = d3.select('#circle-picker').style('pointer-events', 'none')
-  const svgCircle = d3.select('#circle').style('pointer-events', CIRCLE_STICKS_TO_CENTER ? 'none' : 'all')
+  const svgCircle = d3
+    .select('#circle')
+    .style('pointer-events', CIRCLE_STICKS_TO_CENTER ? 'none' : 'all')
   const svgCircleCenter = d3.select('#circle-center')
   const svgCircleMask = d3.select('#circle-mask-cutout')
   const svgHandle = d3.select('#handle').style('pointer-events', 'all')
@@ -50,8 +52,8 @@ export default function CircleRenderer({
         const mouseXY = e.point
         const rise = mouseXY.y - centerXY.y
         const run = mouseXY.x - centerXY.x
-        let angle = Math.atan(rise / run) * 180 / Math.PI
-        guidelineAngle = (angle + 90) + (run < 0 ? 180 : 0)
+        let angle = (Math.atan(rise / run) * 180) / Math.PI
+        guidelineAngle = angle + 90 + (run < 0 ? 180 : 0)
       }
     }
 
@@ -60,8 +62,7 @@ export default function CircleRenderer({
       setCursor({ draggingHandle: false })
       map.off('mousemove', onMouseMove)
       svgHandle.style('pointer-events', 'all')
-      if (!CIRCLE_STICKS_TO_CENTER)
-        svgCircle.style('pointer-events', 'all')
+      if (!CIRCLE_STICKS_TO_CENTER) svgCircle.style('pointer-events', 'all')
       svgGuidelineText.attr('fill-opacity', 0)
       svgGuideline.attr('stroke-opacity', 0)
     }
@@ -178,7 +179,7 @@ export default function CircleRenderer({
       const lineEnd = turf.rhumbDestination(
         [center.lng, center.lat],
         radius * 2,
-        guidelineAngle,
+        guidelineAngle
       )
 
       const line = turf.lineString([
@@ -191,13 +192,9 @@ export default function CircleRenderer({
       return map.project(inter.features[0].geometry.coordinates)
     })()
 
-    svgCircleCenter
-      .attr('cx', centerXY.x)
-      .attr('cy', centerXY.y)
+    svgCircleCenter.attr('cx', centerXY.x).attr('cy', centerXY.y)
 
-    svgHandle
-      .attr('cx', handleXY.x)
-      .attr('cy', handleXY.y)
+    svgHandle.attr('cx', handleXY.x).attr('cy', handleXY.y)
 
     svgGuideline
       .attr('x1', centerXY.x)
@@ -213,7 +210,7 @@ export default function CircleRenderer({
     if (SHOW_CIRCLE_XY) {
       const radiusXY = Math.sqrt(
         Math.pow(handleXY.x - centerXY.x, 2) +
-        Math.pow(handleXY.y - centerXY.y, 2)
+          Math.pow(handleXY.y - centerXY.y, 2)
       )
       svgCircleXY
         .attr('cx', centerXY.x)

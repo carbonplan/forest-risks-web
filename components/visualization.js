@@ -31,22 +31,31 @@ export default function Visualization({ data }) {
     <Box sx={{ padding: 16 }}>
       <Box sx={{ textTransform: 'uppercase' }}>Location</Box>
       {(() => {
-        switch(region.type) {
-          case 'Circle': return (
-            <>
-              <Box>Lng: {region.center.lng}</Box>
-              <Box>Lat: {region.center.lat}</Box>
-              <Box>Radius: {region.radius.toFixed(2)} miles</Box>
-            </>
-          )
-          case 'Viewport': return (
-            <>
-              <Box>Viewport</Box>
-              <Box>SW: {region.bounds[0][0].toFixed(8)} / {region.bounds[0][1].toFixed(8)}</Box>
-              <Box>NE: {region.bounds[1][0].toFixed(8)} / {region.bounds[1][1].toFixed(8)}</Box>
-            </>
-          )
-          default: return null
+        switch (region.type) {
+          case 'Circle':
+            return (
+              <>
+                <Box>Lng: {region.center.lng}</Box>
+                <Box>Lat: {region.center.lat}</Box>
+                <Box>Radius: {region.radius.toFixed(2)} miles</Box>
+              </>
+            )
+          case 'Viewport':
+            return (
+              <>
+                <Box>Viewport</Box>
+                <Box>
+                  SW: {region.bounds[0][0].toFixed(8)} /{' '}
+                  {region.bounds[0][1].toFixed(8)}
+                </Box>
+                <Box>
+                  NE: {region.bounds[1][0].toFixed(8)} /{' '}
+                  {region.bounds[1][1].toFixed(8)}
+                </Box>
+              </>
+            )
+          default:
+            return null
         }
       })()}
       {types.map((type) => (

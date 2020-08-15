@@ -5,16 +5,15 @@ import { DEDUPE_ON_FILTER } from '../../settings'
 function dedupedPoints(points) {
   const deduped = []
 
-  points.forEach(point => {
-    const duplicatePoint = deduped.find(d => (
-      d.properties.lat === point.properties.lat &&
-      d.properties.lon === point.properties.lon
-    ))
+  points.forEach((point) => {
+    const duplicatePoint = deduped.find(
+      (d) =>
+        d.properties.lat === point.properties.lat &&
+        d.properties.lon === point.properties.lon
+    )
 
-    if (duplicatePoint)
-      console.log('duplicate point!')
-    else
-      deduped.push(point)
+    if (duplicatePoint) console.log('duplicate point!')
+    else deduped.push(point)
   })
 
   return deduped
@@ -35,7 +34,7 @@ function bboxToScreenCoords(map, bbox) {
   const northEast = map.project(bbox[1])
   return [
     [southWest.x, southWest.y],
-    [northEast.x, northEast.y]
+    [northEast.x, northEast.y],
   ]
 }
 
@@ -56,10 +55,10 @@ export function getSelectedData(map, layers, selectedRegion) {
     region: selectedRegion
       ? selectedRegion.properties
       : { type: 'Viewport', bounds: map.getBounds().toArray() },
-    points: {}
+    points: {},
   }
 
-  layers.forEach(layer => {
+  layers.forEach((layer) => {
     let points = selectedRegion
       ? getFilteredPoints(map, layer, selectedRegion)
       : map.queryRenderedFeatures({ layers: [layer] }) // entire viewport

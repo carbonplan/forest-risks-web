@@ -1,4 +1,3 @@
-
 export const INITIAL_CENTER = { lng: -100, lat: 40 }
 export const INITIAL_RADIUS = 300
 export const INITIAL_ZOOM = 3
@@ -21,7 +20,6 @@ counts) in the sidebar change based on zoom level, which doesn't really
 make sense.
 */
 export const UPDATE_STATS_ON_ZOOM = true
-
 
 /*
 Set to true to deduplicate points when filtering. This addresses mapbox's

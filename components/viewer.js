@@ -29,10 +29,7 @@ function Viewer() {
         <Sidebar options={options} setOptions={setOptions}>
           <Visualization data={selectedData} />
         </Sidebar>
-        <Map
-          options={options}
-          onChangeSelectedData={setSelectedData}
-        />
+        <Map options={options} onChangeSelectedData={setSelectedData} />
         <Switch />
       </Flex>
     </Box>
