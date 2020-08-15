@@ -20,12 +20,12 @@ function Map({
       style: style,
       center: INITIAL_CENTER,
       zoom: INITIAL_ZOOM,
-      minZoom: 3,
-      maxZoom: 8,
-      maxBounds: [
-        [-155, 5],
-        [-45, 65],
-      ],
+      // minZoom: 3,
+      // maxZoom: 8,
+      // maxBounds: [
+      //   [-155, 5],
+      //   [-45, 65],
+      // ],
     })
 
     map.on('load', () => setMap(map))

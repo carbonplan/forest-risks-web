@@ -1,3 +1,5 @@
+import * as d3 from 'd3'
+
 import {
   circle as turfCircle,
   mask as turfMask,
@@ -5,20 +7,25 @@ import {
   distance as turfDistance,
   booleanPointInPolygon,
   bbox,
+  rewind,
 } from '@turf/turf'
 
 export function circle(
   center,
   radius = 1,
-  options = { units: 'miles', steps: 128 }
+  options = { units: 'miles', steps: 64 }
 ) {
-  const c = turfCircle([center.lng, center.lat], radius, options)
-  c.properties = {
-    type: 'Circle',
-    center,
-    radius,
-  }
-  return c
+  const c = turfCircle([center.lng, center.lat], radius, {
+    ...options,
+    properties: {
+      type: 'Circle',
+      center,
+      radius,
+    }
+  })
+
+  // need to rewind or svg fill is inside-out
+  return rewind(c, { reverse: true, mutate: true })
 }
 
 export function mask(poly, outline) {
@@ -49,4 +56,23 @@ export function boundingBox(poly) {
     [bounds[0], bounds[1]],
     [bounds[2], bounds[3]]
   ]
+}
+
+// returns a function that converts a geojson feature to an svg path
+// this basically ties d3 to mapbox
+// 512 is the size of mapbox tiles
+// adapted from http://bl.ocks.org/enjalot/0d87f32a1ccb9a720d29ba74142ba365
+export function getPathMaker(map) {
+  const { width, height } = map.getContainer().getBoundingClientRect()
+  const center = map.getCenter()
+  const zoom = map.getZoom()
+  const scale = 512 * 0.5 / Math.PI * Math.pow(2, zoom)
+
+  const projection = d3
+    .geoMercator()
+    .center([center.lng, center.lat])
+    .translate([width / 2, height / 2])
+    .scale(scale)
+
+  return d3.geoPath(projection)
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-import CirclePicker from './circle-picker'
+import CirclePicker from './circle-picker-svg'
 import CircleButton from './circle-button'
 import RadiusSlider from './radius-slider'
 import { getSelectedData } from './helpers'
@@ -75,7 +75,11 @@ function CircleFilter({
             center={INITIAL_CENTER}
             radius={radius}
             onSetRadius={(circle) => circleRef.current = circle}
-            onDrag={UPDATE_STATS_ON_DRAG ? setCircle : undefined}
+            onDrag={(circle) => {
+              setRadius(circle.properties.radius)
+              if (UPDATE_STATS_ON_DRAG)
+                setCircle(circle)
+            }}
             onIdle={setCircle}
           />
         </>
