@@ -54,6 +54,12 @@ export default function Visualization({ data }) {
                 </Box>
               </>
             )
+          case 'UserUploaded':
+            return (
+              <>
+                <Box>Filename: {region.filename}</Box>
+              </>
+            )
           default:
             return null
         }

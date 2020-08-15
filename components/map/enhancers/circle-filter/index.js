@@ -46,10 +46,15 @@ function CircleFilter({ map, options, onChangeSelectedData }) {
       return
     }
 
+    // TODO: create a Filters component that includes CircleFilter, ViewportFilter and UploadFilter
+    // handle state in that component so that only one filter can be on at once
+    // (this line and the dependency below prevent the reversion to a Viewport filter on map move after loading geojson)
+    if (!showCircle) return
+
     const layers = Object.keys(options).filter((key) => options[key])
     const selectedData = getSelectedData(map, layers, circle)
     onChangeSelectedData(selectedData)
-  }, [zoom, bounds, options, circle])
+  }, [zoom, bounds, options, circle, showCircle])
 
   return (
     <>
