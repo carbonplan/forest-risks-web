@@ -60,6 +60,12 @@ export default function Visualization({ data }) {
                 <Box>Filename: {region.filename}</Box>
               </>
             )
+          case 'Drawn':
+            return (
+              <>
+                <Box>Hand Drawn</Box>
+              </>
+            )
           default:
             return null
         }
