@@ -2,28 +2,97 @@ import { useRef, useState, useEffect } from 'react'
 import * as turf from '@turf/turf'
 import { getSelectedData } from '../circle-filter/helpers'
 
-function addPointsToMap(map, points, options, onChangeSelectedData) {
-  const linearRing = points.map(p => map.unproject(p).toArray())
-  linearRing.push(linearRing[0])
+function addPointsToMap(map, points, options, onChangeSelectedData, cb = () => {}) {
+  if (points.length < 4) return
 
-  // avoid error about linear ring needing at least 4 positions
-  if (linearRing.length < 4) return
-
-  const region = turf.polygon([linearRing], {
-    type: 'Drawn',
+  const region = turf.polygon([points], {
+    source: 'carbonplan.org',
   })
 
-  let source = map.getSource('draw')
+  region.properties = {
+    type: 'Drawn',
+    export: turf.featureCollection([JSON.parse(JSON.stringify(region))])
+  }
 
-  if (source)
-    source.setData(region)
-  else
+  map.getSource('draw').setData(region)
+  //map.getSource('draw-mask').setData(turf.mask(region))
+
+  map.once('idle', () => {
+    const layers = Object.keys(options).filter((key) => options[key])
+    const selectedData = getSelectedData(map, layers, region)
+    onChangeSelectedData(selectedData)
+    cb()
+  })
+}
+
+function DrawFilter({ map, options, onChangeSelectedData }) {
+  const canvasRef = useRef(null)
+  const mapCanvas = map.getCanvas()
+  const originalCursorStyle = mapCanvas.style.cursor
+  const { width, height } = mapCanvas.getBoundingClientRect()
+
+  useEffect(() => {
+    // https://stackoverflow.com/questions/2368784/draw-on-html5-canvas-using-a-mouse
+    const ctx = canvasRef.current.getContext('2d')
+    ctx.lineWidth = 3
+    ctx.lineCap = 'round'
+    ctx.strokeStyle = 'red'
+
+    let drawing = false
+    let initialPos
+    let pos
+    let points = []
+
+    const setPosition = e => {
+      pos = { ...e.point }
+      points.push(e.lngLat.toArray())
+    }
+
+    const draw = e => {
+      ctx.beginPath()
+      ctx.moveTo(pos.x, pos.y)
+      setPosition(e);
+      ctx.lineTo(pos.x, pos.y)
+      ctx.stroke()
+    }
+
+    const stopDrawing = e => {
+      if (!drawing) return
+
+      drawing = false
+      map.off('mousemove', draw)
+      map.off('contextmenu', stopDrawing)
+      map.dragPan.enable()
+      map.scrollZoom.enable()
+      mapCanvas.style.cursor = originalCursorStyle
+      draw(initialPos)
+      addPointsToMap(map, points, options, onChangeSelectedData, () => {
+        ctx.clearRect(0, 0, width, height)
+
+      })
+      points = []
+    }
+
+    const startDrawing = e => {
+      if (drawing) return
+
+      drawing = true
+      e.preventDefault()
+      map.dragPan.disable()
+      map.scrollZoom.disable()
+      mapCanvas.style.cursor = 'crosshair'
+      initialPos = e
+      setPosition(e)
+      map.on('mousemove', draw)
+      map.once('click', stopDrawing)
+      map.on('contextmenu', stopDrawing)
+    }
+
     map.addSource('draw', {
       type: 'geojson',
-      data: region,
+      data: null,
     })
 
-  if (!map.getLayer('draw/line'))
     map.addLayer({
       id: 'draw/line',
       source: 'draw',
@@ -34,64 +103,28 @@ function addPointsToMap(map, points, options, onChangeSelectedData) {
       },
     })
 
-  const layers = Object.keys(options).filter((key) => options[key])
-  const selectedData = getSelectedData(map, layers, region)
-  onChangeSelectedData(selectedData)
+    // map.addSource('draw-mask', {
+    //   type: 'geojson',
+    //   data: null,
+    // })
+    //
+    // map.addLayer({
+    //   id: 'draw-mask/fill',
+    //   source: 'draw-mask',
+    //   type: 'fill',
+    //   paint: {
+    //     'fill-color': '#FFFFFF',
+    //     'fill-opacity': 0.2,
+    //   }
+    // })
 
-  // var tab = window.open('about:blank', '_blank');
-  // tab.document.write('<html><body><pre>' + JSON.stringify(region, null, 2) + '</pre></body></html>');
-  // tab.document.close();
-}
+    map.on('contextmenu', startDrawing)
 
-function DrawFilter({ map, options, onChangeSelectedData }) {
-  const canvasRef = useRef(null)
-  const { width, height } = map.getContainer().getBoundingClientRect()
-
-  useEffect(() => {
-    // https://stackoverflow.com/questions/2368784/draw-on-html5-canvas-using-a-mouse
-    const ctx = canvasRef.current.getContext('2d')
-
-    let drawing = false
-    let pos = { x: 0, y: 0 }
-    let points = []
-
-    canvasRef.current.addEventListener('mousedown', (e) => {
-      setPosition(e)
-      canvasRef.current.addEventListener('mousemove', draw)
-    });
-
-    canvasRef.current.addEventListener('mouseup', () => {
-      canvasRef.current.removeEventListener('mousemove', draw)
-      addPointsToMap(map, points, options, onChangeSelectedData)
-      ctx.clearRect(0, 0, width, height)
-      points = []
-    })
-
-    function setPosition(e) {
-      pos.x = e.offsetX;
-      pos.y = e.offsetY;
-      points.push({ ...pos })
+    return function cleanup() {
+      map.off('contextmenu', startDrawing)
+      map.removeLayer('draw/line')
+      map.removeSource('draw')
     }
-
-    function draw(e) {
-      // if (!drawing) return
-      // mouse left button must be pressed
-      if (e.buttons !== 1) return;
-
-      ctx.beginPath(); // begin
-
-      ctx.lineWidth = 3;
-      ctx.lineCap = 'round';
-      ctx.strokeStyle = 'red';
-
-      ctx.moveTo(pos.x, pos.y); // from
-      setPosition(e);
-      ctx.lineTo(pos.x, pos.y); // to
-
-      ctx.stroke(); // draw it!
-    }
-
-
   }, [])
 
   return (
@@ -107,6 +140,7 @@ function DrawFilter({ map, options, onChangeSelectedData }) {
         width: '100%',
         height: '100%',
         zIndex: 100,
+        pointerEvents: 'none'
       }}
     />
   )

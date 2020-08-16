@@ -62,9 +62,22 @@ export default function Visualization({ data }) {
             )
           case 'Drawn':
             return (
-              <>
-                <Box>Hand Drawn</Box>
-              </>
+              <Box
+                sx={{
+                  textDecoration: 'underline',
+                  cursor: 'pointer',
+                }}
+                onClick={() => {
+                  const tab = window.open('about:blank', '_blank')
+                  tab.document.write(
+                    '<html><body><pre>' +
+                      JSON.stringify(region.export, null, 2) +
+                    '</pre></body></html>'
+                  )
+                  tab.document.close()
+                }}>
+                Hand Drawn
+              </Box>
             )
           default:
             return null
