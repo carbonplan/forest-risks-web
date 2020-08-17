@@ -11,6 +11,7 @@ TODO: handle issues with stats calculation
 import { useRef, useEffect } from 'react'
 import { boundingBox } from '../../../geo-utils'
 import FilePicker from './file-picker'
+import * as turf from '@turf/turf'
 
 function FileFilter({ map, onChangeRegion = (region) => {}  }) {
   const onFile = ({ filename, content }) => {
@@ -25,7 +26,7 @@ function FileFilter({ map, onChangeRegion = (region) => {}  }) {
 
     const region = (() => {
       switch(content.type) {
-        case 'FeatureCollection': return content.features[0]
+        case 'FeatureCollection': return turf.combine(content).features[0]
         case 'Feature': return content
         default: return null
       }

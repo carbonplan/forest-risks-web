@@ -33,6 +33,7 @@
     "@theme-ui/color": "^0.3.1",
     "@turf/turf": "^5.1.6",
     "d3": "^5.16.0",
+    "geojson-dissolve": "^3.1.0",
     "mapbox-gl": "^1.11.1",
     "next": "^9.5.1",
     "react": "^16.13.1",
