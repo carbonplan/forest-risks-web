@@ -40,21 +40,7 @@ export default function Visualization({ data }) {
                 <Box>Radius: {region.radius.toFixed(2)} miles</Box>
               </>
             )
-          case 'Viewport':
-            return (
-              <>
-                <Box>Viewport</Box>
-                <Box>
-                  SW: {region.bounds[0][0].toFixed(8)} /{' '}
-                  {region.bounds[0][1].toFixed(8)}
-                </Box>
-                <Box>
-                  NE: {region.bounds[1][0].toFixed(8)} /{' '}
-                  {region.bounds[1][1].toFixed(8)}
-                </Box>
-              </>
-            )
-          case 'UserUploaded':
+          case 'File':
             return (
               <>
                 <Box>Filename: {region.filename}</Box>
@@ -78,6 +64,20 @@ export default function Visualization({ data }) {
                 }}>
                 Hand Drawn
               </Box>
+            )
+          case 'Viewport':
+            return (
+              <>
+                <Box>Viewport</Box>
+                <Box>
+                  SW: {region.bounds[0][0].toFixed(8)} /{' '}
+                  {region.bounds[0][1].toFixed(8)}
+                </Box>
+                <Box>
+                  NE: {region.bounds[1][0].toFixed(8)} /{' '}
+                  {region.bounds[1][1].toFixed(8)}
+                </Box>
+              </>
             )
           default:
             return null

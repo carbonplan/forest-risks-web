@@ -1,41 +1,42 @@
 import { useRef, useEffect } from 'react'
-import { IconButton, useThemeUI } from 'theme-ui'
 import { boundingBox } from '../../../geo-utils'
 
-const FileFilter = ({ map, onChangeRegion = (region) => {}  }) => {
+function FileFilter({ map, onChangeRegion = (region) => {}  }) {
   const inputRef = useRef(null)
 
-  const onChange = e => {
+  const onChange = (e) => {
     const file = e.target.files[0]
-    const { name: filename, size, type } = file
 
     const reader = new FileReader()
     reader.readAsText(file, 'UTF-8')
-    reader.onload = readerEvent => {
-      const content = readerEvent.target.result;
+    reader.onload = (readerEvent) => {
+      let content = readerEvent.target.result
 
-      // TODO: handle multiple features?
-      const region = JSON.parse(content).features[0]
-      region.properties = {
-        type: 'UserUploaded',
-        filename,
+      try {
+        content = JSON.parse(content)
+      } catch (e) {
+        console.log('parse error:', e)
+        return
       }
 
-      map.addSource(filename, {
-        type: 'geojson',
-        data: region,
-      })
+      if (!content || !content.type) return
 
-      map.addLayer({
-        id: `${filename}/line`,
-        source: filename,
-        type: 'line',
-        paint: {
-          'line-width': 3.0,
-          'line-color': '#FFF',
-        },
-      })
+      const region = (() => {
+        switch(content.type) {
+          case 'FeatureCollection': return content.features[0]
+          case 'Feature': return content
+          default: return null
+        }
+      })()
 
+      if (!region) return null
+
+      region.properties = {
+        type: 'File',
+        filename: file.name,
+      }
+
+      map.getSource('file').setData(region)
       map.fitBounds(boundingBox(region), { padding: 50 })
 
       /*
@@ -52,7 +53,27 @@ const FileFilter = ({ map, onChangeRegion = (region) => {}  }) => {
   }
 
   useEffect(() => {
+    map.addSource('file', {
+      type: 'geojson',
+      data: null,
+    })
+
+    map.addLayer({
+      id: 'file/line',
+      source: 'file',
+      type: 'line',
+      paint: {
+        'line-width': 3.0,
+        'line-color': '#FFF',
+      },
+    })
+
     inputRef.current.click()
+
+    return function cleanup() {
+      map.removeLayer('file/line')
+      map.removeSource('file')
+    }
   }, [])
 
   return (

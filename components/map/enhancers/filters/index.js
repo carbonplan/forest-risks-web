@@ -2,8 +2,9 @@ import { useRef, useState, useEffect } from 'react'
 import { Box } from 'theme-ui'
 import Button from './button'
 import CircleFilter from './circle-filter'
-import DrawFilter from './draw-filter'
 import FileFilter from './file-filter'
+import DrawFilter from './draw-filter'
+import ViewportFilter from './viewport-filter'
 import { getSelectedData } from './helpers'
 
 const FILTERS = [
@@ -44,39 +45,22 @@ const FILTERS = [
   {
     type: 'Viewport',
     svg: null,
-    Component: null,
+    Component: ViewportFilter,
     label: 'No filter',
   },
 ]
 
 function Filters({ map, options, onChangeSelectedData }) {
-  const initialized = useRef(false)
-
   const [activeFilter, setActiveFilter] = useState(FILTERS[0])
   const [region, setRegion] = useState(null)
-  const [bounds, setBounds] = useState(null)
 
   useEffect(() => {
-    // skip first run because circle isn't ready yet
-    if (!initialized.current) {
-      initialized.current = true
-      return
-    }
+    if (!region) return
 
     const layers = Object.keys(options).filter((key) => options[key])
     const selectedData = getSelectedData(map, layers, region)
     onChangeSelectedData(selectedData)
-  }, [options, region, bounds])
-
-  useEffect(() => {
-    if (region) return
-
-    const onMoveEnd = () => setBounds(map.getBounds())
-    map.on('moveend', onMoveEnd)
-    return function cleanup() {
-      map.off('moveend', onMoveEnd)
-    }
-  }, [region])
+  }, [options, region])
 
   const bottom = 68
   const activeFilterPos = (
@@ -86,7 +70,6 @@ function Filters({ map, options, onChangeSelectedData }) {
 
   return (
     <>
-
       {FILTERS.map((filter, idx) => {
         const { Component } = filter
         return (

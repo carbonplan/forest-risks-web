@@ -51,17 +51,17 @@ function getFilteredPoints(map, layer, selectedRegion) {
 // get metadata on the selectedRegion plus, for each layer, and array
 // of the points in the selectedRegion
 export function getSelectedData(map, layers, selectedRegion) {
+  if (!selectedRegion) return null
+  
   const selectedData = {
-    region: selectedRegion
-      ? selectedRegion.properties
-      : { type: 'Viewport', bounds: map.getBounds().toArray() },
+    region: selectedRegion.properties,
     points: {},
   }
 
   layers.forEach((layer) => {
-    let points = selectedRegion
-      ? getFilteredPoints(map, layer, selectedRegion)
-      : map.queryRenderedFeatures({ layers: [layer] }) // entire viewport
+    let points = selectedRegion.properties.type === 'Viewport'
+      ? map.queryRenderedFeatures({ layers: [layer] })
+      : getFilteredPoints(map, layer, selectedRegion)
 
     if (DEDUPE_ON_FILTER) points = dedupedPoints(points)
 

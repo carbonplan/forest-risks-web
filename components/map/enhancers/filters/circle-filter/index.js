@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-import CirclePicker from './circle-picker-geojson'
+import CirclePicker from './circle-picker-svg'
 import RadiusSlider from './radius-slider'
 import {
   INITIAL_RADIUS,
@@ -8,7 +8,7 @@ import {
   UPDATE_STATS_ON_ZOOM,
 } from '../../../settings'
 
-function CircleFilter({ map, onChangeRegion }) {
+function CircleFilter({ map, onChangeRegion = () => {} }) {
   const circleRef = useRef(null)
 
   const [circle, setCircle] = useState(null)
