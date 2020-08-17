@@ -60,10 +60,10 @@ function FilePicker({ map, onFile = () => {} }) {
       <Box
         sx={{
           fontFamily: 'faux',
-          fontSize: 20,
+          fontSize: 18,
           position: 'absolute',
-          top: 50,
-          left: 12,
+          top: 34,
+          left: 16,
           borderWidth: 2,
           borderColor: 'primary',
           borderStyle: 'solid',
@@ -73,20 +73,23 @@ function FilePicker({ map, onFile = () => {} }) {
           textAlign: 'center'
         }}
       >
-        <Box sx={{ marginBottom: 10 }}>Drag GeoJson Onto Map</Box>
-        <Box sx={{ marginBottom: 10 }}>OR</Box>
+        <Box>drag geojson file onto map</Box>
+        <Box sx={{ marginTop: 12 }}>OR</Box>
         <Button
           sx={{
-            fontSize: 16,
+            color: 'text',
+            fontSize: 18,
+            fontFamily: 'faux',
             backgroundColor: 'transparent',
             cursor: 'pointer',
-            borderWidth: 1,
+            borderWidth: 0,
             borderColor: 'primary',
             borderStyle: 'solid',
             borderRadius: 3,
+            textDecoration: 'underline',
           }}
           onClick={() => inputRef.current.click()}>
-          Select File
+          select file from hard drive
         </Button>
         <input
           ref={inputRef}
@@ -106,7 +109,7 @@ function FilePicker({ map, onFile = () => {} }) {
           right: 0,
           zIndex: 1,
           pointerEvents: 'none',
-          borderWidth: 3,
+          borderWidth: 4,
           borderStyle: 'dashed',
           borderColor: 'primary',
         }}
