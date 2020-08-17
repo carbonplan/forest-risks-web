@@ -7,7 +7,7 @@ import { INITIAL_CENTER, INITIAL_ZOOM } from './settings'
 
 mapboxgl.accessToken = ''
 
-function Map({ options, onChangeSelectedData = (selectedData) => {}, children }) {
+function Map({ options, onChangeSelectedData = (selectedData) => {} }) {
   const container = useRef(null)
   const [map, setMap] = useState(null)
 
@@ -42,7 +42,6 @@ function Map({ options, onChangeSelectedData = (selectedData) => {}, children })
           onChangeSelectedData={onChangeSelectedData}
         />
       )}
-      { children }
     </Box>
   )
 }

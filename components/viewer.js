@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Box, Flex } from 'theme-ui'
 import Sidebar from './sidebar'
-import Switch from './switch'
 import Map from './map'
 import Visualization from './visualization'
 
@@ -29,9 +28,7 @@ function Viewer() {
         <Sidebar options={options} setOptions={setOptions}>
           <Visualization data={selectedData} />
         </Sidebar>
-        <Map options={options} onChangeSelectedData={setSelectedData}>
-          <Switch />
-        </Map>
+        <Map options={options} onChangeSelectedData={setSelectedData} />
       </Flex>
     </Box>
   )

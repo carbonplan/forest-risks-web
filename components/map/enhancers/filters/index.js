@@ -20,8 +20,9 @@ const FILTERS = [
     type: 'File',
     svg: (
       <>
-        <circle cx='10' cy='10' r='3' />
-        <line x1='12' x2='17' y1='12' y2='17' />
+        <line x1='12' x2='12' y1='7' y2='18' />
+        <line x1='12' x2='6' y1='7' y2='12' />
+        <line x1='12' x2='18' y1='7' y2='12' />
       </>
     ),
     Component: null,
@@ -30,8 +31,8 @@ const FILTERS = [
     type: 'Draw',
     svg: (
       <>
-        <circle cx='10' cy='10' r='3' />
-        <line x1='12' x2='17' y1='12' y2='17' />
+        <line x1='12' x2='12' y1='6' y2='18' />
+        <line x1='6' x2='18' y1='12' y2='12' />
       </>
     ),
     Component: DrawFilter,
@@ -98,14 +99,14 @@ function Filters({ map, options, onChangeSelectedData }) {
           bottom: 92,
           height: 1,
           backgroundColor: 'secondary',
+          zIndex: 1,
         }}
       />
       {FILTERS.map((filter, idx) => {
         const { Component } = filter
         return (
-          <>
+          <Box key={filter.type}>
             <Button
-              key={filter.type}
               svg={filter.svg}
               onClick={() => setActiveFilter(filter)}
               active={activeFilter === filter}
@@ -122,7 +123,7 @@ function Filters({ map, options, onChangeSelectedData }) {
                 onChangeRegion={setRegion}
               />
             )}
-          </>
+          </Box>
         )
       })}
     </>

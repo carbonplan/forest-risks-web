@@ -5,6 +5,7 @@ import CircleFilter from './circle-filter'
 import UploadFilter from './upload-filter'
 import DrawFilter from './draw-filter'
 import Filters from './filters'
+import Switch from '../../switch'
 
 export default function Enhancers({ map, options, onChangeSelectedData }) {
   useTheme(map)
@@ -33,6 +34,7 @@ export default function Enhancers({ map, options, onChangeSelectedData }) {
         options={options}
         onChangeSelectedData={onChangeSelectedData}
       />
+      <Switch />
     </>
   )
 }
