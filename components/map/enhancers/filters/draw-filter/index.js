@@ -1,5 +1,7 @@
 import { useRef, useState, useEffect } from 'react'
 import * as turf from '@turf/turf'
+import Instructions from '../instructions'
+import { Box } from 'theme-ui'
 
 function addPointsToMap(map, points, cb = () => {}) {
   if (points.length < 4) return
@@ -124,21 +126,28 @@ function DrawFilter({ map, onChangeRegion }) {
   }, [])
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="draw-filter"
-      width={width}
-      height={height}
-      style={{
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        width: '100%',
-        height: '100%',
-        zIndex: 100,
-        pointerEvents: 'none'
-      }}
-    />
+    <>
+      <canvas
+        ref={canvasRef}
+        className="draw-filter"
+        width={width}
+        height={height}
+        style={{
+          position: 'absolute',
+          top: 0,
+          bottom: 0,
+          width: '100%',
+          height: '100%',
+          zIndex: 100,
+          pointerEvents: 'none'
+        }}
+      />
+      <Instructions>
+        <Box>right-click to start drawing</Box>
+        <Box sx={{ marginTop: 10 }}>AND</Box>
+        <Box sx={{ marginTop: 10 }}>click when you're done</Box>
+      </Instructions>
+    </>
   )
 }
 

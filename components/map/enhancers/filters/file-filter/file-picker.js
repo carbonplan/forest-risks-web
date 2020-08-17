@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from 'react'
 import { Box, Button } from 'theme-ui'
+import Instructions from '../instructions'
 
 function FilePicker({ map, onFile = () => {} }) {
   const inputRef = useRef(null)
@@ -57,22 +58,7 @@ function FilePicker({ map, onFile = () => {} }) {
 
   return (
     <>
-      <Box
-        sx={{
-          fontFamily: 'faux',
-          fontSize: 18,
-          position: 'absolute',
-          top: 34,
-          left: 16,
-          borderWidth: 2,
-          borderColor: 'primary',
-          borderStyle: 'solid',
-          borderRadius: 5,
-          backgroundColor: 'background',
-          padding: 10,
-          textAlign: 'center'
-        }}
-      >
+      <Instructions>
         <Box>drag geojson file onto map</Box>
         <Box sx={{ marginTop: 12 }}>OR</Box>
         <Button
@@ -97,7 +83,7 @@ function FilePicker({ map, onFile = () => {} }) {
           style={{ display: 'none' }}
           onChange={e => handleFile(e.target.files[0])}
         />
-      </Box>
+      </Instructions>
       <Box
         className="drop-indicator"
         sx={{
