@@ -14,6 +14,13 @@ import FilePicker from './file-picker'
 
 function FileFilter({ map, onChangeRegion = (region) => {}  }) {
   const onFile = ({ filename, content }) => {
+    try {
+      content = JSON.parse(content)
+    } catch (e) {
+      console.log('parse error:', e)
+      return
+    }
+
     if (!content || !content.type) return
 
     const region = (() => {
@@ -55,14 +62,13 @@ function FileFilter({ map, onChangeRegion = (region) => {}  }) {
     })
 
     return function cleanup() {
-      console.log('ccleanin')
       map.removeLayer('file/line')
       map.removeSource('file')
     }
   }, [])
 
   return (
-    <FilePicker onFile={onFile} />
+    <FilePicker map={map} onFile={onFile} />
   )
 }
 
