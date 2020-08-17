@@ -10,17 +10,19 @@ import { getSelectedData } from './helpers'
 const FILTERS = [
   {
     type: 'Circle',
+    Component: CircleFilter,
+    label: 'Circle filter',
     svg: (
       <>
         <circle cx='10' cy='10' r='3' />
         <line x1='12' x2='17' y1='12' y2='17' />
       </>
     ),
-    Component: CircleFilter,
-    label: 'Circle filter',
   },
   {
     type: 'File',
+    Component: FileFilter,
+    label: 'Upload geojson',
     svg: (
       <>
         <line x1='12' x2='12' y1='7' y2='18' />
@@ -28,25 +30,23 @@ const FILTERS = [
         <line x1='12' x2='18' y1='7' y2='12' />
       </>
     ),
-    Component: FileFilter,
-    label: 'Upload geojson',
   },
   {
     type: 'Draw',
+    Component: DrawFilter,
+    label: 'Draw filter',
     svg: (
       <>
         <line x1='12' x2='12' y1='6' y2='18' />
         <line x1='6' x2='18' y1='12' y2='12' />
       </>
     ),
-    Component: DrawFilter,
-    label: 'Draw filter',
   },
   {
     type: 'Viewport',
-    svg: null,
     Component: ViewportFilter,
     label: 'No filter',
+    svg: null,
   },
 ]
 
@@ -55,8 +55,6 @@ function Filters({ map, options, onChangeSelectedData }) {
   const [region, setRegion] = useState(null)
 
   useEffect(() => {
-    if (!region) return
-
     const layers = Object.keys(options).filter((key) => options[key])
     const selectedData = getSelectedData(map, layers, region)
     onChangeSelectedData(selectedData)
@@ -77,7 +75,7 @@ function Filters({ map, options, onChangeSelectedData }) {
             <Button
               svg={filter.svg}
               onClick={() => setActiveFilter(filter)}
-              active={activeFilter === filter}
+              active={filter === activeFilter}
               sx={{
                 position: 'absolute',
                 left: 12,
@@ -85,7 +83,7 @@ function Filters({ map, options, onChangeSelectedData }) {
                 zIndex: 1,
               }}
             />
-            {Component && activeFilter === filter && (
+            {filter === activeFilter && (
               <Component
                 map={map}
                 onChangeRegion={setRegion}
