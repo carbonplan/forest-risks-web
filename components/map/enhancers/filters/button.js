@@ -1,8 +1,8 @@
 import { IconButton } from 'theme-ui'
 
-const Button = ({ svg, onClick, sx, active }) => (
+const Button = ({ svg, onClick, sx, active, label }) => (
   <IconButton
-    aria-label='Toggle drawing'
+    aria-label={label}
     onClick={onClick}
     sx={sx}
   >

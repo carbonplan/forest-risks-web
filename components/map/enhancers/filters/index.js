@@ -3,6 +3,7 @@ import { Box } from 'theme-ui'
 import Button from './button'
 import CircleFilter from './circle-filter'
 import DrawFilter from './draw-filter'
+import FileFilter from './file-filter'
 import { getSelectedData } from './helpers'
 
 const FILTERS = [
@@ -15,6 +16,7 @@ const FILTERS = [
       </>
     ),
     Component: CircleFilter,
+    label: 'Circle filter',
   },
   {
     type: 'File',
@@ -25,7 +27,8 @@ const FILTERS = [
         <line x1='12' x2='18' y1='7' y2='12' />
       </>
     ),
-    Component: null,
+    Component: FileFilter,
+    label: 'Upload geojson',
   },
   {
     type: 'Draw',
@@ -36,11 +39,13 @@ const FILTERS = [
       </>
     ),
     Component: DrawFilter,
+    label: 'Draw filter',
   },
   {
     type: 'Viewport',
     svg: null,
     Component: null,
+    label: 'No filter',
   },
 ]
 
@@ -73,35 +78,15 @@ function Filters({ map, options, onChangeSelectedData }) {
     }
   }, [region])
 
-  console.log(FILTERS.indexOf(activeFilter))
-
   const bottom = 68
+  const activeFilterPos = (
+    FILTERS.length -
+    Math.max(FILTERS.indexOf(activeFilter), 0)
+  )
+
   return (
     <>
-      <Box
-        sx={{
-          position: 'absolute',
-          left: 46,
-          bottom: bottom + 12 + (36 * (FILTERS.length - Math.max(FILTERS.indexOf(activeFilter), 0))),
-          zIndex: 1,
-          borderRadius: '50%',
-          width: 8,
-          height: 8,
-          backgroundColor: 'cyan',
-          transition: 'bottom 0.25s',
-        }}
-      />
-      <Box
-        sx={{
-          position: 'absolute',
-          left: 20,
-          width: 16,
-          bottom: 92,
-          height: 1,
-          backgroundColor: 'secondary',
-          zIndex: 1,
-        }}
-      />
+
       {FILTERS.map((filter, idx) => {
         const { Component } = filter
         return (
@@ -126,6 +111,30 @@ function Filters({ map, options, onChangeSelectedData }) {
           </Box>
         )
       })}
+      <Box
+        sx={{
+          position: 'absolute',
+          left: 20,
+          width: 16,
+          bottom: 92,
+          height: 1,
+          backgroundColor: 'secondary',
+          zIndex: 1,
+        }}
+      />
+      <Box
+        sx={{
+          position: 'absolute',
+          left: 46,
+          bottom: bottom + 12 + (36 * activeFilterPos),
+          zIndex: 1,
+          borderRadius: '50%',
+          width: 8,
+          height: 8,
+          backgroundColor: 'cyan',
+          transition: 'bottom 0.25s',
+        }}
+      />
     </>
   )
 }
