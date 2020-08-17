@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-import CirclePicker from './circle-picker-svg'
+import CirclePicker from './circle-picker-geojson'
 import RadiusSlider from './radius-slider'
 import {
   INITIAL_RADIUS,

@@ -1,10 +1,7 @@
 import useOptions from './use-options'
 import useTheme from './use-theme'
-import { RulerButton } from './ruler'
-import CircleFilter from './circle-filter'
-import UploadFilter from './upload-filter'
-import DrawFilter from './draw-filter'
 import Filters from './filters'
+import { RulerButton } from './ruler'
 import Switch from '../../switch'
 
 export default function Enhancers({ map, options, onChangeSelectedData }) {
@@ -13,27 +10,12 @@ export default function Enhancers({ map, options, onChangeSelectedData }) {
 
   return (
     <>
-      <RulerButton map={map} />
-      {/*<CircleFilter
-        map={map}
-        options={options}
-        onChangeSelectedData={onChangeSelectedData}
-      />
-      <UploadFilter
-        map={map}
-        options={options}
-        onChangeSelectedData={onChangeSelectedData}
-      />*/}
-      {/*<DrawFilter
-        map={map}
-        options={options}
-        onChangeSelectedData={onChangeSelectedData}
-      />*/}
       <Filters
         map={map}
         options={options}
         onChangeSelectedData={onChangeSelectedData}
       />
+      <RulerButton map={map} />
       <Switch />
     </>
   )
