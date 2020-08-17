@@ -205,7 +205,7 @@ export const RulerButton = ({ map }) => {
       onClick={switchMode}
       sx={{
         position: 'absolute',
-        bottom: 12,
+        bottom: 48,
         left: 12,
         zIndex: 1,
       }}

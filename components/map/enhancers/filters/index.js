@@ -1,12 +1,12 @@
 import { useRef, useState, useEffect } from 'react'
+import { Box } from 'theme-ui'
 import Button from './button'
 import CircleFilter from './circle-filter'
 import DrawFilter from './draw-filter'
 import { getSelectedData } from './helpers'
 
-const FILTERS = {
-
-  circle: {
+const FILTERS = [
+  {
     type: 'Circle',
     svg: (
       <>
@@ -16,7 +16,7 @@ const FILTERS = {
     ),
     Component: CircleFilter,
   },
-  file: {
+  {
     type: 'File',
     svg: (
       <>
@@ -26,7 +26,7 @@ const FILTERS = {
     ),
     Component: null,
   },
-  draw: {
+  {
     type: 'Draw',
     svg: (
       <>
@@ -36,17 +36,17 @@ const FILTERS = {
     ),
     Component: DrawFilter,
   },
-  viewport: {
+  {
     type: 'Viewport',
     svg: null,
     Component: null,
   },
-}
+]
 
 function Filters({ map, options, onChangeSelectedData }) {
   const initialized = useRef(false)
 
-  const [activeFilter, setActiveFilter] = useState(FILTERS.circle)
+  const [activeFilter, setActiveFilter] = useState(FILTERS[0])
   const [region, setRegion] = useState(null)
   const [bounds, setBounds] = useState(null)
 
@@ -72,31 +72,61 @@ function Filters({ map, options, onChangeSelectedData }) {
     }
   }, [region])
 
-  return Object.keys(FILTERS).map((key, idx) => {
-    const { Component } = FILTERS[key]
-    return (
-      <>
-        <Button
-          key={key}
-          svg={FILTERS[key].svg}
-          onClick={() => setActiveFilter(FILTERS[key])}
-          active={activeFilter === FILTERS[key]}
-          sx={{
-            position: 'absolute',
-            left: 12,
-            bottom: 12 + (36 * (Object.keys(FILTERS).length - idx)),
-            zIndex: 1,
-          }}
-        />
-        {Component && activeFilter === FILTERS[key] && (
-          <Component
-            map={map}
-            onChangeRegion={setRegion}
-          />
-        )}
-      </>
-    )
-  })
+  console.log(FILTERS.indexOf(activeFilter))
+
+  const bottom = 68
+  return (
+    <>
+      <Box
+        sx={{
+          position: 'absolute',
+          left: 46,
+          bottom: bottom + 12 + (36 * (FILTERS.length - Math.max(FILTERS.indexOf(activeFilter), 0))),
+          zIndex: 1,
+          borderRadius: '50%',
+          width: 8,
+          height: 8,
+          backgroundColor: 'cyan',
+          transition: 'bottom 0.25s',
+        }}
+      />
+      <Box
+        sx={{
+          position: 'absolute',
+          left: 20,
+          width: 16,
+          bottom: 92,
+          height: 1,
+          backgroundColor: 'secondary',
+        }}
+      />
+      {FILTERS.map((filter, idx) => {
+        const { Component } = filter
+        return (
+          <>
+            <Button
+              key={filter.type}
+              svg={filter.svg}
+              onClick={() => setActiveFilter(filter)}
+              active={activeFilter === filter}
+              sx={{
+                position: 'absolute',
+                left: 12,
+                bottom: bottom + (36 * (FILTERS.length - idx)),
+                zIndex: 1,
+              }}
+            />
+            {Component && activeFilter === filter && (
+              <Component
+                map={map}
+                onChangeRegion={setRegion}
+              />
+            )}
+          </>
+        )
+      })}
+    </>
+  )
 }
 
 export default Filters
