@@ -4,6 +4,7 @@ import { RulerButton } from './ruler'
 import CircleFilter from './circle-filter'
 import UploadFilter from './upload-filter'
 import DrawFilter from './draw-filter'
+import Filters from './filters'
 
 export default function Enhancers({ map, options, onChangeSelectedData }) {
   useTheme(map)
@@ -22,7 +23,12 @@ export default function Enhancers({ map, options, onChangeSelectedData }) {
         options={options}
         onChangeSelectedData={onChangeSelectedData}
       />*/}
-      <DrawFilter
+      {/*<DrawFilter
+        map={map}
+        options={options}
+        onChangeSelectedData={onChangeSelectedData}
+      />*/}
+      <Filters
         map={map}
         options={options}
         onChangeSelectedData={onChangeSelectedData}
