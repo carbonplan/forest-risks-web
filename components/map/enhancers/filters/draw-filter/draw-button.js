@@ -1,12 +1,12 @@
 import { IconButton } from 'theme-ui'
 
-const CircleButton = ({ onClick }) => (
+const DrawButton = ({ onClick }) => (
   <IconButton
-    aria-label='Toggle circle picker'
+    aria-label='Toggle drawing'
     onClick={onClick}
     sx={{
       position: 'absolute',
-      bottom: 84,
+      bottom: 48,
       left: 12,
       zIndex: 1,
     }}
@@ -20,10 +20,10 @@ const CircleButton = ({ onClick }) => (
       fill='none'
     >
       <circle cx='12' cy='12' r='10' />
-      <circle cx='10' cy='10' r='3' />
-      <line x1='12' x2='17' y1='12' y2='17' />
+      <line x1='6' x2='18' y1='12' y2='12' />
+      <line x1='12' x2='12' y1='6' y2='18' />
     </svg>
   </IconButton>
 )
 
-export default CircleButton
+export default DrawButton

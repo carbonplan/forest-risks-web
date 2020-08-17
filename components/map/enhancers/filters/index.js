@@ -1,12 +1,15 @@
 import { useRef, useState, useEffect } from 'react'
 import CircleButton from './circle-filter/circle-button'
 import CircleFilter from './circle-filter'
+import DrawButton from './draw-filter/draw-button'
+import DrawFilter from './draw-filter'
 import { getSelectedData } from './helpers'
 
 function Filters({ map, options, onChangeSelectedData }) {
   const initialized = useRef(false)
-  
+
   const [showCircle, setShowCircle] = useState(true)
+  const [showDraw, setShowDraw] = useState(false)
   const [bounds, setBounds] = useState(null)
   const [region, setRegion] = useState(null)
 
@@ -39,10 +42,25 @@ function Filters({ map, options, onChangeSelectedData }) {
         onClick={() => {
           if (showCircle) setRegion(null)
           setShowCircle(!showCircle)
+          setShowDraw(false)
+        }}
+      />
+      <DrawButton
+        map={map}
+        onClick={() => {
+          if (showDraw) setRegion(null)
+          setShowDraw(!showDraw)
+          setShowCircle(false)
         }}
       />
       {showCircle && (
         <CircleFilter
+          map={map}
+          onChangeRegion={setRegion}
+        />
+      )}
+      {showDraw && (
+        <DrawFilter
           map={map}
           onChangeRegion={setRegion}
         />
