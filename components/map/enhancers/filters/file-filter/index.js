@@ -1,3 +1,13 @@
+/*
+TODO: handle issues with stats calculation
+  1. takes a long time
+    - may need to simplify geojson somehow
+  2. queryRenderedFeatures still returns data even if you zoom in
+  really far and there are no points
+    - may need to find the smaller of the two bounding boxes in getSelectedData:
+    (1) the bbox of the region, and (2) the bbox of the viewport
+*/
+
 import { useRef, useEffect } from 'react'
 import { boundingBox } from '../../../geo-utils'
 import FilePicker from './file-picker'
@@ -23,16 +33,6 @@ function FileFilter({ map, onChangeRegion = (region) => {}  }) {
 
     map.getSource('file').setData(region)
     map.fitBounds(boundingBox(region), { padding: 50 })
-
-    /*
-    TODO: handle issues with stats calculation
-      1. takes a long time
-        - may need to simplify geojson somehow
-      2. queryRenderedFeatures still returns data even if you zoom in
-      really far and there are no points
-        - may need to find the smaller of the two bounding boxes in getSelectedData:
-        (1) the bbox of the region, and (2) the bbox of the viewport
-    */
     map.once('moveend', () => onChangeRegion(region))
   }
 
@@ -55,6 +55,7 @@ function FileFilter({ map, onChangeRegion = (region) => {}  }) {
     })
 
     return function cleanup() {
+      console.log('ccleanin')
       map.removeLayer('file/line')
       map.removeSource('file')
     }

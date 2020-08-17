@@ -51,7 +51,7 @@ const FILTERS = [
 ]
 
 function Filters({ map, options, onChangeSelectedData }) {
-  const [activeFilter, setActiveFilter] = useState(FILTERS[0])
+  const [activeFilter, setActiveFilter] = useState(FILTERS[1])
   const [region, setRegion] = useState(null)
 
   useEffect(() => {
