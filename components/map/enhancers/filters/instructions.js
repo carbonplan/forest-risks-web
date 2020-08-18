@@ -15,7 +15,9 @@ export default function Instructions({ children }) {
         borderRadius: 5,
         backgroundColor: 'background',
         padding: 14,
-        textAlign: 'center'
+        textAlign: 'center',
+        zIndex: 2,
+        userSelect: 'none',
       }}
     >
       { children }

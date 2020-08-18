@@ -7,6 +7,8 @@ function FilePicker({ map, onFile = () => {} }) {
   const [dragging, setDragging] = useState(false)
 
   const handleFile = file => {
+    if (!(file instanceof Blob)) return
+
     const reader = new FileReader()
     reader.readAsText(file, 'UTF-8')
     reader.onload = (readerEvent) => {
@@ -84,22 +86,23 @@ function FilePicker({ map, onFile = () => {} }) {
           onChange={e => handleFile(e.target.files[0])}
         />
       </Instructions>
-      <Box
-        className="drop-indicator"
-        sx={{
-          display: dragging ? 'block' : 'none',
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          bottom: 0,
-          right: 0,
-          zIndex: 1,
-          pointerEvents: 'none',
-          borderWidth: 4,
-          borderStyle: 'dashed',
-          borderColor: 'primary',
-        }}
-      />
+      {dragging && (
+        <Box
+          className="drop-indicator"
+          sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+            zIndex: 1,
+            pointerEvents: 'none',
+            borderWidth: 4,
+            borderStyle: 'dashed',
+            borderColor: 'primary',
+          }}
+        />
+      )}
     </>
   )
 }

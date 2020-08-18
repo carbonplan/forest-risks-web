@@ -12,6 +12,7 @@ const Button = ({ svg, onClick, sx, active, label }) => (
       width='24'
       height='24'
       strokeWidth='1.75'
+      stroke={active ? 'cyan' : undefined}
       fill='none'
     >
       <circle cx='12' cy='12' r='10' />

@@ -145,7 +145,7 @@ function DrawFilter({ map, onChangeRegion }) {
       <Instructions>
         <Box>right-click to start drawing</Box>
         <Box sx={{ marginTop: 10 }}>AND</Box>
-        <Box sx={{ marginTop: 10 }}>click when you're done</Box>
+        <Box sx={{ marginTop: 10, marginBottom: '4px' }}>click when you're done</Box>
       </Instructions>
     </>
   )
