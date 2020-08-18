@@ -1,25 +1,33 @@
 import { Box } from 'theme-ui'
 import { useState, useRef, useEffect } from 'react'
 
-export default function Toolbar({ children }) {
+export default function Toolbar({ map, children }) {
   const boxRef = useRef(null)
 
-  const [top, setTop] = useState(null)
+  const [bottom, setBottom] = useState(100)
   const [moving, setMoving] = useState(false)
 
   const onMouseDown = e => {
-    let offset = e.offsetY
-    const { height } = boxRef.current.getBoundingClientRect()
+    const mapContainer = map.getContainer()
+    const { height: toolbarHeight } = boxRef.current.getBoundingClientRect()
+    const { height: mapHeight } = mapContainer.getBoundingClientRect()
+    const offset = e.offsetY
 
-    const onMouseMove = (e) => setTop(e.clientY - offset)
+    const onMouseMove = (e) => {
+      let bottom = mapHeight - e.clientY - toolbarHeight + offset
+      if (bottom < 0) bottom = 0
+      if (bottom > mapHeight - toolbarHeight) bottom = mapHeight - toolbarHeight
+      setBottom(bottom)
+    }
 
     const onMouseUp = (e) => {
-      window.removeEventListener('mousemove', onMouseMove)
+      mapContainer.removeEventListener('mousemove', onMouseMove)
       setMoving(false)
     }
 
-    window.addEventListener('mousemove', onMouseMove)
-    window.addEventListener('mouseup', onMouseUp, { once: true })
+    mapContainer.addEventListener('mousemove', onMouseMove)
+    mapContainer.addEventListener('mouseup', onMouseUp, { once: true })
+    mapContainer.addEventListener('mouseleave', onMouseUp, { once: true })
     setMoving(true)
   }
 
@@ -27,9 +35,9 @@ export default function Toolbar({ children }) {
     <Box
       sx={{
         position: 'absolute',
-        top: top !== null ? `${top}px` : '60%',
+        bottom: `${bottom}px`,
         left: 0,
-        zIndex: 100,
+        zIndex: 2,
       }}
     >
       <Box

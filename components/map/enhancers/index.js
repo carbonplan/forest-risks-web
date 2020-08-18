@@ -21,7 +21,7 @@ export default function Enhancers({ map, options, onChangeSelectedData }) {
         onChangeSelectedData={onChangeSelectedData}
         activeFilter={activeFilter}
       />
-      <Toolbar>
+      <Toolbar map={map}>
         <FilterButtons
           activeFilter={activeFilter}
           onChangeActiveFilter={setActiveFilter}
