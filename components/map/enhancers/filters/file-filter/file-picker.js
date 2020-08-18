@@ -19,6 +19,14 @@ function FilePicker({ map, onFile = () => {} }) {
     }
   }
 
+  const handlePaste = async () => {
+    const text = await navigator.clipboard.readText()
+    onFile({
+      filename: 'clipboard',
+      content: text,
+    })
+  }
+
   useEffect(() => {
     const container = map.getContainer()
     const listeners = []
@@ -58,26 +66,34 @@ function FilePicker({ map, onFile = () => {} }) {
     }
   }, [])
 
+  const buttonStyles = {
+    color: 'text',
+    fontSize: 18,
+    fontFamily: 'faux',
+    backgroundColor: 'transparent',
+    cursor: 'pointer',
+    borderWidth: 0,
+    borderColor: 'primary',
+    borderStyle: 'solid',
+    borderRadius: 3,
+    textDecoration: 'underline',
+  }
+
   return (
     <>
       <Instructions>
         <Box>drag geojson file onto map</Box>
         <Box sx={{ marginTop: 12 }}>OR</Box>
         <Button
-          sx={{
-            color: 'text',
-            fontSize: 18,
-            fontFamily: 'faux',
-            backgroundColor: 'transparent',
-            cursor: 'pointer',
-            borderWidth: 0,
-            borderColor: 'primary',
-            borderStyle: 'solid',
-            borderRadius: 3,
-            textDecoration: 'underline',
-          }}
+          sx={buttonStyles}
           onClick={() => inputRef.current.click()}>
           select file from hard drive
+        </Button>
+        <Box sx={{ marginTop: '8px' }}>OR</Box>
+        <Button
+          sx={buttonStyles}
+          onClick={handlePaste}>
+          paste from the clipboard
         </Button>
         <input
           ref={inputRef}
