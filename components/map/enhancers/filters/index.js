@@ -59,59 +59,26 @@ export function Filters({ map, options, onChangeSelectedData, activeFilter }) {
     onChangeSelectedData(selectedData)
   }, [options, region])
 
-  return (
-    <>
-      {FILTERS.map((filter, idx) => {
-        const { Component } = filter
-        return filter === activeFilter
-          ? (
-            <Component
-              key={idx}
-              map={map}
-              onChangeRegion={setRegion}
-            />
-          ) : null
-      })}
-    </>
-  )
+  return FILTERS.map((filter) => {
+    const { Component } = filter
+    return filter === activeFilter
+      ? (
+        <Component
+          key={filter.type}
+          map={map}
+          onChangeRegion={setRegion}
+        />
+      ) : null
+  })
 }
 
 export function FilterButtons({ activeFilter, onChangeActiveFilter }) {
-  const bottom = 68
-  const activeFilterPos = (
-    FILTERS.length -
-    Math.max(FILTERS.indexOf(activeFilter), 0)
-  )
-
-  return (
-    <>
-      {FILTERS.map((filter, idx) => (
-        <Button
-          key={filter.type}
-          svg={filter.svg}
-          onClick={() => onChangeActiveFilter(filter)}
-          active={filter === activeFilter}
-          sx={{
-            position: 'absolute',
-            left: 12,
-            bottom: bottom + (36 * (FILTERS.length - idx)),
-            zIndex: 1,
-          }}
-        />
-      ))}
-      {/*<Box
-        sx={{
-          position: 'absolute',
-          left: 46,
-          bottom: bottom + 12 + (36 * activeFilterPos),
-          zIndex: 1,
-          borderRadius: '50%',
-          width: 8,
-          height: 8,
-          backgroundColor: 'cyan',
-          transition: 'bottom 0.25s',
-        }}
-      />*/}
-    </>
-  )
+  return FILTERS.map((filter) => (
+    <Button
+      key={filter.type}
+      svg={filter.svg}
+      onClick={() => onChangeActiveFilter(filter)}
+      active={filter === activeFilter}
+    />
+  ))
 }

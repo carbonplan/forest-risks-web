@@ -26,12 +26,6 @@ const Switch = (props) => {
     <IconButton
       aria-label='Toggle dark mode'
       onClick={() => toggle()}
-      sx={{
-        position: 'absolute',
-        left: 12,
-        bottom: '12px !important',
-        zIndex: 1,
-      }}
     >
       <svg
         xmlns='http://www.w3.org/2000/svg'

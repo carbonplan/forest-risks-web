@@ -203,12 +203,6 @@ export const RulerButton = ({ map }) => {
     <IconButton
       aria-label='Switch ruler mode'
       onClick={switchMode}
-      sx={{
-        position: 'absolute',
-        bottom: 48,
-        left: 12,
-        zIndex: 1,
-      }}
     >
       <svg
         xmlns='http://www.w3.org/2000/svg'
