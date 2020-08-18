@@ -2,22 +2,23 @@ import { Box } from 'theme-ui'
 import { useState, useRef, useEffect } from 'react'
 
 export default function Toolbar({ map, children }) {
-  const boxRef = useRef(null)
+  const toolbar = useRef(null)
 
-  const [bottom, setBottom] = useState(100)
+  const [position, setPosition] = useState('left')
+  const [edge, setEdge] = useState(50)
   const [moving, setMoving] = useState(false)
 
   const onMouseDown = e => {
     const mapContainer = map.getContainer()
-    const { height: toolbarHeight } = boxRef.current.getBoundingClientRect()
+    const { height: toolbarHeight } = toolbar.current.getBoundingClientRect()
     const { height: mapHeight } = mapContainer.getBoundingClientRect()
     const offset = e.offsetY
 
     const onMouseMove = (e) => {
-      let bottom = mapHeight - e.clientY - toolbarHeight + offset
-      if (bottom < 0) bottom = 0
-      if (bottom > mapHeight - toolbarHeight) bottom = mapHeight - toolbarHeight
-      setBottom(bottom)
+      let edge = mapHeight - e.clientY - toolbarHeight + offset
+      if (edge < 0) edge = 0
+      if (edge > mapHeight - toolbarHeight) edge = mapHeight - toolbarHeight
+      setEdge(edge)
     }
 
     const onMouseUp = (e) => {
@@ -31,17 +32,67 @@ export default function Toolbar({ map, children }) {
     setMoving(true)
   }
 
+  const styles = (() => {
+    switch(position) {
+      case 'left': return {
+        guide: {
+          left: 0,
+          bottom: `${edge}px`,
+        },
+        outer: {
+          borderBottomWidth: 1,
+          borderLeftWidth: 0,
+          borderBottomRightRadius: 5,
+        },
+        inner: {
+          flexDirection: 'column',
+        },
+        button: {
+          marginTop: '2px',
+          marginBottom: '2px',
+        },
+        divider: {
+          width: 16,
+          height: 1,
+          margin: '8px 0',
+        },
+      }
+      case 'bottom': return {
+        guide: {
+          left: `${edge}px`,
+          bottom: 0,
+        },
+        outer: {
+          borderBottomWidth: 0,
+          borderLeftWidth: 1,
+          borderTopLeftRadius: 5,
+        },
+        inner: {
+          flexDirection: 'row',
+        },
+        button: {
+          marginLeft: '2px',
+          marginRight: '2px',
+        },
+        divider: {
+          width: 1,
+          height: 16,
+          margin: '0 8px',
+        },
+      }
+    }
+  })()
+
   return (
     <Box
       sx={{
         position: 'absolute',
-        bottom: `${bottom}px`,
-        left: 0,
         zIndex: 2,
+        ...styles.guide,
       }}
     >
       <Box
-        ref={boxRef}
+        ref={toolbar}
         onMouseDown={e => {
           if (e.defaultPrevented) return
           onMouseDown(e.nativeEvent)
@@ -49,26 +100,26 @@ export default function Toolbar({ map, children }) {
         sx={{
           backgroundColor: 'background',
           borderTopRightRadius: 5,
-          borderBottomRightRadius: 5,
           borderTopWidth: 1,
-          borderBottomWidth: 1,
           borderRightWidth: 1,
-          borderLeftWidth: 0,
           borderStyle: 'solid',
           borderColor: 'muted',
           cursor: moving ? 'grabbing' : 'grab',
           padding: '12px',
+          ...styles.outer,
         }}
       >
         <Box
           onMouseDown={e => e.preventDefault()}
           sx={{
             display: 'flex',
-            flexDirection: 'column',
-            textAlign: 'center',
+            alignItems: 'center',
+            ...styles.inner,
             '& > button': {
-              marginTop: '2px',
-              marginBottom: '2px',
+              ...styles.button,
+            },
+            '& > .divider': {
+              ...styles.divider,
             },
           }}
         >
@@ -82,12 +133,8 @@ export default function Toolbar({ map, children }) {
 export function Divider() {
   return (
     <Box
-      sx={{
-        width: 16,
-        height: 1,
-        backgroundColor: 'secondary',
-        margin: '8px auto',
-      }}
+      className="divider"
+      sx={{ backgroundColor: 'secondary' }}
     />
   )
 }
