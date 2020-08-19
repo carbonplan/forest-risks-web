@@ -23,6 +23,9 @@ function Viewer() {
           top: 0,
           bottom: 0,
           flexDirection: ['column', 'row', 'row'],
+          '*': {
+            userSelect: 'none'
+          }
         }}
       >
         <Sidebar options={options} setOptions={setOptions}>

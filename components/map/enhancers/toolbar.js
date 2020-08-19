@@ -114,6 +114,7 @@ export default function Toolbar({ map, children }) {
           sx={{
             display: 'flex',
             alignItems: 'center',
+            position: 'relative',
             ...styles.inner,
             '& > button': {
               ...styles.button,
@@ -123,7 +124,19 @@ export default function Toolbar({ map, children }) {
             },
           }}
         >
-          { children }
+          {children}
+          {moving && (
+            <Box
+              className="mouse-blocker"
+              sx={{
+                position: 'absolute',
+                top: 0,
+                bottom: 0,
+                left: 0,
+                right: 0,
+              }}
+            />
+          )}
         </Box>
       </Box>
     </Box>
