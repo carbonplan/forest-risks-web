@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from 'react'
 import * as turf from '@turf/turf'
 import Instructions from '../instructions'
-import { Box } from 'theme-ui'
+import { Box, useThemeUI } from 'theme-ui'
 
 function addPointsToMap(map, points, cb = () => {}) {
   if (points.length < 4) return
@@ -23,18 +23,74 @@ function addPointsToMap(map, points, cb = () => {}) {
 
 function DrawFilter({ map, onChangeRegion }) {
   const canvasRef = useRef(null)
-  const mapCanvas = map.getCanvas()
-  const originalCursorStyle = mapCanvas.style.cursor
-  const { width, height } = mapCanvas.getBoundingClientRect()
+  const context = useThemeUI()
+  const ctx = useState(null)
+  const [bounds, setBounds] = useState(map.getCanvas().getBoundingClientRect())
 
-  useEffect(() => {
+  useEffect(function init() {
     onChangeRegion(null)
+
+    map.addSource('draw', {
+      type: 'geojson',
+      data: null,
+    })
+
+    map.addLayer({
+      id: 'draw/line',
+      source: 'draw',
+      type: 'line',
+      paint: {
+        'line-width': 3.0,
+      },
+    })
+
+    // map.addSource('draw-mask', {
+    //   type: 'geojson',
+    //   data: null,
+    // })
+    //
+    // map.addLayer({
+    //   id: 'draw-mask/fill',
+    //   source: 'draw-mask',
+    //   type: 'fill',
+    //   paint: {
+    //     'fill-color': '#FFFFFF',
+    //     'fill-opacity': 0.2,
+    //   }
+    // })
+
+    const onResize = () => {
+      setBounds(map.getCanvas().getBoundingClientRect())
+    }
+
+    map.on('resize', onResize)
+
+    return function cleanup() {
+      map.off('resize', onResize)
+      map.removeLayer('draw/line')
+      map.removeSource('draw')
+    }
+  }, [])
+
+  useEffect(function setLineColor() {
+    map.setPaintProperty(
+      'draw/line',
+      'line-color',
+      context.theme.colors.primary
+    )
+  }, [context])
+
+  useEffect(function addDrawListeners() {
+    if (!bounds) return
 
     // https://stackoverflow.com/questions/2368784/draw-on-html5-canvas-using-a-mouse
     const ctx = canvasRef.current.getContext('2d')
     ctx.lineWidth = 3
     ctx.lineCap = 'round'
-    ctx.strokeStyle = 'red'
+    ctx.strokeStyle = context.theme.colors.primary
+
+    const mapCanvas = map.getCanvas()
+    const originalCursorStyle = mapCanvas.style.cursor
 
     let drawing = false
     let initialPos
@@ -65,7 +121,7 @@ function DrawFilter({ map, onChangeRegion }) {
       mapCanvas.style.cursor = originalCursorStyle
       draw(initialPos)
       addPointsToMap(map, points, (region) => {
-        ctx.clearRect(0, 0, width, height)
+        ctx.clearRect(0, 0, bounds.width, bounds.height)
         onChangeRegion(region)
       })
       points = []
@@ -86,59 +142,27 @@ function DrawFilter({ map, onChangeRegion }) {
       map.on('contextmenu', stopDrawing)
     }
 
-    map.addSource('draw', {
-      type: 'geojson',
-      data: null,
-    })
-
-    map.addLayer({
-      id: 'draw/line',
-      source: 'draw',
-      type: 'line',
-      paint: {
-        'line-width': 3.0,
-        'line-color': '#FFFFFF',
-      },
-    })
-
-    // map.addSource('draw-mask', {
-    //   type: 'geojson',
-    //   data: null,
-    // })
-    //
-    // map.addLayer({
-    //   id: 'draw-mask/fill',
-    //   source: 'draw-mask',
-    //   type: 'fill',
-    //   paint: {
-    //     'fill-color': '#FFFFFF',
-    //     'fill-opacity': 0.2,
-    //   }
-    // })
-
     map.on('contextmenu', startDrawing)
 
     return function cleanup() {
       map.off('contextmenu', startDrawing)
-      map.removeLayer('draw/line')
-      map.removeSource('draw')
     }
-  }, [])
+  }, [bounds, context])
 
   return (
     <>
       <canvas
         ref={canvasRef}
         className="draw-filter"
-        width={width}
-        height={height}
+        width={bounds.width}
+        height={bounds.height}
         style={{
           position: 'absolute',
           top: 0,
           bottom: 0,
           width: '100%',
           height: '100%',
-          zIndex: 100,
+          zIndex: 1,
           pointerEvents: 'none'
         }}
       />
