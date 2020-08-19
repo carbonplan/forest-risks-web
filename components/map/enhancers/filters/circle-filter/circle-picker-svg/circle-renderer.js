@@ -1,4 +1,4 @@
-import * as geo from '../../../../geo-utils'
+import * as geo from '@utils'
 import CursorManager from './cursor-manager'
 import * as d3 from 'd3'
 import * as turf from '@turf/turf'

@@ -3,7 +3,7 @@ import { Box } from 'theme-ui'
 import mapboxgl from 'mapbox-gl'
 import style from './style'
 import Enhancers from './enhancers'
-import { INITIAL_CENTER, INITIAL_ZOOM } from './settings'
+import { INITIAL_CENTER, INITIAL_ZOOM } from '@constants'
 
 mapboxgl.accessToken = ''
 

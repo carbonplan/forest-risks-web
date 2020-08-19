@@ -1,5 +1,5 @@
-import { isPointInPolygon, boundingBox } from '../../geo-utils'
-import { DEDUPE_ON_FILTER } from '../../settings'
+import { isPointInPolygon, boundingBox } from '@utils'
+import { DEDUPE_ON_FILTER } from '@constants'
 
 // dedupe points by lat and lon
 function dedupedPoints(points) {
@@ -52,7 +52,7 @@ function getFilteredPoints(map, layer, selectedRegion) {
 // of the points in the selectedRegion
 export function getSelectedData(map, layers, selectedRegion) {
   if (!selectedRegion) return null
-  
+
   const selectedData = {
     region: selectedRegion.properties,
     points: {},

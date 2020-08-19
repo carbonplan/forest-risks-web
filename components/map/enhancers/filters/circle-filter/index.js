@@ -6,7 +6,7 @@ import {
   INITIAL_ZOOM,
   UPDATE_STATS_ON_DRAG,
   UPDATE_STATS_ON_ZOOM,
-} from '../../../settings'
+} from '@constants'
 
 function CircleFilter({ map, onChangeRegion = () => {} }) {
   const circleRef = useRef(null)

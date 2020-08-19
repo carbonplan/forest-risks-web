@@ -9,7 +9,7 @@ TODO: handle issues with stats calculation
 */
 
 import { useRef, useEffect } from 'react'
-import { boundingBox } from '../../../geo-utils'
+import { boundingBox } from '@utils'
 import FilePicker from './file-picker'
 import * as turf from '@turf/turf'
 
