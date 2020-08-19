@@ -13,6 +13,7 @@ function CircleFilter({ map, onChangeRegion = () => {} }) {
 
   const [circle, setCircle] = useState(null)
   const [zoom, setZoom] = useState(map.getZoom())
+  const [center, setCenter] = useState(map.getCenter())
   const [radius, setRadius] = useState(INITIAL_RADIUS)
 
   // add zoom handler
@@ -40,7 +41,7 @@ function CircleFilter({ map, onChangeRegion = () => {} }) {
       />
       <CirclePicker
         map={map}
-        center={map.getCenter()}
+        center={center}
         radius={radius}
         onSetRadius={(circle) => (circleRef.current = circle)}
         onDrag={(circle) => {
