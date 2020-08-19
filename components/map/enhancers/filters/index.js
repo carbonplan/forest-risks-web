@@ -59,17 +59,14 @@ export function Filters({ map, options, onChangeSelectedData, activeFilter }) {
     onChangeSelectedData(selectedData)
   }, [options, region])
 
-  return FILTERS.map((filter) => {
-    const { Component } = filter
-    return filter === activeFilter
-      ? (
-        <Component
-          key={filter.type}
-          map={map}
-          onChangeRegion={setRegion}
-        />
-      ) : null
-  })
+  const { Component } = activeFilter
+
+  return (
+    <Component
+      map={map}
+      onChangeRegion={setRegion}
+    />
+  )
 }
 
 export function FilterButtons({ activeFilter, onChangeActiveFilter }) {
