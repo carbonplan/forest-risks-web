@@ -10,18 +10,6 @@ we need to refilter all of the points every time the mouse moves.
 export const UPDATE_STATS_ON_DRAG = false
 
 /*
-Set to true to update the sidebar stats when zoom changes.
-
-If true, the sidebar stats are always consistent with the vector source
-data (which changes based on zoom level). This solves the problem of
-the occasional inconsistency between what you see in the circle and what's
-shown in the sidebar. But it creates a different problem: the averages (and
-counts) in the sidebar change based on zoom level, which doesn't really
-make sense.
-*/
-export const UPDATE_STATS_ON_ZOOM = true
-
-/*
 Set to true to deduplicate points when filtering. This addresses mapbox's
 caveat about duplication in their docs on queryRenderedFeatures and
 querySourceFeatures. (https://docs.mapbox.com/mapbox-gl-js/api/map/#map).
@@ -39,5 +27,5 @@ export const DEDUPE_ON_FILTER = false
 // circle filter
 export const FLOATING_HANDLE = true
 export const SHOW_RADIUS_GUIDELINE = true
-export const CIRCLE_STICKS_TO_CENTER = false
+export const CIRCLE_STICKS_TO_CENTER = true
 export const SHOW_CIRCLE_XY = false

@@ -28,23 +28,45 @@ uses querySourceFeatures.
 
 ////////////// queryRenderedFeatures ////////////////
 
-// convert a lng/lat bounding box to x/y coords
-function bboxToScreenCoords(map, bbox) {
-  const southWest = map.project(bbox[0])
-  const northEast = map.project(bbox[1])
-  return [
-    [southWest.x, southWest.y],
-    [northEast.x, northEast.y],
-  ]
+// convert a lng/lat box to x/y coords
+function geoBoxToScreenBox(map, geoBox) {
+  const southWest = map.project(geoBox[0])
+  const northEast = map.project(geoBox[1])
+  return [[
+    southWest.x,
+    southWest.y
+  ], [
+    northEast.x,
+    northEast.y,
+  ]]
 }
 
-// First filter points by putting a bounding box around the selectedRegion
-// and using it in queryRenderedFeatures. Then filter again by checking
-// whether each point is in the selectedRegion.
+// clamp screenBox to boundaries of viewport
+function clampedScreenBox(map, screenBox) {
+  const { width, height } = map.getContainer().getBoundingClientRect()
+  return [[
+    Math.max(screenBox[0][0], 0),
+    Math.min(screenBox[0][1], height),
+  ], [
+    Math.min(screenBox[1][0], width),
+    Math.max(screenBox[1][1], 0),
+  ]]
+}
+
+/*
+First filter points by putting a bounding box around the selectedRegion
+and using it in queryRenderedFeatures. (The function requires an x/y
+bounding box, not a lngLat bounding box. And that box has to be clamped
+to the size of the viewport, otherwise queryRenderedFeatures will sometimes
+-- but not always -- include points that are outside the visible area).
+
+Then filter again by checking whether each point is in the selectedRegion.
+*/
 function getFilteredPoints(map, layer, selectedRegion) {
-  const bbox = boundingBox(selectedRegion)
-  const screenBbox = bboxToScreenCoords(map, bbox)
-  const points = map.queryRenderedFeatures(screenBbox, { layers: [layer] })
+  const geoBox = boundingBox(selectedRegion)
+  const screenBox = geoBoxToScreenBox(map, geoBox)
+  const clampedBox = clampedScreenBox(map, screenBox)
+  const points = map.queryRenderedFeatures(clampedBox, { layers: [layer] })
   return points.filter((p) => isPointInPolygon(p, selectedRegion))
 }
 

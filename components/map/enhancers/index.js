@@ -8,7 +8,7 @@ import Switch from '../../switch'
 import { Box } from 'theme-ui'
 
 export default function Enhancers({ map, options, onChangeSelectedData }) {
-  const [activeFilter, setActiveFilter] = useState(FILTERS[1])
+  const [activeFilter, setActiveFilter] = useState(FILTERS[0])
 
   useTheme(map)
   useOptions(map, options)
