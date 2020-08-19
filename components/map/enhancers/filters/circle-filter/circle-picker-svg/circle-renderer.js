@@ -2,11 +2,12 @@ import * as geo from '@utils'
 import CursorManager from './cursor-manager'
 import * as d3 from 'd3'
 import * as turf from '@turf/turf'
-
-const FLOATING_HANDLE = true
-const SHOW_RADIUS_GUIDELINE = true
-const CIRCLE_STICKS_TO_CENTER = true
-const SHOW_CIRCLE_XY = false
+import {
+  FLOATING_HANDLE,
+  SHOW_RADIUS_GUIDELINE,
+  CIRCLE_STICKS_TO_CENTER,
+  SHOW_CIRCLE_XY,
+} from '@constants'
 
 export default function CircleRenderer({
   map,

@@ -6,6 +6,7 @@ import FileFilter from './file-filter'
 import DrawFilter from './draw-filter'
 import ViewportFilter from './viewport-filter'
 import { getSelectedData } from './helpers'
+import { UPDATE_STATS_ON_ZOOM, CIRCLE_STICKS_TO_CENTER } from '@constants'
 
 export const FILTERS = [
   {
@@ -52,12 +53,31 @@ export const FILTERS = [
 
 export function Filters({ map, options, onChangeSelectedData, activeFilter }) {
   const [region, setRegion] = useState(null)
+  const [zoom, setZoom] = useState(map.getZoom())
+
+  useEffect(() => {
+    const updateOnZoom = (
+      UPDATE_STATS_ON_ZOOM &&
+      !(activeFilter === FILTERS[0] && CIRCLE_STICKS_TO_CENTER) &&
+      activeFilter !== FILTERS[3]
+    )
+
+    const onZoomEnd = updateOnZoom
+      ? () => setZoom(map.getZoom())
+      : () => {}
+
+    map.on('zoomend', onZoomEnd)
+
+    return function cleanup() {
+      map.off('zoomend', onZoomEnd)
+    }
+  }, [activeFilter])
 
   useEffect(() => {
     const layers = Object.keys(options).filter((key) => options[key])
     const selectedData = getSelectedData(map, layers, region)
     onChangeSelectedData(selectedData)
-  }, [options, region])
+  }, [options, region, zoom])
 
   const { Component } = activeFilter
 

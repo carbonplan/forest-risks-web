@@ -35,3 +35,9 @@ Based on initial testing, it looks like querySourceFeatures does
 duplicate points, but queryRenderedFeatures does not.
 */
 export const DEDUPE_ON_FILTER = false
+
+// circle filter
+export const FLOATING_HANDLE = true
+export const SHOW_RADIUS_GUIDELINE = true
+export const CIRCLE_STICKS_TO_CENTER = false
+export const SHOW_CIRCLE_XY = false
