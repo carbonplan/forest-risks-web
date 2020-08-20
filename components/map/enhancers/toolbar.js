@@ -1,5 +1,5 @@
 import { Box } from 'theme-ui'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 
 export default function Toolbar({ map, children }) {
   const toolbar = useRef(null)

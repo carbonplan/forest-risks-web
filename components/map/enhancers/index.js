@@ -1,11 +1,10 @@
 import { useState } from 'react'
 import useOptions from './use-options'
 import useTheme from './use-theme'
-import { Filters, FilterButtons, FILTERS } from './filters'
 import Toolbar, { Divider } from './toolbar'
+import { Filters, FilterButtons, FILTERS } from './filters'
 import { RulerButton } from './ruler'
-import Switch from '../../switch'
-import { Box } from 'theme-ui'
+import ThemeButton from '../../switch'
 
 export default function Enhancers({ map, options, onChangeSelectedData }) {
   const [activeFilter, setActiveFilter] = useState(FILTERS[0])
@@ -15,12 +14,6 @@ export default function Enhancers({ map, options, onChangeSelectedData }) {
 
   return (
     <>
-      <Filters
-        map={map}
-        options={options}
-        onChangeSelectedData={onChangeSelectedData}
-        activeFilter={activeFilter}
-      />
       <Toolbar map={map}>
         <FilterButtons
           activeFilter={activeFilter}
@@ -28,8 +21,14 @@ export default function Enhancers({ map, options, onChangeSelectedData }) {
         />
         <Divider />
         <RulerButton map={map} />
-        <Switch />
+        <ThemeButton />
       </Toolbar>
+      <Filters
+        map={map}
+        options={options}
+        onChangeSelectedData={onChangeSelectedData}
+        activeFilter={activeFilter}
+      />
     </>
   )
 }
