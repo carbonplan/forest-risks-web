@@ -3,7 +3,6 @@ import { Box } from 'theme-ui'
 import mapboxgl from 'mapbox-gl'
 import style from './style'
 import Enhancers from './enhancers'
-import { INITIAL_CENTER, INITIAL_ZOOM } from '@constants'
 
 mapboxgl.accessToken = ''
 
@@ -15,8 +14,8 @@ function Map({ options, onChangeSelectedData = (selectedData) => {} }) {
     const map = new mapboxgl.Map({
       container: container.current,
       style: style,
-      center: INITIAL_CENTER,
-      zoom: INITIAL_ZOOM,
+      center: [-100, 40],
+      zoom: 3,
       // minZoom: 3,
       // maxZoom: 8,
       // maxBounds: [

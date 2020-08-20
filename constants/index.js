@@ -1,13 +1,9 @@
-export const INITIAL_CENTER = { lng: -100, lat: 40 }
-export const INITIAL_RADIUS = 300
-export const INITIAL_ZOOM = 3
-
-/*
-Set to true to update the sidebar stats while dragging the circle.
-Morphocode does that well, but it's really laggy here because
-we need to refilter all of the points every time the mouse moves.
-*/
-export const UPDATE_STATS_ON_DRAG = false
+export const filterTypes = {
+  CIRCLE: 'Circle',
+  FILE: 'File',
+  DRAW: 'Draw',
+  VIEWPORT: 'Viewport',
+}
 
 /*
 Set to true to deduplicate points when filtering. This addresses mapbox's
@@ -24,15 +20,15 @@ duplicate points, but queryRenderedFeatures does not.
 */
 export const DEDUPE_ON_FILTER = false
 
-// circle filter
+//// CIRCLE FILTER ////
+
 export const FLOATING_HANDLE = true
 export const SHOW_RADIUS_GUIDELINE = true
 export const CIRCLE_STICKS_TO_CENTER = true
 export const SHOW_CIRCLE_XY = false
-
-export const filterTypes = {
-  CIRCLE: 'Circle',
-  FILE: 'File',
-  DRAW: 'Draw',
-  VIEWPORT: 'Viewport',
-}
+/*
+Set to true to update the sidebar stats while dragging the circle.
+Morphocode does that well, but it's really laggy here because
+we need to refilter all of the points every time the mouse moves.
+*/
+export const UPDATE_STATS_ON_DRAG = false
