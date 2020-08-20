@@ -11,7 +11,6 @@ function addPointsToMap(map, points, cb = () => {}) {
   })
 
   region.properties = {
-    type: 'Drawn',
     export: turf.featureCollection([JSON.parse(JSON.stringify(region))])
   }
 

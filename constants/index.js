@@ -29,3 +29,10 @@ export const FLOATING_HANDLE = true
 export const SHOW_RADIUS_GUIDELINE = true
 export const CIRCLE_STICKS_TO_CENTER = true
 export const SHOW_CIRCLE_XY = false
+
+export const filterTypes = {
+  CIRCLE: 'Circle',
+  FILE: 'File',
+  DRAW: 'Draw',
+  VIEWPORT: 'Viewport',
+}

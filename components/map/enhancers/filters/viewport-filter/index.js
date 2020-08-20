@@ -4,7 +4,6 @@ function ViewportFilter({ map, onChangeRegion }) {
   useEffect(() => {
     const update = () => onChangeRegion({
       properties: {
-        type: 'Viewport',
         bounds: map.getBounds().toArray(),
       }
     })

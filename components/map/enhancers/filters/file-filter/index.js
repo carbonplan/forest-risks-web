@@ -36,10 +36,7 @@ function FileFilter({ map, onChangeRegion = (region) => {}  }) {
 
     if (!region) return null
 
-    region.properties = {
-      type: 'File',
-      filename,
-    }
+    region.properties = { filename }
 
     map.getSource('file').setData(region)
     map.fitBounds(boundingBox(region), { padding: 50 })

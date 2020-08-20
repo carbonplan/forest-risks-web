@@ -18,7 +18,6 @@ export function circle(
   const c = turfCircle([center.lng, center.lat], radius, {
     ...options,
     properties: {
-      type: 'Circle',
       center,
       radius,
     },

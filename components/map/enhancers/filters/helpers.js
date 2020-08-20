@@ -1,5 +1,5 @@
 import { isPointInPolygon, boundingBox } from '@utils'
-import { DEDUPE_ON_FILTER } from '@constants'
+import { DEDUPE_ON_FILTER, filterTypes } from '@constants'
 
 // dedupe points by lat and lon
 function dedupedPoints(points) {
@@ -81,7 +81,7 @@ export function getSelectedData(map, layers, selectedRegion) {
   }
 
   layers.forEach((layer) => {
-    let points = selectedRegion.properties.type === 'Viewport'
+    let points = selectedRegion.properties.type === filterTypes.VIEWPORT
       ? map.queryRenderedFeatures({ layers: [layer] })
       : getFilteredPoints(map, layer, selectedRegion)
 

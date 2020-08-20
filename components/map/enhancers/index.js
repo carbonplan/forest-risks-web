@@ -2,12 +2,13 @@ import { useState } from 'react'
 import useOptions from './use-options'
 import useTheme from './use-theme'
 import Toolbar, { Divider } from './toolbar'
-import { Filters, FilterButtons, FILTERS } from './filters'
+import { Filters, FilterButtons } from './filters'
+import { filterTypes } from '@constants'
 import { RulerButton } from './ruler'
 import ThemeButton from '../../switch'
 
 export default function Enhancers({ map, options, onChangeSelectedData }) {
-  const [activeFilter, setActiveFilter] = useState(FILTERS[0])
+  const [activeFilter, setActiveFilter] = useState(filterTypes.CIRCLE)
 
   useTheme(map)
   useOptions(map, options)

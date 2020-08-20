@@ -1,4 +1,5 @@
 import { Box } from 'theme-ui'
+import { filterTypes } from '@constants'
 
 function getAverageForYear(points, year) {
   if (!points.length) return null
@@ -32,7 +33,7 @@ export default function Visualization({ data }) {
       <Box sx={{ textTransform: 'uppercase' }}>Location</Box>
       {(() => {
         switch (region.type) {
-          case 'Circle':
+          case filterTypes.CIRCLE:
             return (
               <>
                 <Box>Lng: {region.center.lng}</Box>
@@ -40,13 +41,13 @@ export default function Visualization({ data }) {
                 <Box>Radius: {region.radius.toFixed(2)} miles</Box>
               </>
             )
-          case 'File':
+          case filterTypes.FILE:
             return (
               <>
                 <Box>Filename: {region.filename}</Box>
               </>
             )
-          case 'Drawn':
+          case filterTypes.DRAW:
             return (
               <Box
                 sx={{
@@ -65,7 +66,7 @@ export default function Visualization({ data }) {
                 Hand Drawn
               </Box>
             )
-          case 'Viewport':
+          case filterTypes.VIEWPORT:
             return (
               <>
                 <Box>Viewport</Box>
