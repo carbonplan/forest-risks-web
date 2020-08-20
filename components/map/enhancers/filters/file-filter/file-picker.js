@@ -1,31 +1,10 @@
 import { useRef, useEffect, useState } from 'react'
 import { Box, Button } from 'theme-ui'
-import Instructions from '../instructions'
+import { Instructions, Section } from '../instructions'
 
-function FilePicker({ map, onFile = () => {} }) {
+function FilePicker({ map, onFile = () => {}, clearable, onClear }) {
   const inputRef = useRef(null)
   const [dragging, setDragging] = useState(false)
-
-  const handleFile = file => {
-    if (!(file instanceof Blob)) return
-
-    const reader = new FileReader()
-    reader.readAsText(file, 'UTF-8')
-    reader.onload = (readerEvent) => {
-      onFile({
-        filename: file.name,
-        content: readerEvent.target.result
-      })
-    }
-  }
-
-  const handlePaste = async () => {
-    const text = await navigator.clipboard.readText()
-    onFile({
-      filename: 'clipboard',
-      content: text,
-    })
-  }
 
   useEffect(() => {
     const container = map.getContainer()
@@ -66,41 +45,57 @@ function FilePicker({ map, onFile = () => {} }) {
     }
   }, [])
 
-  const buttonStyles = {
-    color: 'text',
-    fontSize: 18,
-    fontFamily: 'faux',
-    backgroundColor: 'transparent',
-    cursor: 'pointer',
-    borderWidth: 0,
-    borderColor: 'primary',
-    borderStyle: 'solid',
-    borderRadius: 3,
-    textDecoration: 'underline',
+  const handleFile = file => {
+    if (!(file instanceof Blob)) return
+
+    if (clearable) onClear()
+
+    const reader = new FileReader()
+    reader.readAsText(file, 'UTF-8')
+    reader.onload = (readerEvent) => {
+      onFile({
+        filename: file.name,
+        content: readerEvent.target.result
+      })
+      inputRef.current.value = ''
+    }
+  }
+
+  const handlePaste = async () => {
+    const text = await navigator.clipboard.readText()
+    onFile({
+      filename: 'clipboard',
+      content: text,
+    })
   }
 
   return (
     <>
+      <input
+        ref={inputRef}
+        type="file"
+        style={{ display: 'none' }}
+        onChange={e => handleFile(e.target.files[0])}
+      />
       <Instructions>
-        <Box>drag geojson file onto map</Box>
-        <Box sx={{ marginTop: 12 }}>OR</Box>
-        <Button
-          sx={buttonStyles}
-          onClick={() => inputRef.current.click()}>
-          select file from hard drive
-        </Button>
-        <Box sx={{ marginTop: '8px' }}>OR</Box>
-        <Button
-          sx={buttonStyles}
-          onClick={handlePaste}>
-          paste from the clipboard
-        </Button>
-        <input
-          ref={inputRef}
-          type="file"
-          style={{ display: 'none' }}
-          onChange={e => handleFile(e.target.files[0])}
-        />
+        <Section>
+          <Box>drag geojson file onto map</Box>
+          <Box sx={{ marginY: '8px' }}>OR</Box>
+          <Button onClick={() => inputRef.current.click()}>
+            select file from hard drive
+          </Button>
+          <Box sx={{ marginY: '8px' }}>OR</Box>
+          <Button onClick={handlePaste}>
+            paste geojson from clipboard
+          </Button>
+        </Section>
+        {clearable && (
+          <Section sx={{ padding: '2px' }}>
+            <Button onClick={onClear}>
+              clear
+            </Button>
+          </Section>
+        )}
       </Instructions>
       {dragging && (
         <Box

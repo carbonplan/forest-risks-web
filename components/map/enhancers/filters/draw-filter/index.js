@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from 'react'
 import * as turf from '@turf/turf'
-import Instructions from '../instructions'
-import { Box, useThemeUI } from 'theme-ui'
+import { Instructions, Section } from '../instructions'
+import { Box, Button, useThemeUI } from 'theme-ui'
 
 function addPointsToMap(map, points, cb = () => {}) {
   if (points.length < 4) return
@@ -24,7 +24,7 @@ function addPointsToMap(map, points, cb = () => {}) {
 function DrawFilter({ map, onChangeRegion }) {
   const canvasRef = useRef(null)
   const context = useThemeUI()
-  const ctx = useState(null)
+  const [clearable, setClearable] = useState(false)
   const [bounds, setBounds] = useState(map.getCanvas().getBoundingClientRect())
 
   useEffect(function init() {
@@ -122,6 +122,7 @@ function DrawFilter({ map, onChangeRegion }) {
       draw(initialPos)
       addPointsToMap(map, points, (region) => {
         ctx.clearRect(0, 0, bounds.width, bounds.height)
+        setClearable(true)
         onChangeRegion(region)
       })
       points = []
@@ -130,6 +131,7 @@ function DrawFilter({ map, onChangeRegion }) {
     const startDrawing = e => {
       if (drawing) return
 
+      if (clearable) clear()
       drawing = true
       e.preventDefault()
       map.dragPan.disable()
@@ -147,7 +149,16 @@ function DrawFilter({ map, onChangeRegion }) {
     return function cleanup() {
       map.off('contextmenu', startDrawing)
     }
-  }, [bounds, context])
+  }, [bounds, context, clearable])
+
+  const clear = () => {
+    map.getSource('draw').setData({
+      type: 'FeatureCollection',
+      features: [],
+    })
+    setClearable(false)
+    onChangeRegion(null)
+  }
 
   return (
     <>
@@ -167,9 +178,18 @@ function DrawFilter({ map, onChangeRegion }) {
         }}
       />
       <Instructions>
-        <Box>right-click to start drawing</Box>
-        <Box sx={{ marginTop: 10 }}>AND</Box>
-        <Box sx={{ marginTop: 10, marginBottom: '4px' }}>click when you're done</Box>
+        <Section>
+          <Box>right-click to start drawing</Box>
+          <Box sx={{ marginY: '8px' }}>AND</Box>
+          <Box sx={{ marginBottom: '2px' }}>click when you're done</Box>
+        </Section>
+        {clearable && (
+          <Section sx={{ padding: '2px' }}>
+            <Button onClick={clear}>
+              clear
+            </Button>
+          </Section>
+        )}
       </Instructions>
     </>
   )

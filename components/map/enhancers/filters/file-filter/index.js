@@ -8,12 +8,14 @@ TODO: handle issues with stats calculation
     (1) the bbox of the region, and (2) the bbox of the viewport
 */
 
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { boundingBox } from '@utils'
 import FilePicker from './file-picker'
 import * as turf from '@turf/turf'
 
 function FileFilter({ map, onChangeRegion = (region) => {}  }) {
+  const [clearable, setClearable] = useState(false)
+
   const onFile = ({ filename, content }) => {
     try {
       content = JSON.parse(content)
@@ -41,7 +43,19 @@ function FileFilter({ map, onChangeRegion = (region) => {}  }) {
 
     map.getSource('file').setData(region)
     map.fitBounds(boundingBox(region), { padding: 50 })
-    map.once('moveend', () => onChangeRegion(region))
+    map.once('moveend', () => {
+      setClearable(true)
+      onChangeRegion(region)
+    })
+  }
+
+  const clear = () => {
+    map.getSource('file').setData({
+      type: 'FeatureCollection',
+      features: [],
+    })
+    setClearable(false)
+    onChangeRegion(null)
   }
 
   useEffect(() => {
@@ -69,7 +83,12 @@ function FileFilter({ map, onChangeRegion = (region) => {}  }) {
   }, [])
 
   return (
-    <FilePicker map={map} onFile={onFile} />
+    <FilePicker
+      map={map}
+      onFile={onFile}
+      clearable={clearable}
+      onClear={clear}
+    />
   )
 }
 
