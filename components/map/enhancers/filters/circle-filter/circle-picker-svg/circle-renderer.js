@@ -135,9 +135,7 @@ export default function CircleRenderer({
     const onMove = CIRCLE_STICKS_TO_CENTER
       ? () => setCenter(map.getCenter())
       : setCircle
-    const onMoveEnd = CIRCLE_STICKS_TO_CENTER
-      ? () => onIdle(circle)
-      : () => {}
+    const onMoveEnd = CIRCLE_STICKS_TO_CENTER ? () => onIdle(circle) : () => {}
 
     map.on('move', onMove)
     map.on('moveend', onMoveEnd)

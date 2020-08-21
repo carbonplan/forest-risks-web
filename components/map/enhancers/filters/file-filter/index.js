@@ -4,7 +4,7 @@ import FilePicker from './file-picker'
 import * as turf from '@turf/turf'
 import { useThemeUI } from 'theme-ui'
 
-function FileFilter({ map, onChangeRegion = (region) => {}  }) {
+function FileFilter({ map, onChangeRegion = (region) => {} }) {
   const [clearable, setClearable] = useState(false)
   const context = useThemeUI()
 
@@ -19,10 +19,13 @@ function FileFilter({ map, onChangeRegion = (region) => {}  }) {
     if (!content || !content.type) return
 
     const region = (() => {
-      switch(content.type) {
-        case 'FeatureCollection': return turf.combine(content).features[0]
-        case 'Feature': return content
-        default: return null
+      switch (content.type) {
+        case 'FeatureCollection':
+          return turf.combine(content).features[0]
+        case 'Feature':
+          return content
+        default:
+          return null
       }
     })()
 
@@ -70,13 +73,16 @@ function FileFilter({ map, onChangeRegion = (region) => {}  }) {
     }
   }, [])
 
-  useEffect(function setLineColor() {
-    map.setPaintProperty(
-      'file/line',
-      'line-color',
-      context.theme.colors.primary
-    )
-  }, [context])
+  useEffect(
+    function setLineColor() {
+      map.setPaintProperty(
+        'file/line',
+        'line-color',
+        context.theme.colors.primary
+      )
+    },
+    [context]
+  )
 
   return (
     <FilePicker

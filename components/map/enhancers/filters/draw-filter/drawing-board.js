@@ -19,7 +19,7 @@ function DrawingBoard({ map, lineColor, startingPoint, onComplete }) {
       points.push({ x, y })
     }
 
-    const lineTo = e => {
+    const lineTo = (e) => {
       ctx.beginPath()
       ctx.moveTo(pos.x, pos.y)
       setPosition(e)
@@ -27,7 +27,7 @@ function DrawingBoard({ map, lineColor, startingPoint, onComplete }) {
       ctx.stroke()
     }
 
-    const stopDrawing = e => {
+    const stopDrawing = (e) => {
       e.preventDefault()
       canvasRef.current.removeEventListener('mousemove', lineTo)
       lineTo(startingPoint)
@@ -37,7 +37,9 @@ function DrawingBoard({ map, lineColor, startingPoint, onComplete }) {
     setPosition(startingPoint)
     canvasRef.current.addEventListener('mousemove', lineTo)
     canvasRef.current.addEventListener('click', stopDrawing, { once: true })
-    canvasRef.current.addEventListener('contextmenu', stopDrawing, { once: true })
+    canvasRef.current.addEventListener('contextmenu', stopDrawing, {
+      once: true,
+    })
   }, [])
 
   const { width, height } = map.getCanvas().style
@@ -45,7 +47,7 @@ function DrawingBoard({ map, lineColor, startingPoint, onComplete }) {
   return (
     <canvas
       ref={canvasRef}
-      className="drawing-board"
+      className='drawing-board'
       width={width}
       height={height}
       style={{

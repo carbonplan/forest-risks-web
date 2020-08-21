@@ -63,17 +63,19 @@ export default function Visualization({ data }) {
                     tab.document.write(
                       '<html><body><pre>' +
                         JSON.stringify(region.export, null, 2) +
-                      '</pre></body></html>'
+                        '</pre></body></html>'
                     )
                     tab.document.close()
-                  }}>
+                  }}
+                >
                   Open
                 </Box>
                 <Box
                   sx={buttonStyles}
                   onClick={() => {
                     const geojson = JSON.stringify(region.export, null, 2)
-                    navigator.clipboard.writeText(geojson)
+                    navigator.clipboard
+                      .writeText(geojson)
                       .then(() => alert('geojson copied to clipboard'))
                   }}
                 >

@@ -23,10 +23,7 @@ const Switch = (props) => {
   const color = '#7eb36a' // TODO: Get from pointer
 
   return (
-    <IconButton
-      aria-label='Toggle dark mode'
-      onClick={() => toggle()}
-    >
+    <IconButton aria-label='Toggle dark mode' onClick={() => toggle()}>
       <svg
         xmlns='http://www.w3.org/2000/svg'
         viewBox='0 0 24 24'

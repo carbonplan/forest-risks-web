@@ -3,7 +3,7 @@ import { Box } from 'theme-ui'
 export function Instructions({ sx, children }) {
   return (
     <Box
-      className="instructions"
+      className='instructions'
       sx={{
         fontFamily: 'faux',
         fontSize: 16,
@@ -25,7 +25,7 @@ export function Instructions({ sx, children }) {
           textDecoration: 'underline',
           padding: 0,
           marginBottom: '2px',
-        }
+        },
       }}
     >
       {children}
@@ -36,7 +36,7 @@ export function Instructions({ sx, children }) {
 export function Section({ sx, children }) {
   return (
     <Box
-      className="instructions-section"
+      className='instructions-section'
       sx={{
         borderWidth: 2,
         borderColor: 'primary',
@@ -46,7 +46,7 @@ export function Section({ sx, children }) {
         padding: 14,
         cursor: 'default',
         '&:not(:last-child)': {
-          marginBottom: '8px'
+          marginBottom: '8px',
         },
         ...sx,
       }}

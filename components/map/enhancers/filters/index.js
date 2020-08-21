@@ -55,10 +55,13 @@ export function Filters({ map, options, onChangeSelectedData, activeFilter }) {
   const [region, setRegion] = useState(null)
   const [bounds, setBounds] = useState(map.getBounds())
 
-  const handleRegion = useCallback((region) => {
-    if (region) region.properties.type = activeFilter
-    setRegion(region)
-  }, [activeFilter])
+  const handleRegion = useCallback(
+    (region) => {
+      if (region) region.properties.type = activeFilter
+      setRegion(region)
+    },
+    [activeFilter]
+  )
 
   useEffect(() => {
     const layers = Object.keys(options).filter((key) => options[key])
@@ -68,9 +71,10 @@ export function Filters({ map, options, onChangeSelectedData, activeFilter }) {
 
   useEffect(() => {
     if (
-      activeFilter === filterTypes.CIRCLE && CIRCLE_STICKS_TO_CENTER ||
+      (activeFilter === filterTypes.CIRCLE && CIRCLE_STICKS_TO_CENTER) ||
       activeFilter === filterTypes.VIEWPORT
-    ) return
+    )
+      return
 
     const onMoveEnd = () => setBounds(map.getBounds())
     map.on('moveend', onMoveEnd)
@@ -79,14 +83,9 @@ export function Filters({ map, options, onChangeSelectedData, activeFilter }) {
     }
   }, [activeFilter])
 
-  const { Component } = FILTERS.find(filter => filter.type === activeFilter)
+  const { Component } = FILTERS.find((filter) => filter.type === activeFilter)
 
-  return (
-    <Component
-      map={map}
-      onChangeRegion={handleRegion}
-    />
-  )
+  return <Component map={map} onChangeRegion={handleRegion} />
 }
 
 export function FilterButtons({ activeFilter, onChangeActiveFilter }) {

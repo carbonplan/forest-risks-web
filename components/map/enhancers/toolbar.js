@@ -8,7 +8,7 @@ export default function Toolbar({ map, children }) {
   const [edge, setEdge] = useState(50)
   const [moving, setMoving] = useState(false)
 
-  const onMouseDown = e => {
+  const onMouseDown = (e) => {
     const mapContainer = map.getContainer()
     const { height: toolbarHeight } = toolbar.current.getBoundingClientRect()
     const { height: mapHeight } = mapContainer.getBoundingClientRect()
@@ -33,53 +33,55 @@ export default function Toolbar({ map, children }) {
   }
 
   const styles = (() => {
-    switch(position) {
-      case 'left': return {
-        guide: {
-          left: 0,
-          bottom: `${edge}px`,
-        },
-        outer: {
-          borderBottomWidth: 1,
-          borderLeftWidth: 0,
-          borderBottomRightRadius: 5,
-        },
-        inner: {
-          flexDirection: 'column',
-        },
-        button: {
-          marginTop: '2px',
-          marginBottom: '2px',
-        },
-        divider: {
-          width: 16,
-          height: 1,
-          margin: '8px 0',
-        },
-      }
-      case 'bottom': return {
-        guide: {
-          left: `${edge}px`,
-          bottom: 0,
-        },
-        outer: {
-          borderBottomWidth: 0,
-          borderLeftWidth: 1,
-          borderTopLeftRadius: 5,
-        },
-        inner: {
-          flexDirection: 'row',
-        },
-        button: {
-          marginLeft: '2px',
-          marginRight: '2px',
-        },
-        divider: {
-          width: 1,
-          height: 16,
-          margin: '0 8px',
-        },
-      }
+    switch (position) {
+      case 'left':
+        return {
+          guide: {
+            left: 0,
+            bottom: `${edge}px`,
+          },
+          outer: {
+            borderBottomWidth: 1,
+            borderLeftWidth: 0,
+            borderBottomRightRadius: 5,
+          },
+          inner: {
+            flexDirection: 'column',
+          },
+          button: {
+            marginTop: '2px',
+            marginBottom: '2px',
+          },
+          divider: {
+            width: 16,
+            height: 1,
+            margin: '8px 0',
+          },
+        }
+      case 'bottom':
+        return {
+          guide: {
+            left: `${edge}px`,
+            bottom: 0,
+          },
+          outer: {
+            borderBottomWidth: 0,
+            borderLeftWidth: 1,
+            borderTopLeftRadius: 5,
+          },
+          inner: {
+            flexDirection: 'row',
+          },
+          button: {
+            marginLeft: '2px',
+            marginRight: '2px',
+          },
+          divider: {
+            width: 1,
+            height: 16,
+            margin: '0 8px',
+          },
+        }
     }
   })()
 
@@ -93,7 +95,7 @@ export default function Toolbar({ map, children }) {
     >
       <Box
         ref={toolbar}
-        onMouseDown={e => {
+        onMouseDown={(e) => {
           if (e.defaultPrevented) return
           onMouseDown(e.nativeEvent)
         }}
@@ -110,7 +112,7 @@ export default function Toolbar({ map, children }) {
         }}
       >
         <Box
-          onMouseDown={e => e.preventDefault()}
+          onMouseDown={(e) => e.preventDefault()}
           sx={{
             display: 'flex',
             alignItems: 'center',
@@ -127,7 +129,7 @@ export default function Toolbar({ map, children }) {
           {children}
           {moving && (
             <Box
-              className="mouse-blocker"
+              className='mouse-blocker'
               sx={{
                 position: 'absolute',
                 top: 0,
@@ -144,10 +146,5 @@ export default function Toolbar({ map, children }) {
 }
 
 export function Divider() {
-  return (
-    <Box
-      className="divider"
-      sx={{ backgroundColor: 'secondary' }}
-    />
-  )
+  return <Box className='divider' sx={{ backgroundColor: 'secondary' }} />
 }

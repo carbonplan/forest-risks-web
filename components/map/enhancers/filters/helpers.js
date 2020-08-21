@@ -32,25 +32,19 @@ uses querySourceFeatures.
 function geoBoxToScreenBox(map, geoBox) {
   const southWest = map.project(geoBox[0])
   const northEast = map.project(geoBox[1])
-  return [[
-    southWest.x,
-    southWest.y
-  ], [
-    northEast.x,
-    northEast.y,
-  ]]
+  return [
+    [southWest.x, southWest.y],
+    [northEast.x, northEast.y],
+  ]
 }
 
 // clamp screenBox to boundaries of viewport
 function clampedScreenBox(map, screenBox) {
   const { width, height } = map.getContainer().getBoundingClientRect()
-  return [[
-    Math.max(screenBox[0][0], 0),
-    Math.min(screenBox[0][1], height),
-  ], [
-    Math.min(screenBox[1][0], width),
-    Math.max(screenBox[1][1], 0),
-  ]]
+  return [
+    [Math.max(screenBox[0][0], 0), Math.min(screenBox[0][1], height)],
+    [Math.min(screenBox[1][0], width), Math.max(screenBox[1][1], 0)],
+  ]
 }
 
 /*
@@ -81,9 +75,10 @@ export function getSelectedData(map, layers, selectedRegion) {
   }
 
   layers.forEach((layer) => {
-    let points = selectedRegion.properties.type === filterTypes.VIEWPORT
-      ? map.queryRenderedFeatures({ layers: [layer] })
-      : getFilteredPoints(map, layer, selectedRegion)
+    let points =
+      selectedRegion.properties.type === filterTypes.VIEWPORT
+        ? map.queryRenderedFeatures({ layers: [layer] })
+        : getFilteredPoints(map, layer, selectedRegion)
 
     if (DEDUPE_ON_FILTER) points = dedupedPoints(points)
 

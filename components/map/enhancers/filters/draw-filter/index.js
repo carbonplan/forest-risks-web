@@ -41,13 +41,16 @@ export default function DrawFilter({ map, onChangeRegion }) {
     }
   }, [])
 
-  useEffect(function setLineColor() {
-    map.setPaintProperty(
-      'draw/line',
-      'line-color',
-      context.theme.colors.primary
-    )
-  }, [context])
+  useEffect(
+    function setLineColor() {
+      map.setPaintProperty(
+        'draw/line',
+        'line-color',
+        context.theme.colors.primary
+      )
+    },
+    [context]
+  )
 
   const handlePoints = useCallback((points) => {
     if (points.length < 4) {
@@ -55,7 +58,7 @@ export default function DrawFilter({ map, onChangeRegion }) {
       return
     }
 
-    const lngLats = points.map(p => map.unproject(p).toArray())
+    const lngLats = points.map((p) => map.unproject(p).toArray())
     const region = turf.polygon([lngLats], { source: 'carbonplan.org' })
     region.properties = { export: turf.featureCollection([turf.clone(region)]) }
 
@@ -84,9 +87,7 @@ export default function DrawFilter({ map, onChangeRegion }) {
         </Section>
         {showClearButton && (
           <Section sx={{ padding: '2px' }}>
-            <Button onClick={clearSelection}>
-              clear
-            </Button>
+            <Button onClick={clearSelection}>clear</Button>
           </Section>
         )}
       </Instructions>
