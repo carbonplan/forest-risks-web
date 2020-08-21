@@ -3,7 +3,7 @@ import * as turf from '@turf/turf'
 import { Instructions, Section } from '../instructions'
 import { Box, Button, useThemeUI } from 'theme-ui'
 
-function DrawCanvas({ map, lineColor, initialPoint, onPoints }) {
+function DrawingBoard({ map, lineColor, initialPoint, onPoints }) {
   const canvasRef = useRef(null)
   const bounds = map.getCanvas().style
 
@@ -18,9 +18,9 @@ function DrawCanvas({ map, lineColor, initialPoint, onPoints }) {
     let pos
     let points = []
 
-    const setPosition = e => {
-      pos = { ...e.point }
-      points.push(e.lngLat.toArray())
+    const setPosition = ({ offsetX: x, offsetY: y }) => {
+      pos = { x, y }
+      points.push({ x, y })
     }
 
     const draw = e => {
@@ -32,18 +32,14 @@ function DrawCanvas({ map, lineColor, initialPoint, onPoints }) {
     }
 
     const stopDrawing = e => {
-      map.off('mousemove', draw)
+      canvasRef.current.removeEventListener('mousemove', draw)
       draw(initialPoint)
       onPoints(points)
     }
 
     setPosition(initialPoint)
-    map.on('mousemove', draw)
-    map.once('click', stopDrawing)
-
-    return function cleanup() {
-      map.off('mousemove', draw)
-    }
+    canvasRef.current.addEventListener('mousemove', draw)
+    canvasRef.current.addEventListener('click', stopDrawing, { once: true })
   }, [])
 
   return (
@@ -59,37 +55,16 @@ function DrawCanvas({ map, lineColor, initialPoint, onPoints }) {
         width: '100%',
         height: '100%',
         zIndex: 1,
-        pointerEvents: 'none'
+        cursor: 'crosshair',
       }}
     />
   )
 }
 
 export default function DrawFilter({ map, onChangeRegion }) {
-  const originalCursorStyle = useRef(map.getCanvas().style.cursor)
-
   const [initialPoint, setInitialPoint] = useState(null)
   const [clearable, setClearable] = useState(false)
   const context = useThemeUI()
-
-  const startDrawing = useCallback((e) => {
-    console.log('starting to draw')
-    clear()
-    e.preventDefault()
-    map.dragPan.disable()
-    map.scrollZoom.disable()
-    map.getCanvas().style.cursor = 'crosshair'
-    setInitialPoint(e)
-  }, [])
-
-  const stopDrawing = useCallback(() => {
-    console.log('stop drawing')
-    map.once('contextmenu', startDrawing)
-    map.dragPan.enable()
-    map.scrollZoom.enable()
-    map.getCanvas().style.cursor = originalCursorStyle.current
-    setInitialPoint(null)
-  }, [])
 
   useEffect(function init() {
     onChangeRegion(null)
@@ -108,7 +83,13 @@ export default function DrawFilter({ map, onChangeRegion }) {
       },
     })
 
-    map.once('contextmenu', startDrawing)
+    const startDrawing = (e) => {
+      console.log('starting to draw')
+      clear()
+      setInitialPoint(e.originalEvent)
+    }
+
+    map.on('contextmenu', startDrawing)
 
     return function cleanup() {
       map.off('contextmenu', startDrawing)
@@ -126,8 +107,11 @@ export default function DrawFilter({ map, onChangeRegion }) {
   }, [context])
 
   const handlePoints = (points) => {
+    points = points.map(p => map.unproject(p).toArray())
+    console.log(points)
+
     if (points.length < 4) {
-      stopDrawing()
+      setInitialPoint(null)
       return
     }
 
@@ -143,7 +127,7 @@ export default function DrawFilter({ map, onChangeRegion }) {
 
     map.once('idle', () => {
       onChangeRegion(region)
-      stopDrawing()
+      setInitialPoint(null)
       setClearable(true)
     })
   }
@@ -177,7 +161,7 @@ export default function DrawFilter({ map, onChangeRegion }) {
         )}
       </Instructions>
       {initialPoint && (
-        <DrawCanvas
+        <DrawingBoard
           map={map}
           lineColor={context.theme.colors.primary}
           initialPoint={initialPoint}
