@@ -1,4 +1,4 @@
-import { Box } from 'theme-ui'
+import { Box, Flex, Button } from 'theme-ui'
 import { filterTypes } from '@constants'
 
 function getAverageForYear(points, year) {
@@ -47,25 +47,41 @@ export default function Visualization({ data }) {
                 <Box>Filename: {region.filename}</Box>
               </>
             )
-          case filterTypes.DRAW:
+          case filterTypes.DRAW: {
+            const buttonStyles = {
+              textDecoration: 'underline',
+              cursor: 'pointer',
+              marginLeft: 12,
+            }
             return (
-              <Box
-                sx={{
-                  textDecoration: 'underline',
-                  cursor: 'pointer',
-                }}
-                onClick={() => {
-                  const tab = window.open('about:blank', '_blank')
-                  tab.document.write(
-                    '<html><body><pre>' +
-                      JSON.stringify(region.export, null, 2) +
-                    '</pre></body></html>'
-                  )
-                  tab.document.close()
-                }}>
-                Hand Drawn
-              </Box>
+              <Flex>
+                <Box>Hand drawn:</Box>
+                <Box
+                  sx={buttonStyles}
+                  onClick={() => {
+                    const tab = window.open('about:blank', '_blank')
+                    tab.document.write(
+                      '<html><body><pre>' +
+                        JSON.stringify(region.export, null, 2) +
+                      '</pre></body></html>'
+                    )
+                    tab.document.close()
+                  }}>
+                  Open
+                </Box>
+                <Box
+                  sx={buttonStyles}
+                  onClick={() => {
+                    const geojson = JSON.stringify(region.export, null, 2)
+                    navigator.clipboard.writeText(geojson)
+                      .then(() => alert('geojson copied to clipboard'))
+                  }}
+                >
+                  Copy
+                </Box>
+              </Flex>
             )
+          }
           case filterTypes.VIEWPORT:
             return (
               <>

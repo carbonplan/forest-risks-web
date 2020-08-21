@@ -31,7 +31,7 @@ export default function DrawFilter({ map, onChangeRegion }) {
       clearSelection()
       setStartingPoint(e.originalEvent)
     }
-    
+
     map.on('contextmenu', startDrawing)
 
     return function cleanup() {
@@ -50,20 +50,14 @@ export default function DrawFilter({ map, onChangeRegion }) {
   }, [context])
 
   const handlePoints = useCallback((points) => {
-    points = points.map(p => map.unproject(p).toArray())
-
     if (points.length < 4) {
       setStartingPoint(null)
       return
     }
 
-    const region = turf.polygon([points], {
-      source: 'carbonplan.org',
-    })
-
-    region.properties = {
-      export: turf.featureCollection([JSON.parse(JSON.stringify(region))])
-    }
+    const lngLats = points.map(p => map.unproject(p).toArray())
+    const region = turf.polygon([lngLats], { source: 'carbonplan.org' })
+    region.properties = { export: turf.featureCollection([turf.clone(region)]) }
 
     map.getSource('draw').setData(region)
 
