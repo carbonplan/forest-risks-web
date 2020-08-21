@@ -15,13 +15,13 @@ function Map({ options, onChangeSelectedData = (selectedData) => {} }) {
       container: container.current,
       style: style,
       center: [-100, 40],
-      zoom: 3,
-      // minZoom: 3,
-      // maxZoom: 8,
-      // maxBounds: [
-      //   [-155, 5],
-      //   [-45, 65],
-      // ],
+      zoom: 3.5,
+      minZoom: 3,
+      maxZoom: 8,
+      maxBounds: [
+        [-155, 5],
+        [-45, 65],
+      ],
     })
 
     map.on('load', () => setMap(map))

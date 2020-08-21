@@ -1,20 +1,12 @@
-/*
-TODO: handle issues with stats calculation
-  1. takes a long time
-    - may need to simplify geojson somehow
-  2. queryRenderedFeatures still returns data even if you zoom in
-  really far and there are no points
-    - may need to find the smaller of the two bounding boxes in getSelectedData:
-    (1) the bbox of the region, and (2) the bbox of the viewport
-*/
-
 import { useRef, useEffect, useState } from 'react'
 import { boundingBox } from '@utils'
 import FilePicker from './file-picker'
 import * as turf from '@turf/turf'
+import { useThemeUI } from 'theme-ui'
 
 function FileFilter({ map, onChangeRegion = (region) => {}  }) {
   const [clearable, setClearable] = useState(false)
+  const context = useThemeUI()
 
   const onFile = ({ filename, content }) => {
     try {
@@ -69,7 +61,6 @@ function FileFilter({ map, onChangeRegion = (region) => {}  }) {
       type: 'line',
       paint: {
         'line-width': 3.0,
-        'line-color': '#FFF',
       },
     })
 
@@ -78,6 +69,14 @@ function FileFilter({ map, onChangeRegion = (region) => {}  }) {
       map.removeSource('file')
     }
   }, [])
+
+  useEffect(function setLineColor() {
+    map.setPaintProperty(
+      'file/line',
+      'line-color',
+      context.theme.colors.primary
+    )
+  }, [context])
 
   return (
     <FilePicker

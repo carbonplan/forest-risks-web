@@ -8,7 +8,7 @@ import { RulerButton } from './ruler'
 import ThemeButton from '../../switch'
 
 export default function Enhancers({ map, options, onChangeSelectedData }) {
-  const [activeFilter, setActiveFilter] = useState(filterTypes.DRAW)
+  const [activeFilter, setActiveFilter] = useState(filterTypes.CIRCLE)
 
   useTheme(map)
   useOptions(map, options)

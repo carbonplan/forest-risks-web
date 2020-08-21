@@ -2,17 +2,18 @@ import { useRef, useEffect, useState } from 'react'
 import { Box, Button } from 'theme-ui'
 import { Instructions, Section } from '../instructions'
 
-function FilePicker({ map, onFile = () => {}, clearable, onClear }) {
-  const inputRef = useRef(null)
+function FilePicker({ map, onFile, clearable, onClear }) {
+  const dropArea = useRef(null)
+  const fileInput = useRef(null)
+
   const [dragging, setDragging] = useState(false)
 
   useEffect(() => {
-    const container = map.getContainer()
     const listeners = []
 
-    const listen = (eventName, func) => {
-      container.addEventListener(eventName, func)
-      listeners.push([eventName, func])
+    const listen = (element, eventName, func) => {
+      element.addEventListener(eventName, func)
+      listeners.push([element, eventName, func])
     }
 
     const trap = (e) => {
@@ -20,27 +21,27 @@ function FilePicker({ map, onFile = () => {}, clearable, onClear }) {
       e.stopPropagation()
     }
 
-    listen('drop', (e) => {
+    listen(map.getContainer(), 'dragenter', (e) => {
+      trap(e)
+      setDragging(true)
+    })
+
+    listen(dropArea.current, 'drop', (e) => {
       trap(e)
       handleFile(e.dataTransfer.files[0])
       setDragging(false)
     })
 
-    listen('dragenter', (e) => {
-      trap(e)
-      setDragging(true)
-    })
-
-    listen('dragleave', (e) => {
+    listen(dropArea.current, 'dragleave', (e) => {
       trap(e)
       setDragging(false)
     })
 
-    listen('dragover', trap)
+    listen(dropArea.current, 'dragover', trap)
 
     return function cleanup() {
-      listeners.forEach(([eventName, func]) => {
-        container.removeEventListener(eventName, func)
+      listeners.forEach(([element, eventName, func]) => {
+        element.removeEventListener(eventName, func)
       })
     }
   }, [])
@@ -60,7 +61,7 @@ function FilePicker({ map, onFile = () => {}, clearable, onClear }) {
         filename: file.name,
         content: readerEvent.target.result
       })
-      inputRef.current.value = ''
+      fileInput.current.value = ''
     }
   }
 
@@ -74,8 +75,23 @@ function FilePicker({ map, onFile = () => {}, clearable, onClear }) {
 
   return (
     <>
+      <Box
+        ref={dropArea}
+        sx={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          bottom: 0,
+          right: 0,
+          zIndex: 1000,
+          pointerEvents: dragging ? 'auto' : 'none',
+          borderWidth: dragging ? 4 : 0,
+          borderStyle: 'dashed',
+          borderColor: 'primary',
+        }}
+      />
       <input
-        ref={inputRef}
+        ref={fileInput}
         type="file"
         style={{ display: 'none' }}
         onChange={e => handleFile(e.target.files[0])}
@@ -84,7 +100,7 @@ function FilePicker({ map, onFile = () => {}, clearable, onClear }) {
         <Section>
           <Box>drag geojson file onto map</Box>
           <Box sx={{ marginY: '8px' }}>OR</Box>
-          <Button onClick={() => inputRef.current.click()}>
+          <Button onClick={() => fileInput.current.click()}>
             select file from hard drive
           </Button>
           <Box sx={{ marginY: '8px' }}>OR</Box>
@@ -100,23 +116,6 @@ function FilePicker({ map, onFile = () => {}, clearable, onClear }) {
           </Section>
         )}
       </Instructions>
-      {dragging && (
-        <Box
-          className="drop-indicator"
-          sx={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            bottom: 0,
-            right: 0,
-            zIndex: 1,
-            pointerEvents: 'none',
-            borderWidth: 4,
-            borderStyle: 'dashed',
-            borderColor: 'primary',
-          }}
-        />
-      )}
     </>
   )
 }
