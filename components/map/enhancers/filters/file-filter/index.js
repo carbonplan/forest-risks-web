@@ -20,7 +20,7 @@ function FileFilter({ map, onChangeRegion = (region) => {}  }) {
     try {
       content = JSON.parse(content)
     } catch (e) {
-      console.log('parse error:', e)
+      alert('could not parse')
       return
     }
 

@@ -46,7 +46,10 @@ function FilePicker({ map, onFile = () => {}, clearable, onClear }) {
   }, [])
 
   const handleFile = file => {
-    if (!(file instanceof Blob)) return
+    if (!(file instanceof Blob)) {
+      alert('could not open file')
+      return
+    }
 
     if (clearable) onClear()
 
