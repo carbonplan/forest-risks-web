@@ -9,7 +9,7 @@
     "build": "next build",
     "start": "next start",
     "serve-tiles": "http-server tiles/processed --cors",
-    "format": "prettier --write README.md '*.js' '{components,hooks,pages}/**/*.js'"
+    "format": "prettier --write README.md '*.js' '{components,hooks,pages,constants,utils}/**/*.js'"
   },
   "repository": {
     "type": "git",
