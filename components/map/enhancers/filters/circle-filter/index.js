@@ -1,8 +1,10 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useCallback, useReducer } from 'react'
 import CirclePicker from './circle-picker-svg'
 import RadiusSlider from './radius-slider'
-import { UPDATE_STATS_ON_DRAG } from '@constants'
+import { UPDATE_STATS_ON_DRAG, CIRCLE_STICKS_TO_CENTER } from '@constants'
 import * as turf from '@turf/turf'
+import { Instructions, Section } from '../instructions'
+import { Box } from 'theme-ui'
 
 function initialRadius(map) {
   const bounds = map.getBounds().toArray()
@@ -18,6 +20,17 @@ function CircleFilter({ map, onChangeRegion = () => {} }) {
   const [radius, setRadius] = useState(initialRadius(map))
 
   useEffect(() => onChangeRegion(circle), [circle])
+
+  useEffect(() => {
+    const recenter = () => {
+      setRadius(initialRadius(map))
+      setCenter(map.getCenter())
+    }
+    map.on('contextmenu', recenter)
+    return function cleanup() {
+      map.off('contextmenu', recenter)
+    }
+  }, [])
 
   return (
     <>
@@ -37,6 +50,16 @@ function CircleFilter({ map, onChangeRegion = () => {} }) {
         }}
         onIdle={setCircle}
       />
+      {!CIRCLE_STICKS_TO_CENTER && (
+        <Instructions>
+          <Section>
+            <Box>click/drag on circle to move it</Box>
+            <Box sx={{ marginTop: '8px' }}>
+              right-click anywhere to recenter
+            </Box>
+          </Section>
+        </Instructions>
+      )}
     </>
   )
 }

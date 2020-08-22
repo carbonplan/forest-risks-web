@@ -24,7 +24,7 @@ export const DEDUPE_ON_FILTER = false
 
 export const FLOATING_HANDLE = true
 export const SHOW_RADIUS_GUIDELINE = true
-export const CIRCLE_STICKS_TO_CENTER = true
+export const CIRCLE_STICKS_TO_CENTER = false
 export const SHOW_CIRCLE_XY = false
 /*
 Set to true to update the sidebar stats while dragging the circle.

@@ -232,7 +232,10 @@ export default function CircleRenderer({
   //// INTERFACE ////
 
   return {
-    setCenter,
+    setCenter: (center) => {
+      setCenter(center)
+      onIdle(circle)
+    },
     setRadius: (radius) => {
       setRadius(radius)
       onSetRadius(circle)

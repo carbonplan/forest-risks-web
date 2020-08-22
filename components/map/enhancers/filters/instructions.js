@@ -33,10 +33,11 @@ export function Instructions({ sx, children }) {
   )
 }
 
-export function Section({ sx, children }) {
+export function Section({ sx, onClick, children }) {
   return (
     <Box
       className='instructions-section'
+      onClick={onClick}
       sx={{
         borderWidth: 2,
         borderColor: 'primary',
