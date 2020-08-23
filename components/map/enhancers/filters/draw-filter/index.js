@@ -59,7 +59,13 @@ export default function DrawFilter({ map, onChangeRegion }) {
     }
 
     const lngLats = points.map((p) => map.unproject(p).toArray())
-    const region = turf.polygon([lngLats], { source: 'carbonplan.org' })
+    const region = turf.polygon([lngLats])
+    // OR
+    // const region = unkinkAndCombine(map, points)
+    // OR
+    // const region = unkinkAndUnion(map, points)
+
+    region.properties = { source: 'carbonplan.org' }
     region.properties = { export: turf.featureCollection([turf.clone(region)]) }
 
     map.getSource('draw').setData(region)
@@ -101,4 +107,38 @@ export default function DrawFilter({ map, onChangeRegion }) {
       )}
     </>
   )
+}
+
+////////////// CLEANING GEOJSON /////////////
+
+function dedupedPoints(points) {
+  const out = []
+  points.slice(0, -1).forEach(point => {
+    if (!out.find(p => p.x === point.x && p.y === point.y))
+      out.push(point)
+  })
+  return [...out, points[points.length - 1]]
+}
+
+// does pretty well at getting the entirety of the region inside the outline
+// returns a single MultiPolygon
+function unkinkAndCombine(map, points) {
+  const deduped = dedupedPoints(points)
+  const lngLats = deduped.map((p) => map.unproject(p).toArray())
+  const poly = turf.polygon([lngLats])
+  const unkinked = turf.unkinkPolygon(poly)
+  const combined = turf.combine(unkinked)
+  return combined.features[0]
+}
+
+// even better at finding the outline
+// returns either a Polygon or a MultiPolygon, depending on whether
+// polygons are contiguous
+function unkinkAndUnion(map, points) {
+  const deduped = dedupedPoints(points)
+  const lngLats = deduped.map((p) => map.unproject(p).toArray())
+  const poly = turf.polygon([lngLats])
+  const unkinked = turf.unkinkPolygon(poly)
+  const union = turf.union.apply(null, unkinked.features)
+  return union
 }
