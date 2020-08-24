@@ -34,11 +34,11 @@ function CircleFilter({ map, onChangeRegion = () => {} }) {
 
   return (
     <>
-      <RadiusSlider
+      {/*<RadiusSlider
         value={radius}
         onChange={setRadius}
         onIdle={() => setCircle(circleRef.current)}
-      />
+      />*/}
       <CirclePicker
         map={map}
         center={center}
