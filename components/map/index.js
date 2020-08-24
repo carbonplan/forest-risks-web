@@ -24,6 +24,7 @@ function Map({ options, onChangeSelectedData = (selectedData) => {} }) {
         [-45, 65],
       ],
       scrollZoom: CIRCLE_STICKS_TO_CENTER ? { around: 'center' } : {},
+      boxZoom: false,
     })
 
     map.on('load', () => setMap(map))

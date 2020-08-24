@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, useCallback, useReducer } from 'react'
-import CirclePicker from './circle-picker-svg'
+import CirclePicker from './circle-picker-svg-shift'
 import RadiusSlider from './radius-slider'
 import { UPDATE_STATS_ON_DRAG, CIRCLE_STICKS_TO_CENTER } from '@constants'
 import * as turf from '@turf/turf'
