@@ -12,8 +12,7 @@ function Viewer() {
   }
 
   const [options, setOptions] = useState(initialOptions)
-  const [mapData, setMapData] = useState(null)
-  const [selectedRegion, setSelectedRegion] = useState(null)
+  const [selectedData, setSelectedData] = useState(null)
 
   return (
     <Box>
@@ -28,13 +27,9 @@ function Viewer() {
         }}
       >
         <Sidebar options={options} setOptions={setOptions}>
-          <Visualization mapData={mapData} filterRegion={selectedRegion} />
+          <Visualization data={selectedData} />
         </Sidebar>
-        <Map
-          options={options}
-          onChangeData={setMapData}
-          onChangeSelectedRegion={setSelectedRegion}
-        />
+        <Map options={options} onChangeSelectedData={setSelectedData} />
         <Switch />
       </Flex>
     </Box>
