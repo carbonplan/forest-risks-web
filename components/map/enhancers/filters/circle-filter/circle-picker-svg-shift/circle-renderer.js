@@ -18,7 +18,7 @@ export default function CircleRenderer({
   initialRadius = 0,
 }) {
   let circle = null
-  let center = initialCenter
+  let center = map.project(initialCenter)
   let radius = initialRadius
 
   const svg = d3.select('#circle-picker').style('pointer-events', 'none')
@@ -42,15 +42,13 @@ export default function CircleRenderer({
 
   function addDragHandleListeners() {
     const onMouseMove = (e) => {
-      const r = geo.distance(map.unproject(e.point), center)
+      const r = geo.distance(map.unproject(e.point), map.unproject(center))
       setRadius(r)
       onDrag(circle)
 
       if (FLOATING_HANDLE) {
-        const centerXY = map.project(center)
-        const mouseXY = e.point
-        const rise = mouseXY.y - centerXY.y
-        const run = mouseXY.x - centerXY.x
+        const rise = e.point.y - center.y
+        const run = e.point.x - center.x
         let angle = (Math.atan(rise / run) * 180) / Math.PI
         guidelineAngle = angle + 90 + (run < 0 ? 180 : 0)
       }
@@ -61,7 +59,7 @@ export default function CircleRenderer({
       setCursor({ draggingHandle: false })
       map.off('mousemove', onMouseMove)
       svgHandle.style('pointer-events', 'all')
-      if (!CIRCLE_STICKS_TO_CENTER) svgCircle.style('pointer-events', 'all')
+      // if (!CIRCLE_STICKS_TO_CENTER) svgCircle.style('pointer-events', 'all')
       svgGuidelineText.attr('fill-opacity', 0)
       svgGuideline.attr('stroke-opacity', 0)
     }
@@ -86,8 +84,8 @@ export default function CircleRenderer({
 
     const onMouseMove = (e) => {
       setCenter({
-        lng: e.lngLat.lng - offset.lng,
-        lat: e.lngLat.lat - offset.lat,
+        x: e.point.x - offset.x,
+        y: e.point.y - offset.y,
       })
       onDrag(circle)
     }
@@ -101,11 +99,10 @@ export default function CircleRenderer({
     }
 
     svgCircle.on('mousedown', () => {
-      const { offsetX: x, offsetY: y } = d3.event
-      const lngLat = map.unproject({ x, y })
+      const { offsetX, offsetY } = d3.event
       offset = {
-        lng: lngLat.lng - center.lng,
-        lat: lngLat.lat - center.lat,
+        x: offsetX - center.x,
+        y: offsetY - center.y,
       }
 
       setCursor({ draggingCircle: true })
@@ -152,10 +149,8 @@ export default function CircleRenderer({
   }
 
   function addMapMoveListeners() {
-    const onMove = CIRCLE_STICKS_TO_CENTER
-      ? () => setCenter(map.getCenter())
-      : setCircle
-    const onMoveEnd = CIRCLE_STICKS_TO_CENTER ? () => onIdle(circle) : () => {}
+    const onMove = setCircle
+    const onMoveEnd = () => onIdle(circle)
 
     map.on('move', onMove)
     map.on('moveend', onMoveEnd)
@@ -185,7 +180,9 @@ export default function CircleRenderer({
   }
 
   function setCircle() {
-    circle = geo.circle(center, radius)
+    const centerGeo = map.unproject(center)
+
+    circle = geo.circle(centerGeo, radius)
 
     // update svg circle and mask
     const makePath = geo.getPathMaker(map)
@@ -194,17 +191,17 @@ export default function CircleRenderer({
     svgCircleMask.attr('d', path)
 
     // update other svg elements
-    const centerXY = map.project(center)
+    const centerXY = center
 
     const handleXY = (() => {
       const lineEnd = turf.rhumbDestination(
-        [center.lng, center.lat],
+        [centerGeo.lng, centerGeo.lat],
         radius * 2,
         guidelineAngle
       )
 
       const line = turf.lineString([
-        [center.lng, center.lat],
+        [centerGeo.lng, centerGeo.lat],
         lineEnd.geometry.coordinates,
       ])
 
@@ -253,7 +250,7 @@ export default function CircleRenderer({
 
   return {
     setCenter: (center) => {
-      setCenter(center)
+      setCenter(map.project(center))
       onIdle(circle)
     },
     setRadius: (radius) => {
