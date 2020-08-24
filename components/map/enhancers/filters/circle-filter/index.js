@@ -23,14 +23,14 @@ function CircleFilter({ map, onChangeRegion = () => {} }) {
 
   useEffect(() => {
     const recenter = () => {
-      setRadius(initialRadius(map))
-      setCenter(map.getCenter())
+      map.panTo(circle.properties.center, { animate: false })
+      setCenter(circle.properties.center)
     }
     map.on('contextmenu', recenter)
     return function cleanup() {
       map.off('contextmenu', recenter)
     }
-  }, [])
+  }, [circle])
 
   return (
     <>
