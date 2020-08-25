@@ -14,6 +14,7 @@ export default function CircleRenderer({
   onIdle = (circle) => {},
   onDrag = (circle) => {},
   onSetRadius = (circle) => {},
+  onMoveCenter = (center) => {},
   initialCenter = { lat: 0, lng: 0 },
   initialRadius = 0,
 }) {
@@ -81,6 +82,7 @@ export default function CircleRenderer({
 
   function addCircleListeners() {
     let offset
+    const mapCanvas = map.getCanvas()
 
     const onMouseMove = (e) => {
       setCenter({
@@ -96,6 +98,7 @@ export default function CircleRenderer({
       map.off('mousemove', onMouseMove)
       svgCircle.style('pointer-events', 'all')
       svgHandle.style('pointer-events', 'all')
+      onMoveCenter(map.unproject(center))
     }
 
     svgCircle.on('mousedown', () => {

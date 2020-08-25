@@ -18,19 +18,30 @@ function CircleFilter({ map, onChangeRegion = () => {} }) {
   const [circle, setCircle] = useState(null)
   const [center, setCenter] = useState(map.getCenter())
   const [radius, setRadius] = useState(initialRadius(map))
+  const [centered, setCentered] = useState(true)
 
   useEffect(() => onChangeRegion(circle), [circle])
 
   useEffect(() => {
     const recenter = () => {
-      map.panTo(circle.properties.center, { animate: false })
-      setCenter(circle.properties.center)
+      //map.panTo(circle.properties.center, { animate: false })
+      setRadius(initialRadius(map))
+      setCenter(map.getCenter())
+      setCentered(true)
     }
     map.on('contextmenu', recenter)
     return function cleanup() {
       map.off('contextmenu', recenter)
     }
   }, [circle])
+
+  useEffect(() => {
+    map.scrollZoom.disable()
+    if (centered)
+      map.scrollZoom.enable({ around: 'center' })
+    else
+      map.scrollZoom.enable()
+  }, [centered])
 
   return (
     <>
@@ -49,8 +60,9 @@ function CircleFilter({ map, onChangeRegion = () => {} }) {
           if (UPDATE_STATS_ON_DRAG) setCircle(circle)
         }}
         onIdle={setCircle}
+        onMoveCenter={(center) => setCentered(false)}
       />
-      {!CIRCLE_STICKS_TO_CENTER && (
+      {!centered && (
         <Instructions>
           <Section>
             <Box>click/drag on circle to move it</Box>
