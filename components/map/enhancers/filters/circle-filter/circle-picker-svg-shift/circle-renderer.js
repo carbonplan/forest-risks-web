@@ -5,7 +5,6 @@ import * as turf from '@turf/turf'
 import {
   FLOATING_HANDLE,
   SHOW_RADIUS_GUIDELINE,
-  CIRCLE_STICKS_TO_CENTER,
   SHOW_CIRCLE_XY,
 } from '@constants'
 
@@ -17,10 +16,13 @@ export default function CircleRenderer({
   onMoveCenter = (center) => {},
   initialCenter = { lat: 0, lng: 0 },
   initialRadius = 0,
+  initialCentered = true,
 }) {
   let circle = null
   let center = map.project(initialCenter)
+  let centerLngLat = initialCenter
   let radius = initialRadius
+  let centered = initialCentered
 
   const svg = d3.select('#circle-picker').style('pointer-events', 'none')
   const svgCircle = d3.select('#circle').style('pointer-events', 'none')
@@ -60,7 +62,6 @@ export default function CircleRenderer({
       setCursor({ draggingHandle: false })
       map.off('mousemove', onMouseMove)
       svgHandle.style('pointer-events', 'all')
-      // if (!CIRCLE_STICKS_TO_CENTER) svgCircle.style('pointer-events', 'all')
       svgGuidelineText.attr('fill-opacity', 0)
       svgGuideline.attr('stroke-opacity', 0)
     }
@@ -152,7 +153,19 @@ export default function CircleRenderer({
   }
 
   function addMapMoveListeners() {
-    const onMove = setCircle
+    const onMove = (e) => {
+      if (centered)
+        setCircle()
+      else {
+        if (e.originalEvent.type === 'wheel') {
+          center = map.project(centerLngLat)
+          setCircle()
+        } else {
+          centerLngLat = map.unproject(center)
+          setCircle()
+        }
+      }
+    }
     const onMoveEnd = () => onIdle(circle)
 
     map.on('move', onMove)
@@ -171,6 +184,7 @@ export default function CircleRenderer({
   function setCenter(_center) {
     if (_center && _center !== center) {
       center = _center
+      centerLngLat = map.unproject(center)
       setCircle()
     }
   }
@@ -184,6 +198,7 @@ export default function CircleRenderer({
 
   function setCircle() {
     const centerGeo = map.unproject(center)
+    const centerXY = center
 
     circle = geo.circle(centerGeo, radius)
 
@@ -192,9 +207,6 @@ export default function CircleRenderer({
     const path = makePath(circle)
     svgCircle.attr('d', path)
     svgCircleMask.attr('d', path)
-
-    // update other svg elements
-    const centerXY = center
 
     const handleXY = (() => {
       const lineEnd = turf.rhumbDestination(
@@ -259,6 +271,10 @@ export default function CircleRenderer({
     setRadius: (radius) => {
       setRadius(radius)
       onSetRadius(circle)
+    },
+    setCentered: (_centered) => {
+      centered = _centered
+      setCircle()
     },
     remove: () => {
       removers.reverse().forEach((remove) => remove())

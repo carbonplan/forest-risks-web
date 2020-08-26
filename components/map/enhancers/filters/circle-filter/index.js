@@ -54,6 +54,7 @@ function CircleFilter({ map, onChangeRegion = () => {} }) {
         map={map}
         center={center}
         radius={radius}
+        centered={centered}
         onSetRadius={(circle) => (circleRef.current = circle)}
         onDrag={(circle) => {
           setRadius(circle.properties.radius)
@@ -64,11 +65,8 @@ function CircleFilter({ map, onChangeRegion = () => {} }) {
       />
       {!centered && (
         <Instructions>
-          <Section>
-            <Box>click/drag on circle to move it</Box>
-            <Box sx={{ marginTop: '8px' }}>
-              right-click anywhere to recenter
-            </Box>
+          <Section sx={{ padding: '4px 8px' }}>
+            right-click to recenter
           </Section>
         </Instructions>
       )}

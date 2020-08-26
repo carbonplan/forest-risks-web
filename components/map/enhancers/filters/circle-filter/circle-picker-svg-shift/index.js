@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useThemeUI, Box } from 'theme-ui'
 import CircleRenderer from './circle-renderer'
 
-const CirclePicker = ({ map, center, radius, onIdle, onDrag, onSetRadius, onMoveCenter }) => {
+const CirclePicker = ({ map, center, radius, onIdle, onDrag, onSetRadius, centered, onMoveCenter }) => {
   const [renderer, setRenderer] = useState(null)
   const { theme } = useThemeUI()
 
@@ -15,6 +15,7 @@ const CirclePicker = ({ map, center, radius, onIdle, onDrag, onSetRadius, onMove
       onMoveCenter,
       initialCenter: center,
       initialRadius: radius,
+      initialCentered: centered,
     })
 
     setRenderer(renderer)
@@ -36,6 +37,12 @@ const CirclePicker = ({ map, center, radius, onIdle, onDrag, onSetRadius, onMove
       renderer.setRadius(radius)
     }
   }, [renderer, radius])
+
+  useEffect(() => {
+    if (renderer) {
+      renderer.setCentered(centered)
+    }
+  }, [renderer, centered])
 
   return (
     <svg
