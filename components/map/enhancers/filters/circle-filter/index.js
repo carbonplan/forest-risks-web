@@ -21,24 +21,23 @@ function CircleFilter({ map, onChangeRegion = () => {} }) {
 
   useEffect(() => onChangeRegion(circle), [circle])
 
-  useEffect(() => {
-    const recenter = () => {
-      setRadius(initialRadius(map))
-      setCenter(map.getCenter())
-    }
-    map.on('contextmenu', recenter)
-    return function cleanup() {
-      map.off('contextmenu', recenter)
-    }
-  }, [])
+  // useEffect(() => {
+  //   const recenter = () => {
+  //     map.panTo(circle.properties.center, { animate: true })
+  //   }
+  //   map.on('contextmenu', recenter)
+  //   return function cleanup() {
+  //     map.off('contextmenu', recenter)
+  //   }
+  // }, [circle])
 
   return (
     <>
-      <RadiusSlider
+      {/*<RadiusSlider
         value={radius}
         onChange={setRadius}
         onIdle={() => setCircle(circleRef.current)}
-      />
+      />*/}
       <CirclePicker
         map={map}
         center={center}
@@ -52,10 +51,11 @@ function CircleFilter({ map, onChangeRegion = () => {} }) {
       />
       {!CIRCLE_STICKS_TO_CENTER && (
         <Instructions>
-          <Section>
-            <Box>click/drag on circle to move it</Box>
-            <Box sx={{ marginTop: '8px' }}>
-              right-click anywhere to recenter
+          <Section sx={{ padding: '2px 4px', cursor: 'grab' }}>
+            <Box
+              onClick={() => map.panTo(circle.properties.center, { animate: true })}
+              sx={{ cursor: 'pointer'}}>
+              recenter
             </Box>
           </Section>
         </Instructions>
