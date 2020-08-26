@@ -113,9 +113,8 @@ export default function DrawFilter({ map, onChangeRegion }) {
 
 function dedupedPoints(points) {
   const out = []
-  points.slice(0, -1).forEach(point => {
-    if (!out.find(p => p.x === point.x && p.y === point.y))
-      out.push(point)
+  points.slice(0, -1).forEach((point) => {
+    if (!out.find((p) => p.x === point.x && p.y === point.y)) out.push(point)
   })
   return [...out, points[points.length - 1]]
 }

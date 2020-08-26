@@ -1,10 +1,5 @@
 /** @jsx jsx */
-import {
-  jsx,
-  Box,
-  Flex,
-  IconButton,
-} from 'theme-ui'
+import { jsx, Box, Flex, IconButton } from 'theme-ui'
 import Logo from './logo'
 
 const Header = ({ showMenu, toggleMenu }) => {

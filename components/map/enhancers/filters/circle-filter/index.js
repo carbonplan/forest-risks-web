@@ -53,8 +53,11 @@ function CircleFilter({ map, onChangeRegion = () => {} }) {
         <Instructions>
           <Section sx={{ padding: '2px 4px', cursor: 'grab' }}>
             <Box
-              onClick={() => map.panTo(circle.properties.center, { animate: true })}
-              sx={{ cursor: 'pointer'}}>
+              onClick={() =>
+                map.panTo(circle.properties.center, { animate: true })
+              }
+              sx={{ cursor: 'pointer' }}
+            >
               recenter
             </Box>
           </Section>

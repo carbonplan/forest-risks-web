@@ -1,11 +1,5 @@
 /** @jsx jsx */
-import {
-  jsx,
-  Box,
-  Container,
-  Link,
-  Text,
-} from 'theme-ui'
+import { jsx, Box, Container, Link, Text } from 'theme-ui'
 import { default as NextLink } from 'next/link'
 
 function Menu({ visible }) {
