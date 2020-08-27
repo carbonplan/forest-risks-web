@@ -4,7 +4,7 @@ import { useRef, useEffect } from 'react'
 import * as d3 from 'd3'
 import { Box } from 'theme-ui'
 
-const NUM_BINS = 20
+const NUM_BINS = 30
 const FORESTS_COLOR = '#7eb36a'
 const FIRES_COLOR = '#ea9755'
 
@@ -18,7 +18,7 @@ export default function Hist({ data }) {
 
     const margin = { top: 10, right: 10, bottom: 40, left: 40 }
     const width = histRef.current.offsetWidth - margin.left - margin.right
-    const height = 300 - margin.top - margin.bottom
+    const height = histRef.current.offsetHeight - margin.top - margin.bottom
 
     const svg = d3
       .select(histRef.current)
@@ -63,7 +63,7 @@ export default function Hist({ data }) {
       .append('rect')
         .attr('x', 1)
         .attr('transform', (d) => `translate(${x(d.x0)},${y(d.length)})`)
-        .attr('width', (d) => x(d.x1) - x(d.x0) - 1)
+        .attr('width', (d) => x(d.x1) - x(d.x0) - 2)
         .attr('height', (d) => height - y(d.length))
         .style('fill', FIRES_COLOR)
 
@@ -74,8 +74,8 @@ export default function Hist({ data }) {
 
   return (
     <Box
-      sx={{ margin: 16 }}
       ref={histRef}
+      sx={{ height: '100%' }}
     />
   )
 }

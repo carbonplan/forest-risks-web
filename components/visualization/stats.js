@@ -29,7 +29,7 @@ export default function Stats({ data }) {
   })
 
   return (
-    <Box sx={{ padding: 16 }}>
+    <>
       <Box sx={{ textTransform: 'uppercase' }}>Location</Box>
       {(() => {
         switch (region.type) {
@@ -121,6 +121,6 @@ export default function Stats({ data }) {
           </Box>
         </Box>
       ))}
-    </Box>
+    </>
   )
 }

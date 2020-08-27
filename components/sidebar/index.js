@@ -29,7 +29,7 @@ function Sidebar({ options, setOptions, children }) {
       }}
     >
       <Header showMenu={showMenu} toggleMenu={() => setShowMenu(!showMenu)} />
-      <Box sx={{ position: 'relative' }}>
+      <Box sx={{ position: 'relative', flex: 1 }}>
         <Menu visible={showMenu} />
         <Main options={options} togglePathway={togglePathway}>
           {children}

@@ -3,7 +3,11 @@ import { alpha } from '@theme-ui/color'
 
 function Main({ options, togglePathway, children }) {
   return (
-    <Box>
+    <Box sx={{
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'column', 
+    }}>
       <Box
         sx={{
           pl: [3],
