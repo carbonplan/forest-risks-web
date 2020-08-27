@@ -8,7 +8,7 @@ function getAverageForYear(points, year) {
   return sum / points.length
 }
 
-export default function Visualization({ data }) {
+export default function Stats({ data }) {
   if (!data) return null
 
   const { region, points } = data
