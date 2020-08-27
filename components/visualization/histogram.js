@@ -4,17 +4,18 @@ import { useRef, useEffect } from 'react'
 import * as d3 from 'd3'
 import { Box } from 'theme-ui'
 
+const PATHWAY = 'forests'
+const YEAR = 2050
 const NUM_BINS = 30
-const FORESTS_COLOR = '#7eb36a'
-const FIRES_COLOR = '#ea9755'
+const COLORS = { forests: '#7eb36a', fires: '#ea9755' }
 
 export default function Hist({ data }) {
   const histRef = useRef(null)
 
   useEffect(() => {
-    if (!data || !data.points.fires) return
+    if (!data || !data.points[PATHWAY]) return
 
-    const points = data.points.fires.map(f => f.properties[2015])
+    const points = data.points[PATHWAY].map(f => f.properties[YEAR])
 
     const margin = { top: 10, right: 10, bottom: 40, left: 40 }
     const width = histRef.current.offsetWidth - margin.left - margin.right
@@ -56,16 +57,20 @@ export default function Hist({ data }) {
     y.domain([0, d3.max(bins, (d) => d.length)])
     svg.append('g').call(d3.axisLeft(y))
 
+    const barWidth = width / bins.length
+    const barSpacing = 1
+
     svg
       .selectAll('rect')
       .data(bins)
       .enter()
       .append('rect')
         .attr('x', 1)
-        .attr('transform', (d) => `translate(${x(d.x0)},${y(d.length)})`)
-        .attr('width', (d) => x(d.x1) - x(d.x0) - 2)
+        .attr('transform', (d, i) =>
+          `translate(${i * barWidth + 0.5 * barSpacing},${y(d.length)})`)
+        .attr('width', (d) => barWidth - barSpacing)
         .attr('height', (d) => height - y(d.length))
-        .style('fill', FIRES_COLOR)
+        .style('fill', COLORS[PATHWAY])
 
     return function cleanup() {
       histRef.current.innerHTML = ''
