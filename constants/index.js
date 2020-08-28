@@ -24,7 +24,6 @@ export const DEDUPE_ON_FILTER = false
 
 export const FLOATING_HANDLE = true
 export const SHOW_RADIUS_GUIDELINE = true
-export const CIRCLE_STICKS_TO_CENTER = false
 /*
 Set to true to update the sidebar stats while dragging the circle.
 Morphocode does that well, but it's really laggy here because

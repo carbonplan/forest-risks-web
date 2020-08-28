@@ -6,7 +6,7 @@ import FileFilter from './file-filter'
 import DrawFilter from './draw-filter'
 import ViewportFilter from './viewport-filter'
 import { getSelectedData } from './helpers'
-import { CIRCLE_STICKS_TO_CENTER, filterTypes } from '@constants'
+import { filterTypes } from '@constants'
 
 const FILTERS = [
   {
@@ -70,10 +70,7 @@ export function Filters({ map, options, onChangeSelectedData, activeFilter }) {
   }, [options, region, bounds])
 
   useEffect(() => {
-    if (
-      (activeFilter === filterTypes.CIRCLE && CIRCLE_STICKS_TO_CENTER) ||
-      activeFilter === filterTypes.VIEWPORT
-    )
+    if (activeFilter === filterTypes.VIEWPORT)
       return
 
     const onMoveEnd = () => setBounds(map.getBounds())

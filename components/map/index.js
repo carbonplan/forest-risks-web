@@ -3,7 +3,6 @@ import { Box } from 'theme-ui'
 import mapboxgl from 'mapbox-gl'
 import style from './style'
 import Enhancers from './enhancers'
-import { CIRCLE_STICKS_TO_CENTER } from '@constants'
 
 mapboxgl.accessToken = ''
 
@@ -23,7 +22,6 @@ function Map({ options, onChangeSelectedData = (selectedData) => {} }) {
         [-155, 5],
         [-45, 65],
       ],
-      scrollZoom: CIRCLE_STICKS_TO_CENTER ? { around: 'center' } : {},
     })
 
     map.on('load', () => setMap(map))

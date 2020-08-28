@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef, useCallback, useReducer } from 'react'
 import CirclePicker from './circle-picker-svg'
 import RadiusSlider from './radius-slider'
-import { UPDATE_STATS_ON_DRAG, CIRCLE_STICKS_TO_CENTER } from '@constants'
+import { UPDATE_STATS_ON_DRAG } from '@constants'
 import * as turf from '@turf/turf'
 import { boundingBox } from '@utils'
 import { Instructions, Section } from '../instructions'
@@ -50,24 +50,22 @@ function CircleFilter({ map, onChangeRegion = () => {} }) {
         }}
         onIdle={setCircle}
       />
-      {!CIRCLE_STICKS_TO_CENTER && (
-        <Instructions>
-          <Section sx={{ padding: '2px 4px', cursor: 'grab' }}>
-            <Box
-              onClick={() =>
-                // map.panTo(circle.properties.center, { animate: true })
-                map.fitBounds(boundingBox(circle), { padding: {
-                  top: 300,
-                  bottom: 300,
-                }})
-              }
-              sx={{ cursor: 'pointer' }}
-            >
-              recenter
-            </Box>
-          </Section>
-        </Instructions>
-      )}
+      <Instructions>
+        <Section sx={{ padding: '2px 4px', cursor: 'grab' }}>
+          <Box
+            onClick={() =>
+              // map.panTo(circle.properties.center, { animate: true })
+              map.fitBounds(boundingBox(circle), { padding: {
+                top: 300,
+                bottom: 300,
+              }})
+            }
+            sx={{ cursor: 'pointer' }}
+          >
+            recenter
+          </Box>
+        </Section>
+      </Instructions>
     </>
   )
 }

@@ -5,7 +5,6 @@ import * as turf from '@turf/turf'
 import {
   FLOATING_HANDLE,
   SHOW_RADIUS_GUIDELINE,
-  CIRCLE_STICKS_TO_CENTER,
 } from '@constants'
 
 export default function CircleRenderer({
@@ -21,9 +20,7 @@ export default function CircleRenderer({
   let radius = initialRadius
 
   const svg = d3.select('#circle-picker').style('pointer-events', 'none')
-  const svgCircle = d3
-    .select('#circle')
-    .style('pointer-events', CIRCLE_STICKS_TO_CENTER ? 'none' : 'all')
+  const svgCircle = d3.select('#circle').style('pointer-events', 'all')
   const svgCircleCenter = d3.select('#circle-center')
   const svgCircleMask = d3.select('#circle-mask-cutout')
   const svgHandle = d3.select('#handle').style('pointer-events', 'all')
@@ -62,7 +59,7 @@ export default function CircleRenderer({
       setCursor({ draggingHandle: false })
       map.off('mousemove', onMouseMove)
       svgHandle.style('pointer-events', 'all')
-      if (!CIRCLE_STICKS_TO_CENTER) svgCircle.style('pointer-events', 'all')
+      svgCircle.style('pointer-events', 'all')
       svgGuidelineText.attr('fill-opacity', 0)
       svgGuideline.attr('stroke-opacity', 0)
     }
@@ -131,17 +128,11 @@ export default function CircleRenderer({
   }
 
   function addMapMoveListeners() {
-    const onMove = CIRCLE_STICKS_TO_CENTER
-      ? () => setCenter(map.getCenter())
-      : setCircle
-    const onMoveEnd = CIRCLE_STICKS_TO_CENTER ? () => onIdle(circle) : () => {}
+    const onMove = setCircle
 
     map.on('move', onMove)
-    map.on('moveend', onMoveEnd)
-
     removers.push(function removeMapMoveListeners() {
       map.off('move', onMove)
-      map.off('moveend', onMoveEnd)
     })
   }
 
@@ -211,7 +202,7 @@ export default function CircleRenderer({
   //// INIT ////
 
   addDragHandleListeners()
-  if (!CIRCLE_STICKS_TO_CENTER) addCircleListeners()
+  addCircleListeners()
   addMapMoveListeners()
   setCircle()
   onIdle(circle)
