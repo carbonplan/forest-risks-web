@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef, useCallback, useReducer } from 'react'
 import CirclePicker from './circle-picker-svg'
-import RadiusSlider from './radius-slider'
 import { UPDATE_STATS_ON_DRAG } from '@constants'
 import * as turf from '@turf/turf'
 import { boundingBox } from '@utils'
@@ -34,20 +33,11 @@ function CircleFilter({ map, onChangeRegion = () => {} }) {
 
   return (
     <>
-      {/*<RadiusSlider
-        value={radius}
-        onChange={setRadius}
-        onIdle={() => setCircle(circleRef.current)}
-      />*/}
       <CirclePicker
         map={map}
         center={center}
         radius={radius}
-        onSetRadius={(circle) => (circleRef.current = circle)}
-        onDrag={(circle) => {
-          setRadius(circle.properties.radius)
-          if (UPDATE_STATS_ON_DRAG) setCircle(circle)
-        }}
+        onDrag={UPDATE_STATS_ON_DRAG ? setCircle : undefined}
         onIdle={setCircle}
       />
       <Instructions>

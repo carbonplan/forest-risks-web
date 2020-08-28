@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useThemeUI } from 'theme-ui'
 import CircleRenderer from './circle-renderer'
 
-const CirclePicker = ({ map, center, radius, onIdle, onDrag, onSetRadius }) => {
+const CirclePicker = ({ map, center, radius, onIdle, onDrag }) => {
   const [renderer, setRenderer] = useState(null)
   const { theme } = useThemeUI()
 
@@ -11,7 +11,6 @@ const CirclePicker = ({ map, center, radius, onIdle, onDrag, onSetRadius }) => {
       map,
       onIdle,
       onDrag,
-      onSetRadius,
       initialCenter: center,
       initialRadius: radius,
     })

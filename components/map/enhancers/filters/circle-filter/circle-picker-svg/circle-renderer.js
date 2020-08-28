@@ -11,7 +11,6 @@ export default function CircleRenderer({
   map,
   onIdle = (circle) => {},
   onDrag = (circle) => {},
-  onSetRadius = (circle) => {},
   initialCenter = { lat: 0, lng: 0 },
   initialRadius = 0,
 }) {
@@ -216,7 +215,7 @@ export default function CircleRenderer({
     },
     setRadius: (radius) => {
       setRadius(radius)
-      onSetRadius(circle)
+      onIdle(circle)
     },
     remove: () => {
       removers.reverse().forEach((remove) => remove())
