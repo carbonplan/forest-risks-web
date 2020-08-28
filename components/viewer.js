@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Box, Flex } from 'theme-ui'
 import Sidebar from './sidebar'
 import Map from './map'
 import Visualization from './visualization'
+import { filterTypes } from '@constants'
+import { getSelectedData } from './map/enhancers/filters/helpers'
 
 function Viewer() {
   const initialOptions = {
@@ -10,8 +12,31 @@ function Viewer() {
     fires: true,
   }
 
+  const [map, setMap] = useState(null)
+  const [region, setRegion] = useState(null)
+  const [bounds, setBounds] = useState(null)
   const [options, setOptions] = useState(initialOptions)
   const [selectedData, setSelectedData] = useState(null)
+
+  useEffect(() => {
+    if (!map) return
+
+    const layers = Object.keys(options).filter((key) => options[key])
+    const data = getSelectedData(map, layers, region)
+    console.log('setting selected data')
+    setSelectedData(data)
+  }, [map, options, region, bounds])
+
+  useEffect(() => {
+    if (!map || !region || region.properties.type === filterTypes.VIEWPORT)
+      return
+
+    const onMoveEnd = () => setBounds(map.getBounds())
+    map.on('moveend', onMoveEnd)
+    return function cleanup() {
+      map.off('moveend', onMoveEnd)
+    }
+  }, [map, region])
 
   return (
     <Box>
@@ -32,7 +57,11 @@ function Viewer() {
         <Sidebar options={options} setOptions={setOptions}>
           <Visualization data={selectedData} />
         </Sidebar>
-        <Map options={options} onChangeSelectedData={setSelectedData} />
+        <Map
+          options={options}
+          onChangeRegion={setRegion}
+          onMapReady={setMap}
+        />
       </Flex>
     </Box>
   )

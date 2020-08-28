@@ -51,38 +51,39 @@ const FILTERS = [
   },
 ]
 
-export function Filters({ map, options, onChangeSelectedData, activeFilter }) {
-  const [region, setRegion] = useState(null)
-  const [bounds, setBounds] = useState(map.getBounds())
+export function Filters({ map, onChangeRegion, activeFilter }) {
+  // const [region, setRegion] = useState(null)
+  // const [bounds, setBounds] = useState(map.getBounds())
 
-  const handleRegion = useCallback(
-    (region) => {
-      if (region) region.properties.type = activeFilter
-      setRegion(region)
-    },
-    [activeFilter]
-  )
+  // const handleRegion = useCallback(
+  //   (region) => {
+  //     if (region) region.properties.type = activeFilter
+  //     // setRegion(region)
+  //     onChangeRegion(region)
+  //   },
+  //   [activeFilter]
+  // )
 
-  useEffect(() => {
-    const layers = Object.keys(options).filter((key) => options[key])
-    const selectedData = getSelectedData(map, layers, region)
-    onChangeSelectedData(selectedData)
-  }, [options, region, bounds])
+  // useEffect(() => {
+  //   const layers = Object.keys(options).filter((key) => options[key])
+  //   const selectedData = getSelectedData(map, layers, region)
+  //   onChangeSelectedData(selectedData)
+  // }, [options, region, bounds])
 
-  useEffect(() => {
-    if (activeFilter === filterTypes.VIEWPORT)
-      return
-
-    const onMoveEnd = () => setBounds(map.getBounds())
-    map.on('moveend', onMoveEnd)
-    return function cleanup() {
-      map.off('moveend', onMoveEnd)
-    }
-  }, [activeFilter])
+  // useEffect(() => {
+  //   if (activeFilter === filterTypes.VIEWPORT)
+  //     return
+  //
+  //   const onMoveEnd = () => setBounds(map.getBounds())
+  //   map.on('moveend', onMoveEnd)
+  //   return function cleanup() {
+  //     map.off('moveend', onMoveEnd)
+  //   }
+  // }, [activeFilter])
 
   const { Component } = FILTERS.find((filter) => filter.type === activeFilter)
 
-  return <Component map={map} onChangeRegion={handleRegion} />
+  return <Component map={map} onChangeRegion={onChangeRegion} />
 }
 
 export function FilterButtons({ activeFilter, onChangeActiveFilter }) {

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import useOptions from './use-options'
 import useTheme from './use-theme'
 import Toolbar, { Divider } from './toolbar'
@@ -7,11 +7,19 @@ import { filterTypes } from '@constants'
 import { RulerButton } from './ruler'
 import ThemeButton from '../../switch'
 
-export default function Enhancers({ map, options, onChangeSelectedData }) {
+export default function Enhancers({ map, options, onChangeRegion }) {
   const [activeFilter, setActiveFilter] = useState(filterTypes.CIRCLE)
 
   useTheme(map)
   useOptions(map, options)
+
+  const handleRegion = useCallback(
+    (region) => {
+      if (region) region.properties.type = activeFilter
+      onChangeRegion(region)
+    },
+    [activeFilter]
+  )
 
   return (
     <>
@@ -26,8 +34,7 @@ export default function Enhancers({ map, options, onChangeSelectedData }) {
       </Toolbar>
       <Filters
         map={map}
-        options={options}
-        onChangeSelectedData={onChangeSelectedData}
+        onChangeRegion={handleRegion}
         activeFilter={activeFilter}
       />
     </>

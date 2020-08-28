@@ -6,7 +6,7 @@ import Enhancers from './enhancers'
 
 mapboxgl.accessToken = ''
 
-function Map({ options, onChangeSelectedData = (selectedData) => {} }) {
+function Map({ onMapReady, options, onChangeRegion = (region) => {} }) {
   const container = useRef(null)
   const [map, setMap] = useState(null)
 
@@ -24,7 +24,10 @@ function Map({ options, onChangeSelectedData = (selectedData) => {} }) {
       ],
     })
 
-    map.on('load', () => setMap(map))
+    map.on('load', () => {
+      setMap(map)
+      onMapReady(map)
+    })
 
     return function cleanup() {
       setMap(null)
@@ -38,7 +41,7 @@ function Map({ options, onChangeSelectedData = (selectedData) => {} }) {
         <Enhancers
           map={map}
           options={options}
-          onChangeSelectedData={onChangeSelectedData}
+          onChangeRegion={onChangeRegion}
         />
       )}
     </Box>
