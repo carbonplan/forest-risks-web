@@ -6,7 +6,6 @@ import {
   FLOATING_HANDLE,
   SHOW_RADIUS_GUIDELINE,
   CIRCLE_STICKS_TO_CENTER,
-  SHOW_CIRCLE_XY,
 } from '@constants'
 
 export default function CircleRenderer({
@@ -207,18 +206,6 @@ export default function CircleRenderer({
       .attr('x', handleXY.x + 12)
       .attr('y', handleXY.y + 4)
       .text(radius.toFixed(0) + 'mi')
-
-    if (SHOW_CIRCLE_XY) {
-      const radiusXY = Math.sqrt(
-        Math.pow(handleXY.x - centerXY.x, 2) +
-          Math.pow(handleXY.y - centerXY.y, 2)
-      )
-      svgCircleXY
-        .attr('cx', centerXY.x)
-        .attr('cy', centerXY.y)
-        .attr('r', radiusXY)
-        .attr('stroke-opacity', 1)
-    }
   }
 
   //// INIT ////
