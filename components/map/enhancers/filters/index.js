@@ -51,7 +51,9 @@ const FILTERS = [
   },
 ]
 
-export function Filters({ map, onChangeRegion, activeFilter }) {
+export function Filters({ map, onChangeRegion, onChangeReset, activeFilter }) {
+
+  
   // const [region, setRegion] = useState(null)
   // const [bounds, setBounds] = useState(map.getBounds())
 
@@ -83,7 +85,7 @@ export function Filters({ map, onChangeRegion, activeFilter }) {
 
   const { Component } = FILTERS.find((filter) => filter.type === activeFilter)
 
-  return <Component map={map} onChangeRegion={onChangeRegion} />
+  return <Component map={map} onChangeRegion={onChangeRegion} onChangeReset={onChangeReset} />
 }
 
 export function FilterButtons({ activeFilter, onChangeActiveFilter }) {

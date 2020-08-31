@@ -12,51 +12,68 @@ function initialRadius(map) {
   return Math.min(Math.round(dist / 15), 300)
 }
 
-function CircleFilter({ map, onChangeRegion = () => {} }) {
+function CircleFilter({ map, onChangeRegion = () => {}, onChangeReset = () => {} }) {
   const circleRef = useRef(null)
+  const initialZoom = useRef(map.getZoom())
+  const firstRun = useRef(true)
+  const prevCircle = useRef(null)
+  const animating = useRef(false)
 
   const [circle, setCircle] = useState(null)
   const [center, setCenter] = useState(map.getCenter())
   const [radius, setRadius] = useState(initialRadius(map))
+  const [bounds, setBounds] = useState(map.getBounds())
 
-  useEffect(() => onChangeRegion(circle), [circle])
+  useEffect(() => {
+    if (firstRun.current) return
+    onChangeRegion(circle)
+  }, [circle])
 
-  // useEffect(() => {
-  //   const recenter = () => {
-  //     map.panTo(circle.properties.center, { animate: true })
-  //   }
-  //   map.on('contextmenu', recenter)
-  //   return function cleanup() {
-  //     map.off('contextmenu', recenter)
-  //   }
-  // }, [circle])
+  useEffect(() => {
+    if (firstRun.current) return
+
+    if (
+      !prevCircle.current ||
+      prevCircle.current.properties.radius !== circle.properties.radius
+    ) {
+      onChangeReset(null)
+      prevCircle.current = circle
+      return
+    }
+
+    const reset = () => {
+      animating.current = true
+      onChangeReset(null)
+
+      map.easeTo({
+        center: circle.properties.center,
+        zoom: initialZoom.current,
+      })
+      map.once('moveend', () => animating.current = false)
+    }
+    onChangeReset(reset)
+  }, [circle, bounds])
+
+  useEffect(() => {
+    const onMoveEnd = () => {
+      if (!animating.current) setBounds(map.getBounds())
+    }
+    map.on('moveend', onMoveEnd)
+    return function cleanup() {
+      map.off('moveend', onMoveEnd)
+    }
+  }, [])
+
+  useEffect(() => { firstRun.current = false }, [])
 
   return (
-    <>
-      <CirclePicker
-        map={map}
-        center={center}
-        radius={radius}
-        onDrag={UPDATE_STATS_ON_DRAG ? setCircle : undefined}
-        onIdle={setCircle}
-      />
-      <Instructions>
-        <Section sx={{ padding: '2px 4px', cursor: 'grab' }}>
-          <Box
-            onClick={() =>
-              // map.panTo(circle.properties.center, { animate: true })
-              map.fitBounds(boundingBox(circle), { padding: {
-                top: 300,
-                bottom: 300,
-              }})
-            }
-            sx={{ cursor: 'pointer' }}
-          >
-            recenter
-          </Box>
-        </Section>
-      </Instructions>
-    </>
+    <CirclePicker
+      map={map}
+      center={center}
+      radius={radius}
+      onDrag={UPDATE_STATS_ON_DRAG ? setCircle : undefined}
+      onIdle={setCircle}
+    />
   )
 }
 
