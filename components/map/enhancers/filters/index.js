@@ -65,6 +65,7 @@ export function FilterButtons({ activeFilter, onChangeActiveFilter }) {
     <Button
       key={filter.type}
       svg={filter.svg}
+      label={filter.label}
       onClick={() => onChangeActiveFilter(filter.type)}
       active={filter.type === activeFilter}
     />

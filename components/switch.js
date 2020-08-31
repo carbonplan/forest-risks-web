@@ -1,29 +1,16 @@
 /** @jsx jsx */
-import { jsx, Box, IconButton, Text } from 'theme-ui'
-import { useColorMode } from 'theme-ui'
-import { useState, useEffect } from 'react'
+import { jsx, IconButton, useColorMode } from 'theme-ui'
+import { useCallback } from 'react'
 
 const Switch = (props) => {
   const [colorMode, setColorMode] = useColorMode()
-  const [coords, setCoords] = useState({ x: 0, y: 0 })
 
-  const toggle = (e) => {
-    if (colorMode == 'light') setColorMode('dark')
-    else setColorMode('light')
-  }
-
-  useEffect(() => {
-    const setFromEvent = (e) => setCoords({ x: e.clientX, y: e.clientY })
-    window.addEventListener('mousemove', setFromEvent)
-    return () => {
-      window.removeEventListener('mousemove', setFromEvent)
-    }
-  }, [])
-
-  const color = '#7eb36a' // TODO: Get from pointer
+  const toggle = useCallback(() => {
+    setColorMode(colorMode === 'light' ? 'dark' : 'light')
+  }, [colorMode])
 
   return (
-    <IconButton aria-label='Toggle dark mode' onClick={() => toggle()}>
+    <IconButton aria-label='Toggle dark mode' onClick={toggle}>
       <svg
         xmlns='http://www.w3.org/2000/svg'
         viewBox='0 0 24 24'
