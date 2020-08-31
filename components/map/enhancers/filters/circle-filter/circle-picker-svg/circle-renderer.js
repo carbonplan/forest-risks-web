@@ -95,8 +95,8 @@ export default function CircleRenderer({
       svgHandle.style('pointer-events', 'all')
     }
 
-    svgCircle.on('mousedown', () => {
-      const { offsetX: x, offsetY: y } = d3.event
+    svgCircle.on('mousedown', (e) => {
+      const { offsetX: x, offsetY: y } = e
       const lngLat = map.unproject({ x, y })
       offset = {
         lng: lngLat.lng - center.lng,
@@ -110,8 +110,7 @@ export default function CircleRenderer({
       svgHandle.style('pointer-events', 'none')
     })
 
-    svgCircle.on('wheel', () => {
-      let e = d3.event
+    svgCircle.on('wheel', (e) => {
       e.preventDefault()
       let newEvent = new e.constructor(e.type, e)
       mapCanvas.dispatchEvent(newEvent)
