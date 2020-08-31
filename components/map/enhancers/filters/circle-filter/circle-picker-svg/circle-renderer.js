@@ -209,14 +209,6 @@ export default function CircleRenderer({
   //// INTERFACE ////
 
   return {
-    setCenter: (center) => {
-      setCenter(center)
-      onIdle(circle)
-    },
-    setRadius: (radius) => {
-      setRadius(radius)
-      onIdle(circle)
-    },
     remove: () => {
       removers.reverse().forEach((remove) => remove())
       onIdle(null)

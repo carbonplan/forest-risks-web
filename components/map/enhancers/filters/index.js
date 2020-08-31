@@ -1,12 +1,9 @@
-import { useRef, useState, useEffect, useCallback } from 'react'
-import { Box } from 'theme-ui'
-import Button from './button'
+import { filterTypes } from '@constants'
 import CircleFilter from './circle-filter'
 import FileFilter from './file-filter'
 import DrawFilter from './draw-filter'
 import ViewportFilter from './viewport-filter'
-import { getSelectedData } from './helpers'
-import { filterTypes } from '@constants'
+import Button from './button'
 
 const FILTERS = [
   {
@@ -52,40 +49,15 @@ const FILTERS = [
 ]
 
 export function Filters({ map, onChangeRegion, onChangeReset, activeFilter }) {
-
-  
-  // const [region, setRegion] = useState(null)
-  // const [bounds, setBounds] = useState(map.getBounds())
-
-  // const handleRegion = useCallback(
-  //   (region) => {
-  //     if (region) region.properties.type = activeFilter
-  //     // setRegion(region)
-  //     onChangeRegion(region)
-  //   },
-  //   [activeFilter]
-  // )
-
-  // useEffect(() => {
-  //   const layers = Object.keys(options).filter((key) => options[key])
-  //   const selectedData = getSelectedData(map, layers, region)
-  //   onChangeSelectedData(selectedData)
-  // }, [options, region, bounds])
-
-  // useEffect(() => {
-  //   if (activeFilter === filterTypes.VIEWPORT)
-  //     return
-  //
-  //   const onMoveEnd = () => setBounds(map.getBounds())
-  //   map.on('moveend', onMoveEnd)
-  //   return function cleanup() {
-  //     map.off('moveend', onMoveEnd)
-  //   }
-  // }, [activeFilter])
-
   const { Component } = FILTERS.find((filter) => filter.type === activeFilter)
 
-  return <Component map={map} onChangeRegion={onChangeRegion} onChangeReset={onChangeReset} />
+  return (
+    <Component
+      map={map}
+      onChangeRegion={onChangeRegion}
+      onChangeReset={onChangeReset}
+    />
+  )
 }
 
 export function FilterButtons({ activeFilter, onChangeActiveFilter }) {

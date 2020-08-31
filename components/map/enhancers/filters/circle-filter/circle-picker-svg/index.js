@@ -23,18 +23,6 @@ const CirclePicker = ({ map, center, radius, onIdle, onDrag }) => {
     }
   }, [])
 
-  useEffect(() => {
-    if (renderer) {
-      renderer.setCenter(center)
-    }
-  }, [renderer, center])
-
-  useEffect(() => {
-    if (renderer) {
-      renderer.setRadius(radius)
-    }
-  }, [renderer, radius])
-
   return (
     <svg
       id='circle-picker'

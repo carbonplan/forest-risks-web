@@ -23,7 +23,6 @@ function Viewer() {
 
     const layers = Object.keys(options).filter((key) => options[key])
     const data = getSelectedData(map, layers, region)
-    console.log('setting selected data')
     setSelectedData(data)
   }, [map, options, region, bounds])
 

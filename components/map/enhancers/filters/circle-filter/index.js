@@ -1,58 +1,41 @@
-import { useEffect, useState, useRef, useCallback, useReducer } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 import CirclePicker from './circle-picker-svg'
 import { UPDATE_STATS_ON_DRAG } from '@constants'
 import * as turf from '@turf/turf'
-import { boundingBox } from '@utils'
-import { Instructions, Section } from '../instructions'
-import { Box } from 'theme-ui'
 
-function initialRadius(map) {
+function getInitialRadius(map) {
   const bounds = map.getBounds().toArray()
   const dist = turf.distance(bounds[0], bounds[1], { units: 'miles' })
   return Math.min(Math.round(dist / 15), 300)
 }
 
-function CircleFilter({ map, onChangeRegion = () => {}, onChangeReset = () => {} }) {
-  const circleRef = useRef(null)
+function CircleFilter({
+  map,
+  onChangeRegion = () => {},
+  onChangeReset = () => {}
+}) {
+  const initialCenter = useRef(map.getCenter())
+  const initialRadius = useRef(getInitialRadius(map))
   const initialZoom = useRef(map.getZoom())
-  const firstRun = useRef(true)
-  const prevCircle = useRef(null)
+  const initialBounds = useRef(map.getBounds())
+
   const animating = useRef(false)
 
-  const [circle, setCircle] = useState(null)
-  const [center, setCenter] = useState(map.getCenter())
-  const [radius, setRadius] = useState(initialRadius(map))
-  const [bounds, setBounds] = useState(map.getBounds())
+  const [center, setCenter] = useState(initialCenter.current)
+  const [bounds, setBounds] = useState(initialBounds.current)
 
   useEffect(() => {
-    if (firstRun.current) return
-    onChangeRegion(circle)
-  }, [circle])
-
-  useEffect(() => {
-    if (firstRun.current) return
-
-    if (
-      !prevCircle.current ||
-      prevCircle.current.properties.radius !== circle.properties.radius
-    ) {
-      onChangeReset(null)
-      prevCircle.current = circle
-      return
-    }
-
-    const reset = () => {
+    onChangeReset(() => {
       animating.current = true
       onChangeReset(null)
 
       map.easeTo({
-        center: circle.properties.center,
+        center: center,
         zoom: initialZoom.current,
       })
       map.once('moveend', () => animating.current = false)
-    }
-    onChangeReset(reset)
-  }, [circle, bounds])
+    })
+  }, [center, bounds])
 
   useEffect(() => {
     const onMoveEnd = () => {
@@ -64,15 +47,19 @@ function CircleFilter({ map, onChangeRegion = () => {}, onChangeReset = () => {}
     }
   }, [])
 
-  useEffect(() => { firstRun.current = false }, [])
+  const handleCircle = useCallback((circle) => {
+    if (!circle) return
+    onChangeRegion(circle)
+    setCenter(circle.properties.center)
+  }, [])
 
   return (
     <CirclePicker
       map={map}
-      center={center}
-      radius={radius}
-      onDrag={UPDATE_STATS_ON_DRAG ? setCircle : undefined}
-      onIdle={setCircle}
+      center={initialCenter.current}
+      radius={initialRadius.current}
+      onDrag={UPDATE_STATS_ON_DRAG ? handleCircle : undefined}
+      onIdle={handleCircle}
     />
   )
 }
