@@ -45,7 +45,7 @@ export default function Enhancers({ map, options, onChangeRegion }) {
       <Filters
         map={map}
         onChangeRegion={handleRegion}
-        onChangeReset={reset => setReset(reset ? [reset] : null)}
+        onChangeReset={(reset) => setReset(reset ? [reset] : null)}
         activeFilter={activeFilter}
       />
     </>

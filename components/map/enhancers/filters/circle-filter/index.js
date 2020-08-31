@@ -12,7 +12,7 @@ function getInitialRadius(map) {
 function CircleFilter({
   map,
   onChangeRegion = () => {},
-  onChangeReset = () => {}
+  onChangeReset = () => {},
 }) {
   const initialCenter = useRef(map.getCenter())
   const initialRadius = useRef(getInitialRadius(map))
@@ -33,7 +33,7 @@ function CircleFilter({
         center: center,
         zoom: initialZoom.current,
       })
-      map.once('moveend', () => animating.current = false)
+      map.once('moveend', () => (animating.current = false))
     })
   }, [center, bounds])
 

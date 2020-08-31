@@ -56,11 +56,7 @@ function Viewer() {
         <Sidebar options={options} setOptions={setOptions}>
           <Visualization data={selectedData} />
         </Sidebar>
-        <Map
-          options={options}
-          onChangeRegion={setRegion}
-          onMapReady={setMap}
-        />
+        <Map options={options} onChangeRegion={setRegion} onMapReady={setMap} />
       </Flex>
     </Box>
   )
