@@ -68,7 +68,13 @@ const CirclePicker = ({ map, center, radius, onIdle, onDrag }) => {
         strokeWidth={2}
         strokeDasharray='3,2'
       />
-      <text id='radius-text' fill={theme.colors.primary} fillOpacity={0} />
+      <g id='radius-text-container'>
+        <text
+          id='radius-text'
+          textAnchor='middle'
+          fill={theme.colors.primary}
+        />
+      </g>
     </svg>
   )
 }

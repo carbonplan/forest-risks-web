@@ -21,13 +21,14 @@ export default function CircleRenderer({
   const svgCircleMask = d3.select('#circle-mask-cutout')
   const svgHandle = d3.select('#handle').style('pointer-events', 'all')
   const svgGuideline = d3.select('#radius-guideline')
-  const svgGuidelineText = d3.select('#radius-text')
+  const svgRadiusTextContainer = d3.select('#radius-text-container')
+  const svgRadiusText = d3.select('#radius-text').attr('fill-opacity', 0)
   const svgCircleXY = d3.select('#circle-xy')
 
   let guidelineAngle = 90
   if (!SHOW_RADIUS_GUIDELINE) {
     svgGuideline.style('display', 'none')
-    svgGuidelineText.style('display', 'none')
+    svgRadiusTextContainer.style('display', 'none')
   }
 
   const removers = []
@@ -56,7 +57,7 @@ export default function CircleRenderer({
       map.off('mousemove', onMouseMove)
       svgHandle.style('pointer-events', 'all')
       svgCircle.style('pointer-events', 'all')
-      svgGuidelineText.attr('fill-opacity', 0)
+      svgRadiusText.attr('fill-opacity', 0)
       svgGuideline.attr('stroke-opacity', 0)
     }
 
@@ -66,7 +67,7 @@ export default function CircleRenderer({
       setCursor({ draggingHandle: true })
       svgHandle.style('pointer-events', 'none')
       svgCircle.style('pointer-events', 'none')
-      svgGuidelineText.attr('fill-opacity', 1)
+      svgRadiusText.attr('fill-opacity', 1)
       svgGuideline.attr('stroke-opacity', 1)
     })
 
@@ -188,10 +189,24 @@ export default function CircleRenderer({
       .attr('x2', handleXY.x)
       .attr('y2', handleXY.y)
 
-    svgGuidelineText
-      .attr('x', handleXY.x + 12)
-      .attr('y', handleXY.y + 4)
+    const translateY = 4
+
+    svgRadiusText
       .text(radius.toFixed(0) + 'mi')
+      .attr('transform',
+        `rotate(${-1 * guidelineAngle + 90}) ` +
+        `translate(0, ${translateY})`)
+
+    const translateX = (() => {
+      const { width: textWidth } = svgRadiusText.node().getBBox()
+      const coeff = 0.8 * Math.sin(guidelineAngle * Math.PI / 180)
+      return 18 + Math.abs(coeff * textWidth / 2)
+    })()
+
+    svgRadiusTextContainer
+      .attr('transform',
+        `rotate(${guidelineAngle - 90}, ${handleXY.x}, ${handleXY.y}) ` +
+        `translate(${handleXY.x + translateX}, ${handleXY.y})`)
   }
 
   //// INIT ////
