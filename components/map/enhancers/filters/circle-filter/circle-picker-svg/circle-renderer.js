@@ -193,20 +193,22 @@ export default function CircleRenderer({
 
     svgRadiusText
       .text(radius.toFixed(0) + 'mi')
-      .attr('transform',
-        `rotate(${-1 * guidelineAngle + 90}) ` +
-        `translate(0, ${translateY})`)
+      .attr(
+        'transform',
+        `rotate(${-1 * guidelineAngle + 90}) ` + `translate(0, ${translateY})`
+      )
 
     const translateX = (() => {
       const { width: textWidth } = svgRadiusText.node().getBBox()
-      const coeff = 0.8 * Math.sin(guidelineAngle * Math.PI / 180)
-      return 18 + Math.abs(coeff * textWidth / 2)
+      const coeff = 0.8 * Math.sin((guidelineAngle * Math.PI) / 180)
+      return 18 + Math.abs((coeff * textWidth) / 2)
     })()
 
-    svgRadiusTextContainer
-      .attr('transform',
-        `rotate(${guidelineAngle - 90}, ${handleXY.x}, ${handleXY.y}) ` +
-        `translate(${handleXY.x + translateX}, ${handleXY.y})`)
+    svgRadiusTextContainer.attr(
+      'transform',
+      `rotate(${guidelineAngle - 90}, ${handleXY.x}, ${handleXY.y}) ` +
+        `translate(${handleXY.x + translateX}, ${handleXY.y})`
+    )
   }
 
   //// INIT ////
