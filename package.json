@@ -9,7 +9,8 @@
     "build": "next build",
     "start": "next start",
     "serve-tiles": "http-server tiles/processed --cors",
-    "format": "prettier --write README.md '*.js' '{components,hooks,pages,constants,utils}/**/*.js'"
+    "format": "prettier --write README.md '*.js' '{components,hooks,pages,constants,utils}/**/*.js'",
+    "analyze": "ANALYZE=true npm run build"
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,7 @@
   "dependencies": {
     "@carbonplan/components": "^1.0.0",
     "@carbonplan/theme": "^1.1.0",
+    "@next/bundle-analyzer": "^9.5.3",
     "@theme-ui/color": "^0.3.1",
     "@turf/turf": "^5.1.6",
     "d3": "^6.1.0",
