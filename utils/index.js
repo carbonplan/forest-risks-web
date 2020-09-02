@@ -8,7 +8,7 @@ import {
   booleanPointInPolygon,
   bbox,
   rewind,
-} from '@turf/turf'
+} from './turf'
 
 export function circle(
   center,

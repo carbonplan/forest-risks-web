@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef, useCallback } from 'react'
 import CirclePicker from './circle-picker-svg'
 import { UPDATE_STATS_ON_DRAG } from '@constants'
-import * as turf from '@turf/turf'
+import * as turf from '@utils/turf'
 
 function getInitialRadius(map) {
   const bounds = map.getBounds().toArray()

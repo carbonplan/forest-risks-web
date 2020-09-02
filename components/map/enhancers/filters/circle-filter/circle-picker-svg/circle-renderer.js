@@ -1,7 +1,7 @@
 import * as geo from '@utils'
 import CursorManager from './cursor-manager'
 import * as d3 from 'd3'
-import * as turf from '@turf/turf'
+import * as turf from '@utils/turf'
 import { FLOATING_HANDLE, SHOW_RADIUS_GUIDELINE } from '@constants'
 
 export default function CircleRenderer({

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import * as turf from '@turf/turf'
+import * as turf from '@utils/turf'
 import { Box, Button, useThemeUI } from 'theme-ui'
 import DrawingBoard from './drawing-board'
 import { Instructions, Section } from '../instructions'

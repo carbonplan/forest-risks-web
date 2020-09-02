@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from 'react'
 import { boundingBox } from '@utils'
 import FilePicker from './file-picker'
-import * as turf from '@turf/turf'
+import * as turf from '@utils/turf'
 import { useThemeUI } from 'theme-ui'
 
 function FileFilter({ map, onChangeRegion = (region) => {} }) {
