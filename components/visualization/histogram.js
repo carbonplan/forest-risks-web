@@ -17,7 +17,7 @@ export default function Hist({ data }) {
 
     const points = data.points[PATHWAY].map((f) => f.properties[YEAR])
 
-    const margin = { top: 10, right: 10, bottom: 40, left: 40 }
+    const margin = { top: 10, right: 10, bottom: 50, left: 50 }
     const width = histRef.current.offsetWidth - margin.left - margin.right
     const height = histRef.current.offsetHeight - margin.top - margin.bottom
 
@@ -29,6 +29,25 @@ export default function Hist({ data }) {
       //.style('border', '1px red solid')
       .append('g')
       .attr('transform', `translate(${margin.left},${margin.top})`)
+
+    // x-axis label
+    svg.append('text')
+      .attr('transform', `translate(${width / 2},${height + margin.top + 30})`)
+      .style('text-anchor', 'middle')
+      .style('fill', 'currentColor')
+      .style('font-size', 10)
+      .text('value')
+
+    // y-axis label
+    svg.append('text')
+        .attr('transform', 'rotate(-90)')
+        .attr('y', 0 - margin.left)
+        .attr('x', 0 - (height / 2))
+        .attr('dy', '1em')
+        .style('text-anchor', 'middle')
+        .style('fill', 'currentColor')
+        .style('font-size', 10)
+        .text('count')
 
     const x = d3
       .scaleLinear()
@@ -55,7 +74,7 @@ export default function Hist({ data }) {
 
     const y = d3.scaleLinear().range([height, 0])
     y.domain([0, d3.max(bins, (d) => d.length)])
-    svg.append('g').call(d3.axisLeft(y))
+    svg.append('g').call(d3.axisLeft(y).tickFormat(d3.format('.0f')))
 
     const barWidth = width / bins.length
     const barSpacing = 1

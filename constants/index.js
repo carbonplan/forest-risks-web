@@ -29,4 +29,4 @@ Set to true to update the sidebar stats while dragging the circle.
 Morphocode does that well, but it's really laggy here because
 we need to refilter all of the points every time the mouse moves.
 */
-export const UPDATE_STATS_ON_DRAG = false
+export const UPDATE_STATS_ON_DRAG = true
