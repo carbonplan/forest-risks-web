@@ -1,4 +1,4 @@
-import { isPointInPolygon, boundingBox } from '@utils'
+import { bbox, booleanPointInPolygon } from '@utils/turf'
 import { DEDUPE_ON_FILTER, filterTypes } from '@constants'
 
 // dedupe points by lat and lon
@@ -30,8 +30,8 @@ uses querySourceFeatures.
 
 // convert a lng/lat box to x/y coords
 function geoBoxToScreenBox(map, geoBox) {
-  const southWest = map.project(geoBox[0])
-  const northEast = map.project(geoBox[1])
+  const southWest = map.project([geoBox[0], geoBox[1]])
+  const northEast = map.project([geoBox[2], geoBox[3]])
   return [
     [southWest.x, southWest.y],
     [northEast.x, northEast.y],
@@ -57,11 +57,11 @@ to the size of the viewport, otherwise queryRenderedFeatures will sometimes
 Then filter again by checking whether each point is in the selectedRegion.
 */
 function getFilteredPoints(map, layer, selectedRegion) {
-  const geoBox = boundingBox(selectedRegion)
+  const geoBox = bbox(selectedRegion)
   const screenBox = geoBoxToScreenBox(map, geoBox)
   const clampedBox = clampedScreenBox(map, screenBox)
   const points = map.queryRenderedFeatures(clampedBox, { layers: [layer] })
-  return points.filter((p) => isPointInPolygon(p, selectedRegion))
+  return points.filter((p) => booleanPointInPolygon(p, selectedRegion))
 }
 
 // get metadata on the selectedRegion plus, for each layer, and array

@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from 'react'
-import { boundingBox } from '@utils'
+import { bbox } from '@utils/turf'
 import FilePicker from './file-picker'
 import * as turf from '@utils/turf'
 import { useThemeUI } from 'theme-ui'
@@ -34,7 +34,7 @@ function FileFilter({ map, onChangeRegion = (region) => {} }) {
     region.properties = { filename }
 
     map.getSource('file').setData(region)
-    map.fitBounds(boundingBox(region), { padding: 50 })
+    map.fitBounds(bbox(region), { padding: 50 })
     map.once('moveend', () => {
       setClearable(true)
       onChangeRegion(region)

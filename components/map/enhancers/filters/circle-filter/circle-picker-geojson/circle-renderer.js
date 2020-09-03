@@ -1,4 +1,4 @@
-import * as geo from '@utils'
+import * as turf from '@utils/turf'
 import CursorManager from './cursor-manager'
 
 export default function CircleRenderer({
@@ -93,7 +93,11 @@ export default function CircleRenderer({
 
   function addDragHandleListeners() {
     const onMouseMove = (e) => {
-      const r = geo.distance(map.unproject(e.point), center)
+      const r = turf.distance(
+        map.unproject(e.point).toArray(),
+        [center.lng, center.lat],
+        { units: 'miles' }
+      )
       setRadius(r)
       onDrag(circle)
     }
@@ -186,6 +190,19 @@ export default function CircleRenderer({
     })
   }
 
+  //// CIRCLE ////
+
+  function geoCircle(center, radius) {
+    return turf.circle([center.lng, center.lat], radius, {
+      units: 'miles',
+      steps: 64,
+      properties: {
+        center,
+        radius,
+      },
+    })
+  }
+
   //// SETTERS ////
 
   const setCursor = CursorManager(map)
@@ -205,9 +222,11 @@ export default function CircleRenderer({
   }
 
   function setCircle() {
-    circle = geo.circle(center, radius)
-    const mask = geo.mask(circle)
-    const handle = geo.destination(center, radius, 90)
+    circle = geoCircle(center, radius)
+    const mask = turf.mask(circle)
+    const handle = turf.destination([center.lng, center.lat], radius, 90, {
+      units: 'miles',
+    })
 
     map.getSource('circle').setData(circle)
     map.getSource('circle-mask').setData(mask)

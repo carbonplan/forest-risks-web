@@ -1,8 +1,8 @@
-import * as geo from '@utils'
-import CursorManager from './cursor-manager'
 import * as d3 from 'd3'
-import * as turf from '@utils/turf'
 import { FLOATING_HANDLE, SHOW_RADIUS_GUIDELINE } from '@constants'
+import { getPathMaker } from '@utils/path'
+import * as turf from '@utils/turf'
+import CursorManager from './cursor-manager'
 
 export default function CircleRenderer({
   map,
@@ -37,7 +37,11 @@ export default function CircleRenderer({
 
   function addDragHandleListeners() {
     const onMouseMove = (e) => {
-      const r = geo.distance(map.unproject(e.point), center)
+      const r = turf.distance(
+        map.unproject(e.point).toArray(),
+        [center.lng, center.lat],
+        { units: 'miles' }
+      )
       setRadius(r)
       onDrag(circle)
 
@@ -132,6 +136,22 @@ export default function CircleRenderer({
     })
   }
 
+  //// CIRCLE ////
+
+  function geoCircle(center, radius) {
+    const c = turf.circle([center.lng, center.lat], radius, {
+      units: 'miles',
+      steps: 64,
+      properties: {
+        center,
+        radius,
+      },
+    })
+
+    // need to rewind or svg fill is inside-out
+    return turf.rewind(c, { reverse: true, mutate: true })
+  }
+
   //// SETTERS ////
 
   const setCursor = CursorManager(map)
@@ -151,10 +171,10 @@ export default function CircleRenderer({
   }
 
   function setCircle() {
-    circle = geo.circle(center, radius)
+    circle = geoCircle(center, radius)
 
     // update svg circle and mask
-    const makePath = geo.getPathMaker(map)
+    const makePath = getPathMaker(map)
     const path = makePath(circle)
     svgCircle.attr('d', path)
     svgCircleMask.attr('d', path)
