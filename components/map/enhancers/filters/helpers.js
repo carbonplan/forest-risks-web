@@ -1,4 +1,5 @@
-import { bbox, booleanPointInPolygon } from '@utils/turf'
+import { bbox, booleanPointInPolygon, distance } from '@utils/turf'
+import pointInPolygon from 'point-in-polygon'
 import { DEDUPE_ON_FILTER, filterTypes } from '@constants'
 
 // dedupe points by lat and lon
@@ -47,6 +48,75 @@ function clampedScreenBox(map, screenBox) {
   ]
 }
 
+//// Three ways to filter by region ////
+
+function turfPointsInPolygon(points, polygon) {
+  return points.filter((p) => booleanPointInPolygon(p, polygon))
+}
+
+function substackPointsInPolygon(points, polygon) {
+  const poly = polygon.geometry.coordinates[0]
+  return points.filter((p) => pointInPolygon(p.geometry.coordinates, poly))
+}
+
+function turfPointsInCircle(points, circle) {
+  const { radius } = circle.properties
+  const { lng, lat } = circle.properties.center
+  return points.filter((p) =>
+    distance(p.geometry.coordinates, [lng, lat], { units: 'miles' }) <= radius
+  )
+}
+
+//// Comparison ////
+
+/*
+Test three ways to filter points by region:
+  (1) turf's booleanPointInPolygon
+  (2) substack's pointInPolygon
+  (3) turf's distance formula (only works if region is a circle)
+*/
+// function getPointsInRegion(points, region) {
+//   let start, out, duration
+//
+//   start = performance.now()
+//   out = turfPointsInPolygon(points, region)
+//   duration = performance.now() - start
+//   console.log('turf', 'points:', out.length, 'duration:', duration)
+//
+//   start = performance.now()
+//   out = substackPointsInPolygon(points, region)
+//   duration = performance.now() - start
+//   console.log('substack', 'points:', out.length, 'duration:', duration)
+//
+//   start = performance.now()
+//   out = turfPointsInCircle(points, region)
+//   duration = performance.now() - start
+//   console.log('circle', 'points:', out.length, 'duration:', duration)
+//
+//   console.log(' ')
+//   return []
+// }
+
+/*
+  Results of comparison: substack is faster than turf, and the two always
+  produce the same number of points. Problem is, substack can't handle
+  multipolygons. Maybe work on this if performance turns out to be
+  important.
+
+  Filtering by distance-from-center is faster than both, but only works
+  if the region is a circle. It yields a slightly larger number of points,
+  but is actually more accurate in that it uses a geodesic circle rather
+  than the geojson approximation (a regular polygon with many sides).
+
+  Therefore:
+*/
+function getPointsInRegion(points, region) {
+  if (region.properties.type === filterTypes.CIRCLE)
+    return turfPointsInCircle(points, region)
+  else
+    return turfPointsInPolygon(points, region)
+}
+
 /*
 First filter points by putting a bounding box around the selectedRegion
 and using it in queryRenderedFeatures. (The function requires an x/y
@@ -61,7 +131,7 @@ function getFilteredPoints(map, layer, selectedRegion) {
   const screenBox = geoBoxToScreenBox(map, geoBox)
   const clampedBox = clampedScreenBox(map, screenBox)
   const points = map.queryRenderedFeatures(clampedBox, { layers: [layer] })
-  return points.filter((p) => booleanPointInPolygon(p, selectedRegion))
+  return getPointsInRegion(points, selectedRegion)
 }
 
 // get metadata on the selectedRegion plus, for each layer, and array
