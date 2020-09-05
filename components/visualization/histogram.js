@@ -9,8 +9,8 @@ const YEAR = 2050
 const NUM_BINS = 30
 const COLORS = { forests: '#7eb36a', fires: '#ea9755' }
 
-export default function Hist({ data }) {
-  const histRef = useRef(null)
+export default function Histogram({ data }) {
+  const boxRef = useRef(null)
 
   useEffect(() => {
     if (!data || !data.points[PATHWAY]) return
@@ -18,11 +18,11 @@ export default function Hist({ data }) {
     const points = data.points[PATHWAY].map((f) => f.properties[YEAR])
 
     const margin = { top: 10, right: 10, bottom: 50, left: 50 }
-    const width = histRef.current.offsetWidth - margin.left - margin.right
-    const height = histRef.current.offsetHeight - margin.top - margin.bottom
+    const width = boxRef.current.offsetWidth - margin.left - margin.right
+    const height = boxRef.current.offsetHeight - margin.top - margin.bottom
 
     const svg = d3
-      .select(histRef.current)
+      .select(boxRef.current)
       .append('svg')
       .attr('width', width + margin.left + margin.right)
       .attr('height', height + margin.top + margin.bottom)
@@ -94,9 +94,9 @@ export default function Hist({ data }) {
       .style('fill', COLORS[PATHWAY])
 
     return function cleanup() {
-      histRef.current.innerHTML = ''
+      boxRef.current.innerHTML = ''
     }
   }, [data])
 
-  return <Box ref={histRef} sx={{ height: '100%' }} />
+  return <Box ref={boxRef} sx={{ height: '100%' }} />
 }
