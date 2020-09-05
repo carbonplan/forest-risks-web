@@ -3,28 +3,26 @@ import { Box } from 'theme-ui'
 import Stats from './stats'
 import Histogram from './histogram'
 import Violin from './violin'
+import ToggleButton from './toggle-button'
 
 export default function Visualization({ data }) {
-  const [mode, setMode] = useState(2)
+  const [mode, setMode] = useState(0)
   return (
     <Box sx={{ flex: 1, padding: 16, position: 'relative' }}>
-      <Box
+      <ToggleButton
         onClick={() => setMode((mode + 1) % 3)}
         sx={{
           position: 'absolute',
           top: '5px',
           right: '5px',
-          width: '15px',
-          height: '15px',
-          backgroundColor: 'red',
           cursor: 'pointer'
         }}
       />
       {(() => {
         switch(mode) {
           case 0: return <Stats data={data} />
-          case 1: return <Histogram data={data} />
-          case 2: return <Violin data={data} />
+          case 1: return <Violin data={data} />
+          case 2: return <Histogram data={data} />
         }
       })()}
     </Box>
