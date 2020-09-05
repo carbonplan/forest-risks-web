@@ -62,8 +62,9 @@ function substackPointsInPolygon(points, polygon) {
 function turfPointsInCircle(points, circle) {
   const { radius } = circle.properties
   const { lng, lat } = circle.properties.center
-  return points.filter((p) =>
-    distance(p.geometry.coordinates, [lng, lat], { units: 'miles' }) <= radius
+  return points.filter(
+    (p) =>
+      distance(p.geometry.coordinates, [lng, lat], { units: 'miles' }) <= radius
   )
 }
 
@@ -113,8 +114,7 @@ Test three ways to filter points by region:
 function getPointsInRegion(points, region) {
   if (region.properties.type === filterTypes.CIRCLE)
     return turfPointsInCircle(points, region)
-  else
-    return turfPointsInPolygon(points, region)
+  else return turfPointsInPolygon(points, region)
 }
 
 /*

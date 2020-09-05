@@ -31,7 +31,8 @@ export default function Histogram({ data }) {
       .attr('transform', `translate(${margin.left},${margin.top})`)
 
     // x-axis label
-    svg.append('text')
+    svg
+      .append('text')
       .attr('transform', `translate(${width / 2},${height + margin.top + 30})`)
       .style('text-anchor', 'middle')
       .style('fill', 'currentColor')
@@ -39,15 +40,16 @@ export default function Histogram({ data }) {
       .text('value')
 
     // y-axis label
-    svg.append('text')
-        .attr('transform', 'rotate(-90)')
-        .attr('y', 0 - margin.left)
-        .attr('x', 0 - (height / 2))
-        .attr('dy', '1em')
-        .style('text-anchor', 'middle')
-        .style('fill', 'currentColor')
-        .style('font-size', 10)
-        .text('count')
+    svg
+      .append('text')
+      .attr('transform', 'rotate(-90)')
+      .attr('y', 0 - margin.left)
+      .attr('x', 0 - height / 2)
+      .attr('dy', '1em')
+      .style('text-anchor', 'middle')
+      .style('fill', 'currentColor')
+      .style('font-size', 10)
+      .text('count')
 
     const x = d3
       .scaleLinear()

@@ -15,14 +15,17 @@ export default function Visualization({ data }) {
           position: 'absolute',
           top: '5px',
           right: '5px',
-          cursor: 'pointer'
+          cursor: 'pointer',
         }}
       />
       {(() => {
-        switch(mode) {
-          case 0: return <Stats data={data} />
-          case 1: return <Violin data={data} />
-          case 2: return <Histogram data={data} />
+        switch (mode) {
+          case 0:
+            return <Stats data={data} />
+          case 1:
+            return <Violin data={data} />
+          case 2:
+            return <Histogram data={data} />
         }
       })()}
     </Box>
