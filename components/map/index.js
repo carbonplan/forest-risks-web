@@ -36,7 +36,14 @@ function Map({ onMapReady, options, onChangeRegion = (region) => {} }) {
   }, [])
 
   return (
-    <Box sx={{ flexBasis: '100%' }} ref={container}>
+    <Box
+      ref={container}
+      sx={{
+        flexBasis: '100%',
+        'canvas.mapboxgl-canvas:focus': {
+          outline: 'none'
+        }
+      }}>
       {map && (
         <Enhancers
           map={map}
