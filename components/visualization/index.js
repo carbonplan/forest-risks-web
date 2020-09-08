@@ -6,7 +6,7 @@ import Violin from './violin'
 import ToggleButton from './toggle-button'
 
 export default function Visualization({ data }) {
-  const [mode, setMode] = useState(0)
+  const [mode, setMode] = useState(1)
   return (
     <Box sx={{ flex: 1, padding: 16, position: 'relative' }}>
       <ToggleButton

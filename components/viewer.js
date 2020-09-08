@@ -38,27 +38,25 @@ function Viewer() {
   }, [map, region])
 
   return (
-    <Box>
-      <Flex
-        sx={{
-          position: 'absolute',
-          left: 0,
-          right: 0,
-          top: 0,
-          bottom: 0,
-          flexDirection: ['column', 'row', 'row'],
-          overflow: 'hidden',
-          '*': {
-            userSelect: 'none',
-          },
-        }}
-      >
-        <Sidebar options={options} setOptions={setOptions}>
-          <Visualization data={selectedData} />
-        </Sidebar>
-        <Map options={options} onChangeRegion={setRegion} onMapReady={setMap} />
-      </Flex>
-    </Box>
+    <Flex
+      sx={{
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        flexDirection: ['column', 'row', 'row'],
+        overflow: 'hidden',
+        '*': {
+          userSelect: 'none',
+        },
+      }}
+    >
+      <Sidebar options={options} setOptions={setOptions}>
+        <Visualization data={selectedData} />
+      </Sidebar>
+      <Map options={options} onChangeRegion={setRegion} onMapReady={setMap} />
+    </Flex>
   )
 }
 
