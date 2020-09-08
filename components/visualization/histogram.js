@@ -2,7 +2,7 @@
 
 import { useRef, useEffect } from 'react'
 import * as d3 from 'd3'
-import { Box } from 'theme-ui'
+import { useThemeUI, Box } from 'theme-ui'
 
 const PATHWAY = 'forests'
 const YEAR = 2050
@@ -11,6 +11,7 @@ const COLORS = { forests: '#7eb36a', fires: '#ea9755' }
 
 export default function Histogram({ data }) {
   const boxRef = useRef(null)
+  const { theme } = useThemeUI()
 
   useEffect(() => {
     if (!data || !data.points[PATHWAY]) return
@@ -26,20 +27,18 @@ export default function Histogram({ data }) {
       .append('svg')
       .attr('width', width + margin.left + margin.right)
       .attr('height', height + margin.top + margin.bottom)
-      //.style('border', '1px red solid')
       .append('g')
       .attr('transform', `translate(${margin.left},${margin.top})`)
 
-    // x-axis label
     svg
       .append('text')
       .attr('transform', `translate(${width / 2},${height + margin.top + 30})`)
       .style('text-anchor', 'middle')
       .style('fill', 'currentColor')
       .style('font-size', 10)
+      .style('font-family', theme.fonts.faux)
       .text('value')
 
-    // y-axis label
     svg
       .append('text')
       .attr('transform', 'rotate(-90)')
@@ -49,6 +48,7 @@ export default function Histogram({ data }) {
       .style('text-anchor', 'middle')
       .style('fill', 'currentColor')
       .style('font-size', 10)
+      .style('font-family', theme.fonts.faux)
       .text('count')
 
     const x = d3
@@ -62,6 +62,7 @@ export default function Histogram({ data }) {
       .call(d3.axisBottom(x))
       .selectAll('text')
       .style('text-anchor', 'end')
+      .style('font-family', theme.fonts.faux)
       .attr('dx', '-.8em')
       .attr('dy', '.15em')
       .attr('transform', 'rotate(-45)')
@@ -76,7 +77,10 @@ export default function Histogram({ data }) {
 
     const y = d3.scaleLinear().range([height, 0])
     y.domain([0, d3.max(bins, (d) => d.length)])
-    svg.append('g').call(d3.axisLeft(y).tickFormat(d3.format('.0f')))
+    svg
+      .append('g')
+      .style('font-family', theme.fonts.faux)
+      .call(d3.axisLeft(y).tickFormat(d3.format('.0f')))
 
     const barWidth = width / bins.length
     const barSpacing = 1
