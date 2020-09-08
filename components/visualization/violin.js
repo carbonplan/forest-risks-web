@@ -1,4 +1,5 @@
 // adapted from https://www.d3-graph-gallery.com/graph/violin_basicHist.html
+// and https://www.d3-graph-gallery.com/graph/boxplot_several_groups.html
 
 import { useRef, useEffect, useState, useCallback } from 'react'
 import * as d3 from 'd3'
@@ -26,6 +27,7 @@ function modifyData(data, pathway) {
 export default function Violin({ data }) {
   const boxRef = useRef(null)
   const [pathwayIdx, setPathwayIdx] = useState(0)
+  const [plotType, setPlotType] = useState('violin')
   const { theme } = useThemeUI()
 
   useEffect(() => {
@@ -42,21 +44,17 @@ export default function Violin({ data }) {
     const svg = d3
       .select(boxRef.current)
       .append('svg')
-        .attr('width', width + margin.left + margin.right)
-        .attr('height', height + margin.top + margin.bottom)
-        .style('display', 'block')
-        .style('vertical-align', 'top')
+      .attr('width', width + margin.left + margin.right)
+      .attr('height', height + margin.top + margin.bottom)
+      .style('display', 'block')
       .append('g')
-        .attr('transform', `translate(${margin.left}, ${margin.top})`)
+      .attr('transform', `translate(${margin.left}, ${margin.top})`)
 
     const yMin = d3.min(data, (d) => d.value)
     const yMax = d3.max(data, (d) => d.value)
 
     const y = d3.scaleLinear().domain([yMin, yMax]).range([height, 0])
-    svg
-      .append('g')
-      .style('font-family', theme.fonts.faux)
-      .call(d3.axisLeft(y))
+    svg.append('g').style('font-family', theme.fonts.faux).call(d3.axisLeft(y))
 
     const x = d3.scaleBand().range([0, width]).domain(YEARS).padding(0.05)
     svg
@@ -65,64 +63,134 @@ export default function Violin({ data }) {
       .style('font-family', theme.fonts.faux)
       .call(d3.axisBottom(x))
 
-    const histogram = d3
-      .histogram()
-      .domain(y.domain())
-      .thresholds(y.ticks(NUM_BINS))
-      .value((d) => d)
+    if (plotType === 'violin') {
+      const histogram = d3
+        .histogram()
+        .domain(y.domain())
+        .thresholds(y.ticks(NUM_BINS))
+        .value((d) => d)
 
-    const sumstat = d3Collection
-      .nest()
-      .key((d) => d.year)
-      .rollup((d) => {
-        const input = d.map((g) => g.value)
-        const bins = histogram(input)
-        return bins
+      const sumstat = d3Collection
+        .nest()
+        .key((d) => d.year)
+        .rollup((d) => {
+          const input = d.map((g) => g.value)
+          const bins = histogram(input)
+          return bins
+        })
+        .entries(data)
+
+      let maxNum = 0
+      sumstat.forEach((stat) => {
+        const lengths = stat.value.map((a) => a.length)
+        const longest = d3.max(lengths)
+        if (longest > maxNum) maxNum = longest
       })
-      .entries(data)
 
-    let maxNum = 0
-    sumstat.forEach((stat) => {
-      const lengths = stat.value.map((a) => a.length)
-      const longest = d3.max(lengths)
-      if (longest > maxNum) maxNum = longest
-    })
+      const xNum = d3
+        .scaleLinear()
+        .range([0, x.bandwidth()])
+        .domain([-maxNum, maxNum])
 
-    const xNum = d3
-      .scaleLinear()
-      .range([0, x.bandwidth()])
-      .domain([-maxNum, maxNum])
+      svg
+        .selectAll('violin-plot')
+        .data(sumstat)
+        .enter()
+        .append('g')
+        .attr('transform', (d) => `translate(${x(d.key)},0)`)
+        .append('path')
+        .datum((d) => d.value)
+        .style('stroke', 'none')
+        .style('fill', color)
+        .attr(
+          'd',
+          d3
+            .area()
+            .x0((d) => xNum(-d.length))
+            .x1((d) => xNum(d.length))
+            .y((d) => y(d.x0))
+            .curve(d3.curveCatmullRom)
+        )
+    } else {
+      const bandWidth = x.bandwidth()
+      const boxWidth = bandWidth * 0.6
 
-    svg
-      .selectAll('violin-plot')
-      .data(sumstat)
-      .enter()
-      .append('g')
-      .attr('transform', (d) => `translate(${x(d.key)},0)`)
-      .append('path')
-      .datum((d) => d.value)
-      .style('stroke', 'none')
-      .style('fill', color)
-      .attr(
-        'd',
-        d3
-          .area()
-          .x0((d) => xNum(-d.length))
-          .x1((d) => xNum(d.length))
-          .y((d) => y(d.x0))
-          .curve(d3.curveCatmullRom)
-      )
+      const sumstat = d3Collection
+        .nest()
+        .key((d) => d.year)
+        .rollup((d) => {
+          const sorted = d.map((g) => g.value).sort(d3.ascending)
+          const minValue = sorted[0]
+          const maxValue = sorted[sorted.length - 1]
+          const q1 = d3.quantile(sorted, 0.25)
+          const q3 = d3.quantile(sorted, 0.75)
+          const interQuantileRange = q3 - q1
+          return {
+            q1,
+            median: d3.quantile(sorted, 0.5),
+            q3,
+            interQuantileRange,
+            min: Math.max(minValue, q1 - 1.5 * interQuantileRange),
+            max: Math.min(maxValue, q3 + 1.5 * interQuantileRange),
+          }
+        })
+        .entries(data)
+
+      svg
+        .selectAll('vert-lines')
+        .data(sumstat)
+        .enter()
+        .append('line')
+        .attr('x1', (d) => x(d.key) + bandWidth / 2)
+        .attr('x2', (d) => x(d.key) + bandWidth / 2)
+        .attr('y1', (d) => y(d.value.min))
+        .attr('y2', (d) => y(d.value.max))
+        .attr('stroke', 'currentColor')
+        .style('width', 40)
+
+      svg
+        .selectAll('boxes')
+        .data(sumstat)
+        .enter()
+        .append('rect')
+        .attr('x', (d) => x(d.key) - boxWidth / 2 + bandWidth / 2)
+        .attr('y', (d) => y(d.value.q3))
+        .attr('height', (d) => y(d.value.q1) - y(d.value.q3))
+        .attr('width', boxWidth)
+        .attr('stroke', 'currentColor')
+        .style('fill', color)
+
+      svg
+        .selectAll('median-lines')
+        .data(sumstat)
+        .enter()
+        .append('line')
+        .attr('x1', (d) => x(d.key) - boxWidth / 2 + bandWidth / 2)
+        .attr('x2', (d) => x(d.key) + boxWidth / 2 + bandWidth / 2)
+        .attr('y1', (d) => y(d.value.median))
+        .attr('y2', (d) => y(d.value.median))
+        .attr('stroke', 'currentColor')
+        .style('width', 50)
+    }
 
     return function cleanup() {
       boxRef.current.innerHTML = ''
     }
-  }, [data, pathwayIdx])
+  }, [data, pathwayIdx, plotType])
 
-  const cyclePathway = useCallback(inc => {
-    const numPathways = PATHWAYS.length
-    const newIdx = (pathwayIdx + inc + numPathways) % numPathways
-    setPathwayIdx(newIdx)
-  }, [pathwayIdx])
+  const cyclePathway = useCallback(
+    (inc) => {
+      const numPathways = PATHWAYS.length
+      const newIdx = (pathwayIdx + inc + numPathways) % numPathways
+      setPathwayIdx(newIdx)
+    },
+    [pathwayIdx]
+  )
+
+  const cyclePlotType = useCallback(() => {
+    if (plotType === 'violin') setPlotType('boxplot')
+    else setPlotType('violin')
+  }, [plotType])
 
   const buttonStyles = {
     cursor: 'pointer',
@@ -131,12 +199,33 @@ export default function Violin({ data }) {
   return (
     <Flex sx={{ height: '100%', flexDirection: 'column' }}>
       <Box ref={boxRef} sx={{ flex: 1 }} />
-      <Flex sx={{ justifyContent: 'center', alignItems: 'center', height: 40 }}>
-        <Box sx={buttonStyles} onClick={() => cyclePathway(-1)}>{'<'}</Box>
-        <Box sx={{ width: 70, textAlign: 'center' }}>
-          { PATHWAYS[pathwayIdx] }
-        </Box>
-        <Box sx={buttonStyles} onClick={() => cyclePathway(1)}>{'>'}</Box>
+      <Flex
+        sx={{
+          justifyContent: 'space-around',
+          alignItems: 'center',
+          height: 40,
+        }}
+      >
+        <Flex>
+          <Box sx={buttonStyles} onClick={() => cyclePathway(-1)}>
+            {'<'}
+          </Box>
+          <Box sx={{ width: 70, textAlign: 'center' }}>
+            {PATHWAYS[pathwayIdx]}
+          </Box>
+          <Box sx={buttonStyles} onClick={() => cyclePathway(1)}>
+            {'>'}
+          </Box>
+        </Flex>
+        <Flex>
+          <Box sx={buttonStyles} onClick={cyclePlotType}>
+            {'<'}
+          </Box>
+          <Box sx={{ width: 70, textAlign: 'center' }}>{plotType}</Box>
+          <Box sx={buttonStyles} onClick={cyclePlotType}>
+            {'>'}
+          </Box>
+        </Flex>
       </Flex>
     </Flex>
   )
