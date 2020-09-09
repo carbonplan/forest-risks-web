@@ -16,36 +16,12 @@ function CircleFilter({
 }) {
   const initialCenter = useRef(map.getCenter())
   const initialRadius = useRef(getInitialRadius(map))
-  const initialZoom = useRef(map.getZoom())
-  const initialBounds = useRef(map.getBounds())
-
-  const animating = useRef(false)
 
   const [center, setCenter] = useState(initialCenter.current)
-  const [bounds, setBounds] = useState(initialBounds.current)
 
   useEffect(() => {
-    onChangeReset(() => {
-      animating.current = true
-      onChangeReset(null)
-
-      map.easeTo({
-        center: center,
-        zoom: initialZoom.current,
-      })
-      map.once('moveend', () => (animating.current = false))
-    })
-  }, [center, bounds])
-
-  useEffect(() => {
-    const onMoveEnd = () => {
-      if (!animating.current) setBounds(map.getBounds())
-    }
-    map.on('moveend', onMoveEnd)
-    return function cleanup() {
-      map.off('moveend', onMoveEnd)
-    }
-  }, [])
+    onChangeReset(() => map.easeTo({ center: center }))
+  }, [center])
 
   const handleCircle = useCallback((circle) => {
     if (!circle) return

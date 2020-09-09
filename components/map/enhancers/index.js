@@ -10,7 +10,7 @@ import ResetButton from './reset-button'
 
 export default function Enhancers({ map, options, onChangeRegion }) {
   const [activeFilter, setActiveFilter] = useState(filterTypes.CIRCLE)
-  const [reset, setReset] = useState(null)
+  const [reset, setReset] = useState([() => {}])
 
   useTheme(map)
   useOptions(map, options)
@@ -23,12 +23,10 @@ export default function Enhancers({ map, options, onChangeRegion }) {
     [activeFilter]
   )
 
-  useEffect(() => setReset(null), [activeFilter])
-
   return (
     <>
       <Toolbar map={map}>
-        {reset && (
+        {activeFilter === filterTypes.CIRCLE && (
           <>
             <ResetButton onClick={() => reset[0]()} />
             <Divider />
@@ -45,7 +43,7 @@ export default function Enhancers({ map, options, onChangeRegion }) {
       <Filters
         map={map}
         onChangeRegion={handleRegion}
-        onChangeReset={(reset) => setReset(reset ? [reset] : null)}
+        onChangeReset={(reset) => setReset([reset])}
         activeFilter={activeFilter}
       />
     </>
