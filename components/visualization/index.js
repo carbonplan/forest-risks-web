@@ -7,6 +7,9 @@ import ToggleButton from './toggle-button'
 
 export default function Visualization({ data }) {
   const [mode, setMode] = useState(0)
+
+  if (!data) return null
+
   return (
     <Box sx={{ flex: 1, padding: 16, position: 'relative' }}>
       <ToggleButton

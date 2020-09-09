@@ -139,6 +139,9 @@ function getFilteredPoints(map, layer, selectedRegion) {
 export function getSelectedData(map, layers, selectedRegion) {
   if (!selectedRegion) return null
 
+  // no stats when using viewport filter
+  if (selectedRegion.properties.type === filterTypes.VIEWPORT) return null
+
   const selectedData = {
     region: selectedRegion.properties,
     points: {},

@@ -17,7 +17,8 @@ const COLORS = { forests: '#7eb36a', fires: '#ea9755' }
 
 function modifyData(data, pathway) {
   const modifiedData = []
-  data.points[pathway].forEach((point) => {
+  const points = data.points[pathway] || []
+  points.forEach((point) => {
     YEARS.forEach((year) => {
       modifiedData.push({
         year,
