@@ -4,4 +4,3 @@ node_modules
 tiles/processed
 tiles/raw
 tiles/util.py
-out
