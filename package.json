@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "next -p 1000",
-    "build": "next build && npm export ",
+    "build": "next build && next export",
     "start": "next start",
     "serve-tiles": "http-server tiles/processed --cors",
     "format": "prettier --write README.md '*.js' '{components,hooks,pages}/**/*.js'"
