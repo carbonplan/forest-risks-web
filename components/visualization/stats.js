@@ -1,4 +1,5 @@
-import { Box } from 'theme-ui'
+import { Box, Flex, Button } from 'theme-ui'
+import { filterTypes } from '@constants'
 
 function getAverageForYear(points, year) {
   if (!points.length) return null
@@ -7,7 +8,7 @@ function getAverageForYear(points, year) {
   return sum / points.length
 }
 
-export default function Visualization({ data }) {
+export default function Stats({ data }) {
   if (!data) return null
 
   const { region, points } = data
@@ -28,11 +29,11 @@ export default function Visualization({ data }) {
   })
 
   return (
-    <Box sx={{ padding: 16 }}>
+    <>
       <Box sx={{ textTransform: 'uppercase' }}>Location</Box>
       {(() => {
         switch (region.type) {
-          case 'Circle':
+          case filterTypes.CIRCLE:
             return (
               <>
                 <Box>Lng: {region.center.lng}</Box>
@@ -40,7 +41,50 @@ export default function Visualization({ data }) {
                 <Box>Radius: {region.radius.toFixed(2)} miles</Box>
               </>
             )
-          case 'Viewport':
+          case filterTypes.FILE:
+            return (
+              <>
+                <Box>Filename: {region.filename}</Box>
+              </>
+            )
+          case filterTypes.DRAW: {
+            const buttonStyles = {
+              textDecoration: 'underline',
+              cursor: 'pointer',
+              marginLeft: 12,
+            }
+            return (
+              <Flex>
+                <Box>Hand drawn:</Box>
+                <Box
+                  sx={buttonStyles}
+                  onClick={() => {
+                    const tab = window.open('about:blank', '_blank')
+                    tab.document.write(
+                      '<html><body><pre>' +
+                        JSON.stringify(region.export, null, 2) +
+                        '</pre></body></html>'
+                    )
+                    tab.document.close()
+                  }}
+                >
+                  Open
+                </Box>
+                <Box
+                  sx={buttonStyles}
+                  onClick={() => {
+                    const geojson = JSON.stringify(region.export, null, 2)
+                    navigator.clipboard
+                      .writeText(geojson)
+                      .then(() => alert('geojson copied to clipboard'))
+                  }}
+                >
+                  Copy
+                </Box>
+              </Flex>
+            )
+          }
+          case filterTypes.VIEWPORT:
             return (
               <>
                 <Box>Viewport</Box>
@@ -77,6 +121,6 @@ export default function Visualization({ data }) {
           </Box>
         </Box>
       ))}
-    </Box>
+    </>
   )
 }

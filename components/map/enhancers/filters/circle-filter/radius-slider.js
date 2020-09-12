@@ -6,8 +6,9 @@ const RadiusSlider = ({ value, onChange, onIdle }) => (
       position: 'absolute',
       zIndex: 1,
       bottom: 18,
-      left: 85,
       width: 300,
+      left: '50%',
+      transform: 'translateX(-50%)',
       display: 'flex',
     }}
   >

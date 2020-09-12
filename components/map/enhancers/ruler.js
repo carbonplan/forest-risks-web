@@ -200,16 +200,7 @@ export const RulerButton = ({ map }) => {
   useRuler(map, mode)
 
   return (
-    <IconButton
-      aria-label='Switch ruler mode'
-      onClick={switchMode}
-      sx={{
-        position: 'absolute',
-        bottom: 12,
-        left: 12,
-        zIndex: 1,
-      }}
-    >
+    <IconButton aria-label='Switch ruler mode' onClick={switchMode}>
       <svg
         xmlns='http://www.w3.org/2000/svg'
         viewBox='0 0 24 24'

@@ -3,11 +3,10 @@ import { Box } from 'theme-ui'
 import mapboxgl from 'mapbox-gl'
 import style from './style'
 import Enhancers from './enhancers'
-import { INITIAL_CENTER, INITIAL_ZOOM } from './settings'
 
 mapboxgl.accessToken = ''
 
-function Map({ options, onChangeSelectedData = (selectedData) => {} }) {
+function Map({ onMapReady, options, onChangeRegion = (region) => {} }) {
   const container = useRef(null)
   const [map, setMap] = useState(null)
 
@@ -15,8 +14,8 @@ function Map({ options, onChangeSelectedData = (selectedData) => {} }) {
     const map = new mapboxgl.Map({
       container: container.current,
       style: style,
-      center: INITIAL_CENTER,
-      zoom: INITIAL_ZOOM,
+      center: [-100, 40],
+      zoom: 3.5,
       minZoom: 3,
       maxZoom: 8,
       maxBounds: [
@@ -25,7 +24,10 @@ function Map({ options, onChangeSelectedData = (selectedData) => {} }) {
       ],
     })
 
-    map.on('load', () => setMap(map))
+    map.on('load', () => {
+      setMap(map)
+      onMapReady(map)
+    })
 
     return function cleanup() {
       setMap(null)
@@ -34,12 +36,20 @@ function Map({ options, onChangeSelectedData = (selectedData) => {} }) {
   }, [])
 
   return (
-    <Box sx={{ flexBasis: '100%' }} ref={container}>
+    <Box
+      ref={container}
+      sx={{
+        flexBasis: '100%',
+        'canvas.mapboxgl-canvas:focus': {
+          outline: 'none',
+        },
+      }}
+    >
       {map && (
         <Enhancers
           map={map}
           options={options}
-          onChangeSelectedData={onChangeSelectedData}
+          onChangeRegion={onChangeRegion}
         />
       )}
     </Box>
