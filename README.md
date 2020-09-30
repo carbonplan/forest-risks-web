@@ -39,6 +39,7 @@ To render the map itself, you need to either build the map tiles locally (so the
 - Python 3
 - the Python dependencies specified in `tiles/requirements.txt`
 - the command line tools `tippecanoe` `tile-join` and `mb-util`
+- several raw files from natural earth
 
 ## license
 
