@@ -105,6 +105,42 @@ def build_basemap():
     )
 
     cmds.append(
+        'tippecanoe '
+        '-Z3 '
+        '-z5 '
+        '-o tmp/roads.mbtiles '
+        '--no-feature-limit '
+        '--no-tile-size-limit '
+        '--extend-zooms-if-still-dropping '
+        '--no-tile-compression '
+        'raw/ne_10m_roads.geojson '
+    )
+
+    cmds.append(
+        'tippecanoe '
+        '-Z3 '
+        '-z5 '
+        '-o tmp/rivers.mbtiles '
+        '--no-feature-limit '
+        '--no-tile-size-limit '
+        '--extend-zooms-if-still-dropping '
+        '--no-tile-compression '
+        'raw/ne_10m_rivers_lake_centerlines.geojson'
+    )
+
+    cmds.append(
+        'tippecanoe '
+        '-Z3 '
+        '-z5 '
+        '-o tmp/places.mbtiles '
+        '--no-feature-limit '
+        '--no-tile-size-limit '
+        '--extend-zooms-if-still-dropping '
+        '--no-tile-compression '
+        'raw/ne_10m_populated_places.geojson'
+    )
+
+    cmds.append(
         'tile-join '
         '-o tmp/basemap.mbtiles '
         '--no-tile-compression '
@@ -112,6 +148,9 @@ def build_basemap():
         'tmp/land_water.mbtiles '
         'tmp/countries.mbtiles '
         'tmp/provinces.mbtiles '
+        'tmp/roads.mbtiles '
+        'tmp/rivers.mbtiles '
+        'tmp/places.mbtiles '
     )
 
     cmds.append(
@@ -126,4 +165,4 @@ def build_basemap():
     [os.system(cmd) for cmd in cmds]
 
 if __name__ == '__main__':
-    # TODO make buildset an argument
+    build_basemap()

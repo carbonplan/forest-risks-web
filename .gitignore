@@ -3,4 +3,5 @@
 node_modules
 tiles/processed
 tiles/raw
+tiles/glyphs
 tiles/util.py
