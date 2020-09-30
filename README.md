@@ -9,11 +9,13 @@
 
 [![GitHub][github-badge]][github]
 ![MIT License][]
+
 <!-- ![Build Status][] -->
 
-
 [github]: https://github.com/carbonplan/maps
+
 <!--[github-badge]: https://flat.badgen.net/badge/-/github?icon=github&label -->
+
 [mit license]: https://flat.badgen.net/badge/license/MIT/blue
 
 ## building the site
