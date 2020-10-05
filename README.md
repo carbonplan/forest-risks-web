@@ -8,12 +8,10 @@
 **interactive web-based mapping tool**
 
 [![GitHub][github-badge]][github]
-![Build Status][]
 ![MIT License][]
 
 [github]: https://github.com/carbonplan/maps
 [github-badge]: https://flat.badgen.net/badge/-/github?icon=github&label
-[build status]: https://flat.badgen.net/github/checks/carbonplan/maps
 [mit license]: https://flat.badgen.net/badge/license/MIT/blue
 
 ## building the site
