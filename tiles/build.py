@@ -1,34 +1,5 @@
 import os
-
-def build_fires():
-
-    cmds = []
-
-    cmds.append('rm -rf processed/fires ')
-    cmds.append('rm -rf tmp ')
-    cmds.append('mkdir tmp ')
-
-    cmds.append(
-        'tippecanoe '
-        '-z5 '
-        '-o tmp/fires.mbtiles '
-        '--no-feature-limit '
-        '--no-tile-size-limit '
-        '--extend-zooms-if-still-dropping '
-        '--no-tile-compression '
-        'raw/fires.geojson '
-    )
-
-    cmds.append(
-        'mb-util '
-        '--image_format=pbf ' 
-        'tmp/fires.mbtiles '
-        'processed/fires'
-    )
-
-    cmds.append('rm -rf tmp ')
-
-    [os.system(cmd) for cmd in cmds]
+import sys
 
 def build_forests():
 
@@ -46,7 +17,7 @@ def build_forests():
         '--no-tile-size-limit '
         '--extend-zooms-if-still-dropping '
         '--no-tile-compression '
-        'raw/forests.geojson '
+        'raw/biomass.geojson '
     )
 
     cmds.append(
@@ -165,4 +136,11 @@ def build_basemap():
     [os.system(cmd) for cmd in cmds]
 
 if __name__ == '__main__':
-    build_basemap()
+    args = sys.argv
+    choice = args[1]
+    if choice == 'basemap':
+        build_basemap()
+    elif choice == 'forests':
+        build_forests()
+    else:
+        print(f'choice "{choice}" not recognized')

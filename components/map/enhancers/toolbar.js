@@ -1,36 +1,10 @@
 import { Box } from 'theme-ui'
 import { useState, useRef } from 'react'
 
-export default function Toolbar({ map, children }) {
+export default function Toolbar({ map, children, position }) {
   const toolbar = useRef(null)
 
-  const [position, setPosition] = useState('left')
-  const [edge, setEdge] = useState(50)
-  const [moving, setMoving] = useState(false)
-
-  const onMouseDown = (e) => {
-    const mapContainer = map.getContainer()
-    const { height: toolbarHeight } = toolbar.current.getBoundingClientRect()
-    const { height: mapHeight } = mapContainer.getBoundingClientRect()
-    const offset = e.offsetY
-
-    const onMouseMove = (e) => {
-      let edge = mapHeight - e.clientY - toolbarHeight + offset
-      if (edge < 0) edge = 0
-      if (edge > mapHeight - toolbarHeight) edge = mapHeight - toolbarHeight
-      setEdge(edge)
-    }
-
-    const onMouseUp = (e) => {
-      mapContainer.removeEventListener('mousemove', onMouseMove)
-      setMoving(false)
-    }
-
-    mapContainer.addEventListener('mousemove', onMouseMove)
-    mapContainer.addEventListener('mouseup', onMouseUp, { once: true })
-    mapContainer.addEventListener('mouseleave', onMouseUp, { once: true })
-    setMoving(true)
-  }
+  const [edge, setEdge] = useState(0)
 
   const styles = (() => {
     switch (position) {
@@ -41,33 +15,36 @@ export default function Toolbar({ map, children }) {
             bottom: `${edge}px`,
           },
           outer: {
-            borderBottomWidth: 1,
+            borderTopWidth: 1,
+            borderRightWidth: 1,
+            borderBottomWidth: 0,
             borderLeftWidth: 0,
-            borderBottomRightRadius: 5,
+            borderTopRightRadius: 4,
           },
           inner: {
-            flexDirection: 'column',
+            flexDirection: 'row',
           },
           button: {
             marginTop: '2px',
             marginBottom: '2px',
           },
           divider: {
-            width: 16,
-            height: 1,
-            margin: '8px 0',
+            width: 1,
+            height: 16,
+            margin: '0 8px',
           },
         }
-      case 'bottom':
+      case 'right':
         return {
           guide: {
-            left: `${edge}px`,
+            right: `${edge}px`,
             bottom: 0,
           },
           outer: {
             borderBottomWidth: 0,
             borderLeftWidth: 1,
-            borderTopLeftRadius: 5,
+            borderRightWidth: 0,
+            borderTopLeftRadius: 4,
           },
           inner: {
             flexDirection: 'row',
@@ -95,24 +72,18 @@ export default function Toolbar({ map, children }) {
     >
       <Box
         ref={toolbar}
-        onMouseDown={(e) => {
-          if (e.defaultPrevented) return
-          onMouseDown(e.nativeEvent)
-        }}
         sx={{
           backgroundColor: 'background',
-          borderTopRightRadius: 5,
           borderTopWidth: 1,
           borderRightWidth: 1,
           borderStyle: 'solid',
           borderColor: 'muted',
-          cursor: moving ? 'grabbing' : 'grab',
+          cursor: 'default',
           padding: '12px',
           ...styles.outer,
         }}
       >
         <Box
-          onMouseDown={(e) => e.preventDefault()}
           sx={{
             display: 'flex',
             alignItems: 'center',
@@ -127,18 +98,6 @@ export default function Toolbar({ map, children }) {
           }}
         >
           {children}
-          {moving && (
-            <Box
-              className='mouse-blocker'
-              sx={{
-                position: 'absolute',
-                top: 0,
-                bottom: 0,
-                left: 0,
-                right: 0,
-              }}
-            />
-          )}
         </Box>
       </Box>
     </Box>

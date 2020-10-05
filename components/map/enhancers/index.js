@@ -9,7 +9,7 @@ import ThemeButton from '../../switch'
 import ResetButton from './reset-button'
 
 export default function Enhancers({ map, options, onChangeRegion }) {
-  const [activeFilter, setActiveFilter] = useState(filterTypes.CIRCLE)
+  const [activeFilter, setActiveFilter] = useState(filterTypes.VIEWPORT)
   const [reset, setReset] = useState([() => {}])
 
   useTheme(map)
@@ -25,18 +25,18 @@ export default function Enhancers({ map, options, onChangeRegion }) {
 
   return (
     <>
-      <Toolbar map={map}>
-        {activeFilter === filterTypes.CIRCLE && (
-          <>
-            <ResetButton onClick={() => reset[0]()} />
-            <Divider />
-          </>
-        )}
+      <Toolbar map={map} position={'left'}>
         <FilterButtons
           activeFilter={activeFilter}
           onChangeActiveFilter={setActiveFilter}
         />
-        <Divider />
+        {activeFilter === filterTypes.CIRCLE && (
+          <>
+            <ResetButton onClick={() => reset[0]()} />
+          </>
+        )}
+      </Toolbar>
+      <Toolbar map={map} position={'right'}>
         <RulerButton map={map} />
         <ThemeButton />
       </Toolbar>

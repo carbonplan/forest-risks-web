@@ -37,7 +37,7 @@ const CirclePicker = ({ map, center, radius, onIdle, onDrag }) => {
       <path
         id='circle'
         stroke={theme.colors.primary}
-        strokeWidth={3}
+        strokeWidth={1}
         fill='transparent'
         cursor='move'
       />
@@ -52,8 +52,8 @@ const CirclePicker = ({ map, center, radius, onIdle, onDrag }) => {
         width='100%'
         height='100%'
         mask='url(#circle-mask)'
-        fill={theme.colors.primary}
-        fillOpacity={0.2}
+        fill={theme.colors.background}
+        fillOpacity={0.8}
       />
       <circle
         id='handle'
@@ -65,7 +65,7 @@ const CirclePicker = ({ map, center, radius, onIdle, onDrag }) => {
         id='radius-guideline'
         stroke={theme.colors.primary}
         strokeOpacity={0}
-        strokeWidth={2}
+        strokeWidth={1}
         strokeDasharray='3,2'
       />
       <g id='radius-text-container'>

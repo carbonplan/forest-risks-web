@@ -8,12 +8,6 @@ import Main from './main'
 function Sidebar({ options, setOptions, children }) {
   const [showMenu, setShowMenu] = useState(false)
 
-  function togglePathway(name) {
-    setOptions((options) => {
-      return { ...options, [name]: !options[name] }
-    })
-  }
-
   return (
     <Flex
       sx={{
@@ -31,7 +25,7 @@ function Sidebar({ options, setOptions, children }) {
       <Header showMenu={showMenu} toggleMenu={() => setShowMenu(!showMenu)} />
       <Box sx={{ position: 'relative', flex: 1 }}>
         <Menu visible={showMenu} />
-        <Main options={options} togglePathway={togglePathway}>
+        <Main options={options} setOptions={setOptions}>
           {children}
         </Main>
       </Box>

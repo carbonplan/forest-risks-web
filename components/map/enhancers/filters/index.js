@@ -6,29 +6,6 @@ import ViewportFilter from './viewport-filter'
 import Button from './button'
 
 const FILTERS = [
-  {
-    type: filterTypes.CIRCLE,
-    Component: CircleFilter,
-    label: 'Circle filter',
-    svg: (
-      <>
-        <circle cx='10' cy='10' r='3' />
-        <line x1='12' x2='17' y1='12' y2='17' />
-      </>
-    ),
-  },
-  // {
-  //   type: filterTypes.FILE,
-  //   Component: FileFilter,
-  //   label: 'Upload geojson',
-  //   svg: (
-  //     <>
-  //       <line x1='12' x2='12' y1='7' y2='18' />
-  //       <line x1='12' x2='6' y1='7' y2='12' />
-  //       <line x1='12' x2='18' y1='7' y2='12' />
-  //     </>
-  //   ),
-  // },
   // {
   //   type: filterTypes.DRAW,
   //   Component: DrawFilter,
@@ -45,6 +22,29 @@ const FILTERS = [
     Component: ViewportFilter,
     label: 'No filter',
     svg: null,
+  },
+  {
+    type: filterTypes.CIRCLE,
+    Component: CircleFilter,
+    label: 'Circle filter',
+    svg: (
+      <>
+        <circle cx='10' cy='10' r='3' />
+        <line x1='12' x2='17' y1='12' y2='17' />
+      </>
+    ),
+  },
+  {
+    type: filterTypes.FILE,
+    Component: FileFilter,
+    label: 'Upload geojson',
+    svg: (
+      <>
+        <line x1='12' x2='12' y1='7' y2='18' />
+        <line x1='12' x2='6' y1='7' y2='12' />
+        <line x1='12' x2='18' y1='7' y2='12' />
+      </>
+    ),
   },
 ]
 

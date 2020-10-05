@@ -8,8 +8,11 @@ import { getSelectedData } from './map/enhancers/filters/helpers'
 
 function Viewer() {
   const initialOptions = {
-    forests: true,
-    fires: true,
+    biomass: true,
+    fire: false,
+    drought: false,
+    insects: false,
+    year: 2010,
   }
 
   const [map, setMap] = useState(null)
@@ -20,9 +23,7 @@ function Viewer() {
 
   useEffect(() => {
     if (!map) return
-
-    const layers = Object.keys(options).filter((key) => options[key])
-    const data = getSelectedData(map, layers, region)
+    const data = getSelectedData(map, ['forests'], region)
     setSelectedData(data)
   }, [map, options, region, bounds])
 

@@ -96,22 +96,6 @@ function FilePicker({ map, onFile, clearable, onClear }) {
         style={{ display: 'none' }}
         onChange={(e) => handleFile(e.target.files[0])}
       />
-      <Instructions>
-        <Section>
-          <Box>drag geojson file onto map</Box>
-          <Box sx={{ marginY: '8px' }}>OR</Box>
-          <Button onClick={() => fileInput.current.click()}>
-            select file from hard drive
-          </Button>
-          <Box sx={{ marginY: '8px' }}>OR</Box>
-          <Button onClick={handlePaste}>paste geojson from clipboard</Button>
-        </Section>
-        {clearable && (
-          <Section sx={{ padding: '2px' }}>
-            <Button onClick={onClear}>clear</Button>
-          </Section>
-        )}
-      </Instructions>
     </>
   )
 }

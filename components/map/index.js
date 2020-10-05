@@ -17,7 +17,7 @@ function Map({ onMapReady, options, onChangeRegion = (region) => {} }) {
       center: [-100, 40],
       zoom: 3.5,
       minZoom: 3,
-      maxZoom: 8,
+      maxZoom: 9,
       maxBounds: [
         [-155, 5],
         [-45, 65],

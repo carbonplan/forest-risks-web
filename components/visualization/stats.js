@@ -13,7 +13,7 @@ export default function Stats({ data }) {
 
   const { region, points } = data
 
-  const years = [2015, 2050, 2085]
+  const years = [2000, 2050, 2100]
   const types = Object.keys(points)
 
   const stats = {}

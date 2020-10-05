@@ -63,7 +63,7 @@ function FileFilter({ map, onChangeRegion = (region) => {} }) {
       source: 'file',
       type: 'line',
       paint: {
-        'line-width': 3.0,
+        'line-width': 1.0,
       },
     })
 

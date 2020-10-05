@@ -2,6 +2,7 @@ import config from '@config'
 
 const style = {
   version: 8,
+  glyphs: `https://storage.googleapis.com/carbonplan-data/tiles/glyphs/{fontstack}/{range}.pbf`,
   sources: {
     basemap: {
       type: 'vector',
@@ -87,12 +88,30 @@ const style = {
       },
     },
     {
+      id: 'roads',
+      type: 'line',
+      source: 'basemap',
+      'source-layer': 'ne_10m_roads',
+      layout: {
+        'line-cap': 'round',
+        'line-join': 'round',
+        visibility: 'visible',
+      },
+      paint: {
+        'line-blur': 0.4,
+        'line-color': 'black',
+        'line-opacity': 0,
+        'line-width': 0.8,
+      },
+    },
+    {
       id: 'forests',
       type: 'circle',
       source: 'forests',
-      'source-layer': 'forests',
+      'source-layer': 'biomass',
       layout: { visibility: 'visible' },
       paint: {
+        'circle-opacity': 0,
         'circle-radius': [
           'interpolate',
           ['exponential', 2],
@@ -109,8 +128,9 @@ const style = {
           3,
           8,
           5,
+          9,
+          9,
         ],
-        'circle-color': '#7eb36a',
       },
     },
     {
@@ -136,8 +156,11 @@ const style = {
           3,
           8,
           5,
+          9,
+          9,
         ],
         'circle-color': '#ea9755',
+        'circle-opacity': 0,
       },
     },
   ],
