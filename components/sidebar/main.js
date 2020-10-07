@@ -4,10 +4,7 @@ import { alpha } from '@theme-ui/color'
 function Main({ options, setOptions, children }) {
   const sx = {
     group: {
-      pl: [3],
-      pr: [3],
-      pt: [3],
-      pb: [3],
+      p: [3],
       borderStyle: 'solid',
       borderColor: 'muted',
       borderWidth: '0px',
@@ -15,10 +12,7 @@ function Main({ options, setOptions, children }) {
       width: '100%',
     },
     groupFinal: {
-      pl: [3],
-      pr: [3],
-      pt: [3],
-      pb: [3],
+      p: [3],
       borderStyle: 'solid',
       borderColor: 'muted',
       borderWidth: '0px',
@@ -49,9 +43,15 @@ function Main({ options, setOptions, children }) {
     },
   }
 
-  function toggleOption(name) {
+  function toggleOption(value) {
     setOptions((options) => {
-      return { ...options, [name]: !options[name] }
+      return { ...options, [value]: !options[value] }
+    })
+  }
+
+  function toggleRadio(name, value) {
+    setOptions((options) => {
+      return {...options, [name]: value}
     })
   }
 
@@ -61,18 +61,36 @@ function Main({ options, setOptions, children }) {
     })
   }
 
-  const Option = ({ label, color, disabled }) => {
+  const Option = ({ value, color, disabled }) => {
     return (
       <Badge
         variant='primary'
-        onClick={() => toggleOption(label)}
+        onClick={() => toggleOption(value)}
         sx={{
           mr: [3],
-          color: options[label] & !disabled ? color : alpha(color, 0.2),
-          borderColor: options[label] & !disabled ? color : alpha(color, 0.2),
+          color: options[value] & !disabled ? color : alpha(color, 0.2),
+          borderColor: options[value] & !disabled ? color : alpha(color, 0.2),
+          cursor: disabled ? 'default' : 'pointer'
         }}
       >
-        {label}
+        {value}
+      </Badge>
+    )
+  }
+
+  const Radio = ({ name, value, color, disabled }) => {
+    return (
+      <Badge
+        variant='primary'
+        onClick={() => toggleRadio(name, value)}
+        sx={{
+          mr: [3],
+          color: (options[name] == value) & !disabled ? color : alpha(color, 0.2),
+          borderColor: (options[name] == value) & !disabled ? color : alpha(color, 0.2),
+          cursor: disabled ? 'default' : 'pointer'
+        }}
+      >
+        {value}
       </Badge>
     )
   }
@@ -87,25 +105,25 @@ function Main({ options, setOptions, children }) {
     >
       <Box sx={sx.group}>
         <Text sx={sx.label}>FORESTS</Text>
-        <Option label='biomass' color='green' />
+        <Option value='biomass' color='green' />
       </Box>
       <Box sx={sx.group}>
         <Text sx={sx.label}>Risks</Text>
-        <Option label='fire' color='orange' />
-        <Option label='drought' color='blue' disabled={true} />
-        <Option label='insects' color='pink' disabled={true} />
+        <Option value='fire' color='orange' />
+        <Option value='drought' color='blue' disabled={true} />
+        <Option value='insects' color='pink' disabled={true} />
       </Box>
       <Box sx={sx.group}>
         <Text sx={sx.label}>Climate</Text>
         <Box>
-          <Option label='SSP4.5' color='primary' />
-          <Option label='SSP7.0' color='primary' />
-          <Option label='SSP8.5' color='primary' />
+          <Radio value='SSP4.5' name='scenario' color='primary' />
+          <Radio value='SSP7.0' name='scenario' color='primary' />
+          <Radio value='SSP8.5' name='scenario' color='primary' />
           <Text sx={sx.arrow}>←</Text>
           <Text sx={sx.sublabel}>scenario</Text>
         </Box>
         <Box>
-          <Option label='CCSM' color='primary' />
+          <Radio value='BCC-CSM2-MR' name='model' color='primary'/>
           <Text sx={sx.arrow}>←</Text>
           <Text sx={sx.sublabel}>model</Text>
         </Box>
@@ -114,14 +132,14 @@ function Main({ options, setOptions, children }) {
         <Text sx={sx.label}>Time</Text>
         <Slider
           sx={{ mt: [3], mb: [3], fg: 'green' }}
-          value={options['year']}
-          onChange={(e) => setYear(parseFloat(e.target.value))}
-          min={2000}
+          value={parseFloat(options['year'])}
+          onChange={(e) => setYear(e.target.value)}
+          min={2020}
           max={2100}
-          step={10}
+          step={20}
         />
         <Text sx={{ fontFamily: 'monospace', display: 'inline-block' }}>
-          2000
+          2020
         </Text>
         <Text
           sx={{

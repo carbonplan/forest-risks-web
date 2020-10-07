@@ -41,7 +41,6 @@ const CirclePicker = ({ map, center, radius, onIdle, onDrag }) => {
         fill='transparent'
         cursor='move'
       />
-      <circle id='circle-center' fill={theme.colors.primary} r={4} />
       <mask id='circle-mask'>
         <rect x='0' y='0' width='100%' height='100%' fill='#FFFFFF' />
         <path id='circle-mask-cutout' fill='#000000' />

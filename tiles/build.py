@@ -1,6 +1,37 @@
 import os
 import sys
 
+def build_risks():
+
+    cmds = []
+
+    cmds.append('rm -rf processed/risks ')
+    cmds.append('rm -rf tmp ')
+    cmds.append('mkdir tmp ')
+
+    cmds.append(
+        'tippecanoe '
+        '-z5 '
+        '-o tmp/risks.mbtiles '
+        '--no-feature-limit '
+        '--no-tile-size-limit '
+        '--extend-zooms-if-still-dropping '
+        '--no-tile-compression '
+        'raw/fire.geojson '
+    )
+
+    cmds.append(
+        'mb-util '
+        '--image_format=pbf ' 
+        'tmp/risks.mbtiles '
+        'processed/risks'
+    )
+
+    cmds.append('rm -rf tmp ')
+
+    [os.system(cmd) for cmd in cmds]
+
+
 def build_forests():
 
     cmds = []
@@ -88,30 +119,6 @@ def build_basemap():
     )
 
     cmds.append(
-        'tippecanoe '
-        '-Z3 '
-        '-z5 '
-        '-o tmp/rivers.mbtiles '
-        '--no-feature-limit '
-        '--no-tile-size-limit '
-        '--extend-zooms-if-still-dropping '
-        '--no-tile-compression '
-        'raw/ne_10m_rivers_lake_centerlines.geojson'
-    )
-
-    cmds.append(
-        'tippecanoe '
-        '-Z3 '
-        '-z5 '
-        '-o tmp/places.mbtiles '
-        '--no-feature-limit '
-        '--no-tile-size-limit '
-        '--extend-zooms-if-still-dropping '
-        '--no-tile-compression '
-        'raw/ne_10m_populated_places.geojson'
-    )
-
-    cmds.append(
         'tile-join '
         '-o tmp/basemap.mbtiles '
         '--no-tile-compression '
@@ -120,8 +127,6 @@ def build_basemap():
         'tmp/countries.mbtiles '
         'tmp/provinces.mbtiles '
         'tmp/roads.mbtiles '
-        'tmp/rivers.mbtiles '
-        'tmp/places.mbtiles '
     )
 
     cmds.append(
@@ -138,9 +143,14 @@ def build_basemap():
 if __name__ == '__main__':
     args = sys.argv
     choice = args[1]
-    if choice == 'basemap':
-        build_basemap()
-    elif choice == 'forests':
-        build_forests()
-    else:
+
+    switcher = {
+        'basemap': build_basemap,
+        'forests': build_forests,
+        'risks': build_risks
+    }
+
+    if choice not in switcher.keys():
         print(f'choice "{choice}" not recognized')
+    else:
+        switcher[choice]()

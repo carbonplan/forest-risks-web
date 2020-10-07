@@ -12,7 +12,9 @@ function Viewer() {
     fire: false,
     drought: false,
     insects: false,
-    year: 2010,
+    model: 'BCC-CSM2-MR',
+    scenario: 'SSP4.5',
+    year: '2020',
   }
 
   const [map, setMap] = useState(null)
@@ -23,7 +25,7 @@ function Viewer() {
 
   useEffect(() => {
     if (!map) return
-    const data = getSelectedData(map, ['forests'], region)
+    const data = getSelectedData(map, ['biomass', 'fire'], region)
     setSelectedData(data)
   }, [map, options, region, bounds])
 
@@ -54,7 +56,7 @@ function Viewer() {
       }}
     >
       <Sidebar options={options} setOptions={setOptions}>
-        <Visualization data={selectedData} />
+        <Visualization data={selectedData} options={options} />
       </Sidebar>
       <Map options={options} onChangeRegion={setRegion} onMapReady={setMap} />
     </Flex>

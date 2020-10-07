@@ -34,18 +34,18 @@ const FILTERS = [
       </>
     ),
   },
-  {
-    type: filterTypes.FILE,
-    Component: FileFilter,
-    label: 'Upload geojson',
-    svg: (
-      <>
-        <line x1='12' x2='12' y1='7' y2='18' />
-        <line x1='12' x2='6' y1='7' y2='12' />
-        <line x1='12' x2='18' y1='7' y2='12' />
-      </>
-    ),
-  },
+  // {
+  //   type: filterTypes.FILE,
+  //   Component: FileFilter,
+  //   label: 'Upload geojson',
+  //   svg: (
+  //     <>
+  //       <line x1='12' x2='12' y1='7' y2='18' />
+  //       <line x1='12' x2='6' y1='7' y2='12' />
+  //       <line x1='12' x2='18' y1='7' y2='12' />
+  //     </>
+  //   ),
+  // },
 ]
 
 export function Filters({ map, onChangeRegion, onChangeReset, activeFilter }) {

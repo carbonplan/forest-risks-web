@@ -18,9 +18,9 @@ function useTheme(map) {
     map.setPaintProperty('countries', 'line-color', theme.colors.primary)
     map.setPaintProperty('countries', 'line-opacity', 1)
     map.setPaintProperty('states', 'line-color', theme.colors.primary)
-    map.setPaintProperty('states', 'line-opacity', 1)
-    map.setPaintProperty('roads', 'line-color', theme.colors.secondary)
-    map.setPaintProperty('roads', 'line-opacity', 0.5)
+    map.setPaintProperty('states', 'line-opacity', 0.8)
+    map.setPaintProperty('roads', 'line-color', theme.colors.primary)
+    map.setPaintProperty('roads', 'line-opacity', 0.25)
   }, [context])
 }
 

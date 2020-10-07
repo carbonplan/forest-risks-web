@@ -4,5 +4,5 @@ const prefix = 'http://localhost:8080'
 export default {
   basemap: `${prefix}/basemap`,
   forests: `${prefix}/forests`,
-  fires: `${prefix}/fires`,
+  risks: `${prefix}/risks`,
 }
