@@ -25,7 +25,10 @@ export default function TimeSeries({ data, domain, range, color }) {
 
     svg
       .append('path')
-      .datum([{x: domain[0], y: 0}, {x: domain[0] + 3, y: 0}])
+      .datum([
+        { x: domain[0], y: 0 },
+        { x: domain[0] + 3, y: 0 },
+      ])
       .attr('fill', 'none')
       .attr('stroke', theme.colors.secondary)
       .attr('stroke-width', 1)
@@ -53,7 +56,10 @@ export default function TimeSeries({ data, domain, range, color }) {
 
     svg
       .append('path')
-      .datum([{x: domain[0], y: range[1]}, {x: domain[0] + 3, y: range[1]}])
+      .datum([
+        { x: domain[0], y: range[1] },
+        { x: domain[0] + 3, y: range[1] },
+      ])
       .attr('fill', 'none')
       .attr('stroke', theme.colors.secondary)
       .attr('stroke-width', 1)

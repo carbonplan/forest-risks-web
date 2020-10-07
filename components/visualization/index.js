@@ -31,7 +31,7 @@ export default function Visualization({ data, options }) {
       const key = optionKey({
         model: options.model,
         scenario: options.scenario,
-        year: year
+        year: year,
       })
       stats[type].averages[index] = {
         x: year,
@@ -41,22 +41,24 @@ export default function Visualization({ data, options }) {
   })
 
   stats.fire.averages = stats.fire.averages.map((d) => {
-    return {x: d.x, y: d.y * 100}
+    return { x: d.x, y: d.y * 100 }
   })
 
   const biomass = stats.biomass.averages.map((d) => d.y)
-  const biomassDelta = biomass.slice(1, biomass.length)
-    .map((_,i) => (biomass[i+1] - biomass[i]))
+  const biomassDelta = biomass
+    .slice(1, biomass.length)
+    .map((_, i) => biomass[i + 1] - biomass[i])
     .reduce((a, b) => a + b, 0)
 
   const fire = stats.fire.averages.map((d) => d.y)
-  const fireDelta = fire.slice(1, fire.length)
-    .map((_,i) => (fire[i+1] - fire[i]))
+  const fireDelta = fire
+    .slice(1, fire.length)
+    .map((_, i) => fire[i + 1] - fire[i])
     .reduce((a, b) => a + b, 0)
 
   const sx = {
     group: {
-      p: [3], 
+      p: [3],
       position: 'relative',
       borderStyle: 'solid',
       borderWidth: '0px',
@@ -78,7 +80,7 @@ export default function Visualization({ data, options }) {
       letterSpacing: 'monospace',
       fontSize: [4],
       display: 'inline-block',
-      ml: [3]
+      ml: [3],
     },
     unit: {
       fontFamily: 'faux',
@@ -96,36 +98,40 @@ export default function Visualization({ data, options }) {
 
   return (
     <>
-    {options['biomass'] && 
-      <Box sx={sx.group}>
-        <Box>
-        <Text sx={sx.label}>Biomass</Text>
-        <Text sx={sx.unit}>t / ha</Text>
-        <Text sx={{...sx.number, color: 'green'}}>+{biomassDelta.toFixed(2)}</Text>
+      {options['biomass'] && (
+        <Box sx={sx.group}>
+          <Box>
+            <Text sx={sx.label}>Biomass</Text>
+            <Text sx={sx.unit}>t / ha</Text>
+            <Text sx={{ ...sx.number, color: 'green' }}>
+              +{biomassDelta.toFixed(2)}
+            </Text>
+          </Box>
+          <TimeSeries
+            data={stats.biomass.averages}
+            domain={[2020, 2100]}
+            range={biomassRange}
+            color={'green'}
+          ></TimeSeries>
         </Box>
-        <TimeSeries 
-          data={stats.biomass.averages} 
-          domain={[2020, 2100]} 
-          range={biomassRange} 
-          color={'green'}
-        ></TimeSeries>
-      </Box>
-    }
-    {options['fire'] && 
-      <Box sx={sx.group}>
-        <Box>
-        <Text sx={sx.label}>Risk</Text>
-        <Text sx={sx.unit}>%</Text>
-        <Text sx={{...sx.number, color: 'orange'}}>+{(fireDelta).toFixed(0)}%</Text>
+      )}
+      {options['fire'] && (
+        <Box sx={sx.group}>
+          <Box>
+            <Text sx={sx.label}>Risk</Text>
+            <Text sx={sx.unit}>%</Text>
+            <Text sx={{ ...sx.number, color: 'orange' }}>
+              +{fireDelta.toFixed(0)}%
+            </Text>
+          </Box>
+          <TimeSeries
+            data={stats.fire.averages}
+            domain={[2020, 2100]}
+            range={fireRange}
+            color={'orange'}
+          ></TimeSeries>
         </Box>
-        <TimeSeries 
-          data={stats.fire.averages} 
-          domain={[2020, 2100]} 
-          range={fireRange} 
-          color={'orange'}
-        ></TimeSeries>
-      </Box>
-    }
+      )}
     </>
   )
 }

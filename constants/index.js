@@ -1,7 +1,7 @@
 export const allOptions = {
   models: ['BCC-CSM2-MR'],
   scenarios: ['SSP4.5', 'SSP7.0', 'SSP8.5'],
-  years: ['2020', '2040', '2060', '2080', '2100']
+  years: ['2020', '2040', '2060', '2080', '2100'],
 }
 
 export const optionIndex = (label, value) => {
@@ -10,9 +10,9 @@ export const optionIndex = (label, value) => {
 
 export const optionKey = (options) => {
   const key = [
-    optionIndex('models', options.model), 
+    optionIndex('models', options.model),
     optionIndex('scenarios', options.scenario),
-    optionIndex('years', options.year)
+    optionIndex('years', options.year),
   ].join('_')
   return key
 }
@@ -24,15 +24,14 @@ export const plotRanges = (options) => {
       'SSP7.0': [0, 35],
       'SSP8.5': [0, 55],
     }[options['scenario']],
-    biomass: [0, 500]
+    biomass: [0, 500],
   }
 }
-
 
 export const colorRanges = (options) => {
   return {
     fire: [0, 0.1],
-    biomass: [50, 300]
+    biomass: [50, 300],
   }
 }
 
@@ -68,5 +67,3 @@ Morphocode does that well, but it's really laggy here because
 we need to refilter all of the points every time the mouse moves.
 */
 export const UPDATE_STATS_ON_DRAG = false
-
-

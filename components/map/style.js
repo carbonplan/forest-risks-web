@@ -123,7 +123,7 @@ const style = {
           8,
           7.5,
           9,
-          14
+          14,
         ],
       },
     },
@@ -151,9 +151,9 @@ const style = {
           8,
           7.5,
           9,
-          14
+          14,
         ],
-        'circle-opacity': 0
+        'circle-opacity': 0,
       },
     },
   ],

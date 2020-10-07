@@ -51,7 +51,7 @@ function Main({ options, setOptions, children }) {
 
   function toggleRadio(name, value) {
     setOptions((options) => {
-      return {...options, [name]: value}
+      return { ...options, [name]: value }
     })
   }
 
@@ -70,7 +70,7 @@ function Main({ options, setOptions, children }) {
           mr: [3],
           color: options[value] & !disabled ? color : alpha(color, 0.2),
           borderColor: options[value] & !disabled ? color : alpha(color, 0.2),
-          cursor: disabled ? 'default' : 'pointer'
+          cursor: disabled ? 'default' : 'pointer',
         }}
       >
         {value}
@@ -85,9 +85,11 @@ function Main({ options, setOptions, children }) {
         onClick={() => toggleRadio(name, value)}
         sx={{
           mr: [3],
-          color: (options[name] == value) & !disabled ? color : alpha(color, 0.2),
-          borderColor: (options[name] == value) & !disabled ? color : alpha(color, 0.2),
-          cursor: disabled ? 'default' : 'pointer'
+          color:
+            (options[name] == value) & !disabled ? color : alpha(color, 0.2),
+          borderColor:
+            (options[name] == value) & !disabled ? color : alpha(color, 0.2),
+          cursor: disabled ? 'default' : 'pointer',
         }}
       >
         {value}
@@ -123,7 +125,7 @@ function Main({ options, setOptions, children }) {
           <Text sx={sx.sublabel}>scenario</Text>
         </Box>
         <Box>
-          <Radio value='BCC-CSM2-MR' name='model' color='primary'/>
+          <Radio value='BCC-CSM2-MR' name='model' color='primary' />
           <Text sx={sx.arrow}>←</Text>
           <Text sx={sx.sublabel}>model</Text>
         </Box>
