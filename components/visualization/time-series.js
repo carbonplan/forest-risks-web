@@ -25,10 +25,10 @@ export default function TimeSeries({ data, domain, range, color }) {
 
     svg
       .append('path')
-      .datum([{x: domain[0], y: 0}, {x: domain[0] + 5, y: 0}])
+      .datum([{x: domain[0], y: 0}, {x: domain[0] + 3, y: 0}])
       .attr('fill', 'none')
-      .attr('stroke', theme.colors.muted)
-      .attr('stroke-width', 2)
+      .attr('stroke', theme.colors.secondary)
+      .attr('stroke-width', 1)
       .attr('stroke-opacity', 1)
       .attr(
         'd',
@@ -44,19 +44,19 @@ export default function TimeSeries({ data, domain, range, color }) {
 
     svg
       .append('text')
-      .attr('transform', `translate(${0 + 25},${height + 5})`)
+      .attr('transform', `translate(${0 + 20},${height + 5})`)
       .style('text-anchor', 'left')
-      .style('fill', theme.colors.muted)
-      .style('font-size', 16)
+      .style('fill', theme.colors.secondary)
+      .style('font-size', 14)
       .style('font-family', theme.fonts.faux)
       .text(range[0])
 
     svg
       .append('path')
-      .datum([{x: domain[0], y: range[1]}, {x: domain[0] + 5, y: range[1]}])
+      .datum([{x: domain[0], y: range[1]}, {x: domain[0] + 3, y: range[1]}])
       .attr('fill', 'none')
-      .attr('stroke', theme.colors.muted)
-      .attr('stroke-width', 2)
+      .attr('stroke', theme.colors.secondary)
+      .attr('stroke-width', 1)
       .attr('stroke-opacity', 1)
       .attr(
         'd',
@@ -72,10 +72,10 @@ export default function TimeSeries({ data, domain, range, color }) {
 
     svg
       .append('text')
-      .attr('transform', `translate(${0 + 25},${5})`)
+      .attr('transform', `translate(${0 + 20},${5})`)
       .style('text-anchor', 'left')
-      .style('fill', theme.colors.muted)
-      .style('font-size', 16)
+      .style('fill', theme.colors.secondary)
+      .style('font-size', 14)
       .style('font-family', theme.fonts.faux)
       .text(range[1])
 

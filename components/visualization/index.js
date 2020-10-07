@@ -100,19 +100,30 @@ export default function Visualization({ data, options }) {
       <Box sx={sx.group}>
         <Box>
         <Text sx={sx.label}>Biomass</Text>
-        <Text sx={sx.unit}>tCO2 / ha</Text>
+        <Text sx={sx.unit}>t / ha</Text>
         <Text sx={{...sx.number, color: 'green'}}>+{biomassDelta.toFixed(2)}</Text>
         </Box>
-        <TimeSeries data={stats.biomass.averages} domain={[2020, 2100]} range={biomassRange} color={'green'}></TimeSeries>
+        <TimeSeries 
+          data={stats.biomass.averages} 
+          domain={[2020, 2100]} 
+          range={biomassRange} 
+          color={'green'}
+        ></TimeSeries>
       </Box>
     }
     {options['fire'] && 
       <Box sx={sx.group}>
         <Box>
         <Text sx={sx.label}>Risk</Text>
+        <Text sx={sx.unit}>%</Text>
         <Text sx={{...sx.number, color: 'orange'}}>+{(fireDelta).toFixed(0)}%</Text>
         </Box>
-        <TimeSeries data={stats.fire.averages} domain={[2020, 2100]} range={fireRange} color={'orange'}></TimeSeries>
+        <TimeSeries 
+          data={stats.fire.averages} 
+          domain={[2020, 2100]} 
+          range={fireRange} 
+          color={'orange'}
+        ></TimeSeries>
       </Box>
     }
     </>
