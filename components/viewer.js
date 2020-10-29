@@ -3,6 +3,7 @@ import { Box, Flex } from 'theme-ui'
 import Sidebar from './sidebar'
 import Map from './map'
 import Visualization from './visualization'
+import Methods from './methods'
 import { filterTypes } from '@constants'
 import { getSelectedData } from './map/enhancers/filters/helpers'
 
@@ -22,6 +23,7 @@ function Viewer() {
   const [bounds, setBounds] = useState(null)
   const [options, setOptions] = useState(initialOptions)
   const [selectedData, setSelectedData] = useState(null)
+  const [showMethods, setShowMethods] = useState(false)
 
   useEffect(() => {
     if (!map) return
@@ -40,6 +42,8 @@ function Viewer() {
     }
   }, [map, region])
 
+  const toggleMethods = () => setShowMethods(!showMethods)
+
   return (
     <Flex
       sx={{
@@ -55,9 +59,10 @@ function Viewer() {
         },
       }}
     >
-      <Sidebar options={options} setOptions={setOptions}>
+      <Sidebar options={options} setOptions={setOptions} showMethods={showMethods} toggleMethods={toggleMethods}>
         <Visualization data={selectedData} options={options} />
       </Sidebar>
+      <Methods showMethods={showMethods} toggleMethods={toggleMethods}/>
       <Map options={options} onChangeRegion={setRegion} onMapReady={setMap} />
     </Flex>
   )

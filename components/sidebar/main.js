@@ -100,7 +100,6 @@ function Main({ options, setOptions, children }) {
   return (
     <Box
       sx={{
-        height: '100%',
         display: 'flex',
         flexDirection: 'column',
       }}

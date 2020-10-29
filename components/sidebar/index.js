@@ -5,8 +5,20 @@ import Header from './header'
 import Menu from './menu'
 import Main from './main'
 
-function Sidebar({ options, setOptions, children }) {
+function Sidebar({ options, setOptions, showMethods, toggleMethods, children }) {
   const [showMenu, setShowMenu] = useState(false)
+
+  const sx = {
+    arrow: {
+      display: 'inline-block',
+      fontSize: [4],
+      ml: [2],
+      top: '3px',
+      position: 'relative',
+      transition: '0.2s',
+      transform: showMethods ? 'scaleX(-1)' : 'scaleX(1)'
+    }
+  }
 
   return (
     <Flex
@@ -20,14 +32,36 @@ function Sidebar({ options, setOptions, children }) {
         borderWidth: '0px',
         borderRightWidth: '1px',
         borderColor: 'muted',
+        zIndex: 2000,
+        backgroundColor: 'background'
       }}
     >
       <Header showMenu={showMenu} toggleMenu={() => setShowMenu(!showMenu)} />
-      <Box sx={{ position: 'relative', flex: 1 }}>
+      <Box sx={{ 
+        position: 'relative', 
+        flex: 1,
+        overflowY: 'scroll'
+      }}>
         <Menu visible={showMenu} />
         <Main options={options} setOptions={setOptions}>
           {children}
         </Main>
+        <Box 
+          onClick={toggleMethods}
+          sx={{
+            px: [3], 
+            py: [2],
+            pb: [3],
+            fontFamily: 'heading',
+            letterSpacing: 'wide',
+            textTransform: 'uppercase',
+            cursor: 'pointer',
+            '&:hover': {
+              color: 'secondary'
+            }
+        }}>
+        <Text>METHODS<Text sx={sx.arrow}>→</Text></Text>
+        </Box>
       </Box>
     </Flex>
   )

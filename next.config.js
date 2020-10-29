@@ -17,9 +17,16 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
 
+//// MDX ////
+
+const withMDX = require('@next/mdx')({
+  extension: /\.mdx?$/,
+})
+
 //// EXPORT ////
 
-module.exports = withBundleAnalyzer({
+module.exports = withMDX(withBundleAnalyzer({
+  pageExtensions: ['jsx', 'js', 'md', 'mdx'],
   webpack: (config, options) => {
     config.resolve.alias = {
       ...config.resolve.alias,
@@ -28,4 +35,4 @@ module.exports = withBundleAnalyzer({
 
     return config
   },
-})
+}))
