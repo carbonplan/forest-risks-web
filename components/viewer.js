@@ -59,10 +59,15 @@ function Viewer() {
         },
       }}
     >
-      <Sidebar options={options} setOptions={setOptions} showMethods={showMethods} toggleMethods={toggleMethods}>
+      <Sidebar
+        options={options}
+        setOptions={setOptions}
+        showMethods={showMethods}
+        toggleMethods={toggleMethods}
+      >
         <Visualization data={selectedData} options={options} />
       </Sidebar>
-      <Methods showMethods={showMethods} toggleMethods={toggleMethods}/>
+      <Methods showMethods={showMethods} toggleMethods={toggleMethods} />
       <Map options={options} onChangeRegion={setRegion} onMapReady={setMap} />
     </Flex>
   )
