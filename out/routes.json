@@ -2,6 +2,7 @@
   "routes": [],
   "defaultHeaders": {
     "Referrer-Policy": "",
-    "ReferrerPolicy": ""
+    "ReferrerPolicy": "",
+    "referrer-policy": ""
   }
 }
