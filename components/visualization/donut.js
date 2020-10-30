@@ -19,17 +19,24 @@ export default function Donut({ data, color }) {
       .append('svg')
       .attr('width', width)
       .attr('height', height)
-    .append('g')
-      .attr('transform', "translate(" + width / 2 + "," + height / 2 + ")")
+      .append('g')
+      .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
 
-    const entries = [{key: 0, value: 1 - data}, {key: 1, value: data}]
+    const entries = [
+      { key: 0, value: 1 - data },
+      { key: 1, value: data },
+    ]
 
-    var colorScale = d3.scaleOrdinal()
+    var colorScale = d3
+      .scaleOrdinal()
       .domain([0, 1])
       .range([P.rgba(theme.colors[color], 0.2), theme.colors[color]])
 
-    var pie = d3.pie()
-      .value(function(d) {return d.value })
+    var pie = d3
+      .pie()
+      .value(function (d) {
+        return d.value
+      })
       .sort(null)
     var dataReady = pie(entries)
 
@@ -38,11 +45,10 @@ export default function Donut({ data, color }) {
       .data(dataReady)
       .enter()
       .append('path')
-      .attr('d', d3.arc()
-        .innerRadius(28)
-        .outerRadius(radius)
-      )
-      .attr('fill', function(d){ return(colorScale(d.data.key)) })
+      .attr('d', d3.arc().innerRadius(28).outerRadius(radius))
+      .attr('fill', function (d) {
+        return colorScale(d.data.key)
+      })
 
     return function cleanup() {
       boxRef.current.innerHTML = ''

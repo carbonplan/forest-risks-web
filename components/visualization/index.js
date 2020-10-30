@@ -97,35 +97,44 @@ export default function Visualization({ data, options }) {
   const key = optionIndex('years', options.year)
 
   const fireTotal = stats.fire.averages.map((d) => d.y)[key]
-  const fireFraction = points['fire'].map((d) => {
-    const key = optionKey({
-      scenario: options.scenario,
-      year: options.year,
-    })
-    if (d.properties[key] > 0.02) return 1
-    else return 0
-  }).reduce((a, b) => a + b, 0) / points['fire'].length
-  
+  const fireFraction =
+    points['fire']
+      .map((d) => {
+        const key = optionKey({
+          scenario: options.scenario,
+          year: options.year,
+        })
+        if (d.properties[key] > 0.02) return 1
+        else return 0
+      })
+      .reduce((a, b) => a + b, 0) / points['fire'].length
+
   const droughtTotal = stats.drought.averages.map((d) => d.y)[key]
-  const droughtFraction = points['drought'].map((d) => {
-    const key = optionKey({
-      scenario: options.scenario,
-      year: options.year,
-    })
-    if (d.properties[key] > 0.1) return 1
-    else return 0
-  }).reduce((a, b) => a + b, 0) / points['drought'].length
+  const droughtFraction =
+    points['drought']
+      .map((d) => {
+        const key = optionKey({
+          scenario: options.scenario,
+          year: options.year,
+        })
+        if (d.properties[key] > 0.1) return 1
+        else return 0
+      })
+      .reduce((a, b) => a + b, 0) / points['drought'].length
 
   const insectsTotal = stats.insects.averages.map((d) => d.y)[key]
-  const insectsFraction = points['insects'].map((d) => {
-    const key = optionKey({
-      scenario: options.scenario,
-      year: options.year,
-    })
-    if (d.properties[key] > 0.1) return 1
-    else return 0
-  }).reduce((a, b) => a + b, 0) / points['insects'].length
-  
+  const insectsFraction =
+    points['insects']
+      .map((d) => {
+        const key = optionKey({
+          scenario: options.scenario,
+          year: options.year,
+        })
+        if (d.properties[key] > 0.1) return 1
+        else return 0
+      })
+      .reduce((a, b) => a + b, 0) / points['insects'].length
+
   const sx = {
     group: {
       p: [3],
@@ -193,8 +202,8 @@ export default function Visualization({ data, options }) {
       fontFamily: 'body',
       fontSize: [1],
       mt: [2],
-      mb: [3]
-    }
+      mb: [3],
+    },
   }
 
   return (
@@ -202,6 +211,7 @@ export default function Visualization({ data, options }) {
       <Box sx={sx.group}>
         <Text sx={sx.label}>Biomass</Text>
         <Text sx={sx.explanation}>
+<<<<<<< HEAD
           The biomass map shows the carbon capture potential from continuing to grow current forests. The growth rate is based upon models trained on historical forests. The distribution of growth rates for the selected area is shown below.
         </Text>
         <Text sx={{ ...sx.numberLeft, color: 'green' }}>

@@ -22,8 +22,8 @@ function Sidebar({
       top: '3px',
       position: 'relative',
       transition: 'transform 0.2s',
-      transform: showMethods ? 'scaleX(-1)' : 'scaleX(1)'
-    }
+      transform: showMethods ? 'scaleX(-1)' : 'scaleX(1)',
+    },
   }
 
   return (
@@ -66,10 +66,13 @@ function Sidebar({
             textTransform: 'uppercase',
             cursor: 'pointer',
             '&:hover': {
-              color: 'secondary'
-            }
-        }}>
-        <Text>ABOUT<Text sx={sx.arrow}>→</Text></Text>
+              color: 'secondary',
+            },
+          }}
+        >
+          <Text>
+            ABOUT<Text sx={sx.arrow}>→</Text>
+          </Text>
         </Box>
       </Box>
     </Flex>

@@ -20,7 +20,7 @@ Here, we briefly describe how we built the biomass map and the risk maps for fir
 
 We developed a statistical model relating forest stand age to biomass, in order to project future biomass under assumptions of historical growth trends. Our approach was inspired by and is similar to that of Zhu et al. (2018), with some differences in model and variable specifications.
 
-The model was fit to historical data from the US Forest Service Forest Inventory Analysis long-term permanent plot network (Gillespie 1999). We aggregated data from individual trees to “conditions,” each of which represents a portion of a plot with similar land cover class types, size classes, and other distinguishing characteristics. We screened to include only conditions that included all of the following attributes: those that had no evidence of disturbance, were classified as accessible forest land, were inventoried since 2000, and for which our primary variables of interest were defined (age, biomass, and forest type). 
+The model was fit to historical data from the US Forest Service Forest Inventory Analysis long-term permanent plot network (Gillespie 1999). We aggregated data from individual trees to “conditions,” each of which represents a portion of a plot with similar land cover class types, size classes, and other distinguishing characteristics. We screened to include only conditions that included all of the following attributes: those that had no evidence of disturbance, were classified as accessible forest land, were inventoried since 2000, and for which our primary variables of interest were defined (age, biomass, and forest type).
 We fit a three-parameter logistic growth function with Gamma-distributed noise relating biomass to age. The model was defined as
 
 `biomass ~ Gamma(shape, scale)`
@@ -31,9 +31,9 @@ We fit a three-parameter logistic growth function with Gamma-distributed noise r
 
 `amplitude = a + w_tavg * tavg + w_ppt * ppt`
 
-Because the mean of the Gamma distribution is the product of the shape and the scale, the mean of this parameterization’s  distribution is given directly by the logistic function, and the scale defines the noise. The parameter b controls the slope, and the amplitude is controlled by a constant plus a weighted function of climatic variables. 
+Because the mean of the Gamma distribution is the product of the shape and the scale, the mean of this parameterization’s distribution is given directly by the logistic function, and the scale defines the noise. The parameter b controls the slope, and the amplitude is controlled by a constant plus a weighted function of climatic variables.
 
-(Note: the somewhat unusual parameterization of the growth curve was designed so that the parameter c allows the shape to interpolate between a simple logistic (for c of 1) and a sigmoid (for c greater than 1). For all values of c, the function evaluates to 0 when age is 0; for large age values, the function evaluates to the amplitude, thus forcing the function through the origin). 
+(Note: the somewhat unusual parameterization of the growth curve was designed so that the parameter c allows the shape to interpolate between a simple logistic (for c of 1) and a sigmoid (for c greater than 1). For all values of c, the function evaluates to 0 when age is 0; for large age values, the function evaluates to the amplitude, thus forcing the function through the origin).
 
 The Gamma distribution was used as the noise model rather than a Gaussian based on some basic statistical properties of the data: biomass is strictly positive, and its variance tends to grow with its mean. We confirmed that fitted model parameters were generally similar when using a Gaussian noise model, but samples from the fitted model were far closer to the measured data distribution when using the Gamma.
 
@@ -47,7 +47,7 @@ See the [biomass model notebook]() for example raw data, fitted growth curves, a
 
 ### Fire
 
-We developed a statistical model relating the probability of very large fires to climatic variables. Our work is inspired by and builds on that of Barbero et al. (2014). Many of the methods are similar, though updated with more recent data (through 2018 rather than 2010). 
+We developed a statistical model relating the probability of very large fires to climatic variables. Our work is inspired by and builds on that of Barbero et al. (2014). Many of the methods are similar, though updated with more recent data (through 2018 rather than 2010).
 
 The model was fit to historical fire data from the Monitoring Trends in Burn Severity (MTBS) database (described in more detail below). Similar to Barbero et al., we defined “very large fires” (VLFs) as fires exceeding 5073 ha. Within each spatial grid cell of a 4km grid and for each month from 1984 and 2018, we coded a 1 if a VLF was present in that location in that month, and a 0 otherwise. This yielded a binary dataset of (t) x (x) x (y) where t is 420 (12 months x 35 years) and x and y are spatial dimensions. For performance during fitting, we upscaled the grid by a factor of 8, computing the mean value within each 32km grid cell. After upscaling we once again thresholded, setting any grid cell greater than 0 to 1.
 
@@ -61,13 +61,13 @@ See the [fire model notebook]() for example raw data, summary statistics, and fi
 
 ### Drought
 
-We aggregated FIA data on live and dead basal area from a tree-level to a ‘condition’ level, grouping together conditions representing repeated inventories of the same location. We screened for plots that had at least 2 or more inventory measurements, which enables the estimation of a true mortality rate. We next screened out plots that had a “fire” or “human” or “insect” disturbance code to remove major non-drought disturbances. 
+We aggregated FIA data on live and dead basal area from a tree-level to a ‘condition’ level, grouping together conditions representing repeated inventories of the same location. We screened for plots that had at least 2 or more inventory measurements, which enables the estimation of a true mortality rate. We next screened out plots that had a “fire” or “human” or “insect” disturbance code to remove major non-drought disturbances.
 
 We estimated the fraction of mortality based on the concept of a census interval, which we define as a pair of measurements in two successive years:
 
 `(year(t), year(t-1))`
 
-The fraction of mortality is defined as the ratio of dead basal area in year(t) to the total basal area in year(t-1). We computed this ratio separately for each condition. Given that several plots only had one repeated measure (only one census interval), we used the first census interval for all conditions. We also included in the mortality models two stand variables of age and age-squared to account for background ecological dynamics such as self-thinning and  background mortality), following Hember et al. (2017).
+The fraction of mortality is defined as the ratio of dead basal area in year(t) to the total basal area in year(t-1). We computed this ratio separately for each condition. Given that several plots only had one repeated measure (only one census interval), we used the first census interval for all conditions. We also included in the mortality models two stand variables of age and age-squared to account for background ecological dynamics such as self-thinning and background mortality), following Hember et al. (2017).
 
 Given the large prevalence of zeros in our mortality data, we modeled mortality using a “hurdle” model that jointly predicts the probability of a non-zero value and, if a non-zero value is present, its value. We formally represented the hurdle model using a sequence of two generalized linear models: a Binomial model with logit link function predicting zero vs non-zero values, and a linear Gaussian model with log-normal link function predicting mortality in the conditions where it was non-zero. The log-normal link function for the linear regression was chosen based on inspecting the behavior of the raw data distributions. We implemented the hurdle model in Python using `scikit-learn` by combining a `LogisticRegression` and a `TweedieRegressor` with `power=0` and a log link. To ensure robustness, results were compared to an alternate implementation using the GLM from statsmodels, and the glm package in R, with only negligible differences in results or performance.
 
@@ -83,32 +83,32 @@ See the [drought model notebook]() for example raw data and fits of the model de
 
 ### FIA
 
-Some pithy intro to FIA: 
+Some pithy intro to FIA:
 [ just take from `intake` https://github.com/carbonplan/data/blob/master/carbonplan_data/catalogs/fia.yaml]
 
 What we did.
 Introduce database structure: Trees >> Condition >> Plot.
 
-We calculated a series of `condition` level summary statistics from the underlying `TREE` data. 
+We calculated a series of `condition` level summary statistics from the underlying `TREE` data.
 
-Introduce concept of “Adjustment” 
+Introduce concept of “Adjustment”
 
-Adjusted living basal area, as well as above and belowground biomass. 
+Adjusted living basal area, as well as above and belowground biomass.
 Adjusted mortality basal area (between surveys)
-Disturbances and treatment. 
+Disturbances and treatment.
 
 Generate year, condition dataset per state that served as a common basis for biomass and insect/drought modeling.
 
-QA/QC 
-Our BALive matches COND BALive. 
-Evaluated results against collaborator data procured directly from an FIA database expert that has been the basis of numerous peer reviewed articles.  
+QA/QC
+Our BALive matches COND BALive.
+Evaluated results against collaborator data procured directly from an FIA database expert that has been the basis of numerous peer reviewed articles.
 
->>> my bad pithy intro
-The Forest Inventory and Analysis (FIA) program, administered by the US Department of Agriculture Forest Service, maintains an extensive forest plot survey network that spans all forested lands in the United States. 
+> > > my bad pithy intro
+> > > The Forest Inventory and Analysis (FIA) program, administered by the US Department of Agriculture Forest Service, maintains an extensive forest plot survey network that spans all forested lands in the United States.
 
-Intensity: 6000 acres. 
-Field crews collect site level attributes, tree level attribute such as overall health, diameter, age, height. 
-Each plot is revisited on a maximum ten-year rotation. 
+Intensity: 6000 acres.
+Field crews collect site level attributes, tree level attribute such as overall health, diameter, age, height.
+Each plot is revisited on a maximum ten-year rotation.
 
 Provenance: We downloaded FIA data from [point to intake]
 
@@ -123,5 +123,3 @@ Provenance: We downloaded FIA data from [point to intake]
 ### Downscaling
 
 export default ({ children }) => <Box>{children}</Box>
-
-
