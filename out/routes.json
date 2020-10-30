@@ -3,6 +3,7 @@
   "defaultHeaders": {
     "Referrer-Policy": "",
     "ReferrerPolicy": "",
-    "referrer-policy": ""
+    "referrer-policy": "",
+    "foo": "bar"
   }
 }
