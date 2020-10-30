@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { jsx, Box, Text, Grid } from 'theme-ui'
 import TimeSeries from './time-series'
 import Donut from './donut'
+import Question from '../question'
 import { allOptions, optionKey, optionIndex, plotRanges } from '@constants'
 import * as d3 from 'd3'
 
@@ -217,12 +218,14 @@ export default function Visualization({ data, options }) {
   return (
     <Box>
       <Box sx={sx.group}>
-        <Text sx={sx.label}>Biomass</Text>
-        <Text sx={sx.explanation}>
-          The biomass map shows the carbon capture potential from continuing to
-          grow current forests. The growth rate is based upon models trained on
-          historical forests. The distribution of growth rates for the selected
-          area is shown below.
+        <Text sx={sx.label}>
+          Biomass
+          <Question>
+            The biomass map shows carbon capture potential from continued
+            growth in current forests. The growth rate is from models trained on
+            historical forests. The distribution of growth rates for the selected
+            area is shown below.
+          </Question>
         </Text>
         <Text sx={{ ...sx.numberLeft, color: 'green' }}>
           +{biomassDelta.toFixed(2)}
@@ -255,13 +258,15 @@ export default function Visualization({ data, options }) {
         </Box>
       </Box>
       <Box sx={sx.group}>
-        <Text sx={sx.label}>Risks</Text>
-        <Text sx={sx.explanation}>
-          Fire, drought, and insects are all risk factors to tree mortality,
-          thus threatening forest carbon permanence. Scores here represent the
-          average risk of each factor across the selected region, and the shaded
-          fraction of the donut represents the fraction of plots where risk was
-          above a threshold.
+        <Text sx={sx.label}>
+          Risks
+          <Question>
+            Fire, drought, and insects are all risk factors to tree mortality,
+            thus threatening forest carbon permanence. Scores here represent the
+            average risk of each factor across the selected region, and the shaded
+            fraction of the donut represents the fraction of plots where risk was
+            above a threshold.
+          </Question>
         </Text>
         <Grid sx={{ mb: ['26px'] }} columns={[3]}>
           <Box sx={{ mt: [2], position: 'relative' }}>

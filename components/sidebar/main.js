@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Box, Slider, Badge, Text } from 'theme-ui'
 import { alpha } from '@theme-ui/color'
-import Expander from './expander'
+import Question from '../question'
 
 function Main({ options, setOptions, children }) {
   const sx = {
@@ -27,7 +27,6 @@ function Main({ options, setOptions, children }) {
       fontFamily: 'heading',
       letterSpacing: 'wide',
       textTransform: 'uppercase',
-      mb: [2],
     },
     sublabel: {
       display: 'inline-block',
@@ -42,7 +41,7 @@ function Main({ options, setOptions, children }) {
       letterSpacing: 'faux',
       mr: [2],
       verticalAlign: 'middle',
-    },
+    }
   }
 
   function toggleOption(value) {
@@ -99,6 +98,8 @@ function Main({ options, setOptions, children }) {
     )
   }
 
+  
+
   return (
     <Box
       sx={{
@@ -107,18 +108,40 @@ function Main({ options, setOptions, children }) {
       }}
     >
       <Box sx={sx.group}>
-        <Text sx={sx.label}>FORESTS</Text>
+        <Text sx={sx.label}>
+          Forests
+          <Question>
+            As forests grow they capture carbon in the form of biomass. 
+            This map shows the carbon removal potential of continuing growth in existing forests.
+            It is more similar to an avoided deforestation scenario, as opposed to afforefation or reforestation.
+          </Question>
+        </Text>
         <Option value='biomass' color='green' />
       </Box>
       <Box sx={sx.group}>
-        <Text sx={sx.label}>Risks</Text>
+        <Text sx={sx.label}>
+          Risks
+          <Question>
+            Fire, drought, and insects all pose risks to forests and thus limit carbon permanence. 
+            There is also a biophysical warming effect due to trees absorbing light. 
+            Toggling each of these factors reveals competing and compounding risks.
+          </Question>
+        </Text>
         <Option value='fire' color='orange' />
         <Option value='drought' color='pink' />
         <Option value='insects' color='blue' />
         <Option value='biophysical' color='grey' />
       </Box>
       <Box sx={sx.group}>
-        <Text sx={sx.label}>Scenarios</Text>
+        <Text sx={sx.label}>
+          Scenarios
+          <Question>
+            The climate science community devises multiple scenarios 
+            (Shared Socioeconomic Pathways or “SSPs”) of emissions and warming for the future. 
+            SSP2-4.5 represents an optimistic outlook, 
+            SSP5-8.5 is pessimistic, and SSP3-7.0 is in between. 
+          </Question>
+        </Text>
         <Box>
           <Radio value='SSP2-4.5' name='scenario' color='primary' />
           <Radio value='SSP3-7.0' name='scenario' color='primary' />
@@ -126,7 +149,13 @@ function Main({ options, setOptions, children }) {
         </Box>
       </Box>
       <Box sx={sx.group}>
-        <Text sx={sx.label}>Time</Text>
+        <Text sx={sx.label}>
+          Time
+          <Question>
+            We fit models to the past and then simulated future conditions from 2020 through 2100. 
+            Moving the slider reveals benefits and risks in the near and far future.
+          </Question>
+        </Text>
         <Slider
           sx={{ mt: [3], mb: [3] }}
           value={parseFloat(options['year'])}

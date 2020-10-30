@@ -28,7 +28,7 @@ export const plotRanges = (options) => {
 
 export const colorRanges = (options) => {
   return {
-    fire: [0.01, 0.1],
+    fire: [0.01, 0.03],
     drought: [0.05, 0.3],
     insects: [0.05, 0.3],
     biomass: [50, 300],

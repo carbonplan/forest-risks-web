@@ -7,6 +7,8 @@ export default function Donut({ data, color }) {
   const boxRef = useRef(null)
   const { theme } = useThemeUI()
 
+  data = isNaN(data) ? 0 : data
+
   useEffect(() => {
     const width = 90
     const height = 90
