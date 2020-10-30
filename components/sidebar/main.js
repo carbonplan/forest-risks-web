@@ -1,7 +1,10 @@
+import { useState } from 'react'
 import { Box, Slider, Badge, Text } from 'theme-ui'
 import { alpha } from '@theme-ui/color'
+import Expander from './expander'
 
 function Main({ options, setOptions, children }) {
+
   const sx = {
     group: {
       p: [3],
@@ -111,8 +114,9 @@ function Main({ options, setOptions, children }) {
       <Box sx={sx.group}>
         <Text sx={sx.label}>Risks</Text>
         <Option value='fire' color='orange' />
-        <Option value='drought' color='blue' disabled={true} />
-        <Option value='insects' color='pink' disabled={true} />
+        <Option value='drought' color='blue' />
+        <Option value='insects' color='pink' />
+        <Option value='feedbacks' color='grey' />
       </Box>
       <Box sx={sx.group}>
         <Text sx={sx.label}>Climate</Text>
@@ -120,19 +124,12 @@ function Main({ options, setOptions, children }) {
           <Radio value='SSP4.5' name='scenario' color='primary' />
           <Radio value='SSP7.0' name='scenario' color='primary' />
           <Radio value='SSP8.5' name='scenario' color='primary' />
-          <Text sx={sx.arrow}>←</Text>
-          <Text sx={sx.sublabel}>scenario</Text>
-        </Box>
-        <Box>
-          <Radio value='BCC-CSM2-MR' name='model' color='primary' />
-          <Text sx={sx.arrow}>←</Text>
-          <Text sx={sx.sublabel}>model</Text>
         </Box>
       </Box>
       <Box sx={sx.group}>
         <Text sx={sx.label}>Time</Text>
         <Slider
-          sx={{ mt: [3], mb: [3], fg: 'green' }}
+          sx={{ mt: [3], mb: [3] }}
           value={parseFloat(options['year'])}
           onChange={(e) => setYear(e.target.value)}
           min={2020}

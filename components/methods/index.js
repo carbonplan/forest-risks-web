@@ -16,14 +16,13 @@ function Methods({ showMethods, toggleMethods }) {
       left: 350,
       backgroundColor: 'background',
       width: 600,
-      transition: '0.2s',
+      transition: 'transform 0.2s',
       transform: showMethods ? 'translateX(0px)' : 'translateX(-600px)',
       overflowY: 'scroll'
     }}>
       <Box sx={{
         px: [4],
         opacity: 1,
-        transition: '0.2s'
       }}>
         <Box onClick={toggleMethods} sx={{
           cursor: 'pointer',

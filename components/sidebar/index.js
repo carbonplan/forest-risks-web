@@ -15,7 +15,7 @@ function Sidebar({ options, setOptions, showMethods, toggleMethods, children }) 
       ml: [2],
       top: '3px',
       position: 'relative',
-      transition: '0.2s',
+      transition: 'transform 0.2s',
       transform: showMethods ? 'scaleX(-1)' : 'scaleX(1)'
     }
   }
@@ -52,6 +52,7 @@ function Sidebar({ options, setOptions, showMethods, toggleMethods, children }) 
             px: [3], 
             py: [2],
             pb: [3],
+            width: 'fit-content',
             fontFamily: 'heading',
             letterSpacing: 'wide',
             textTransform: 'uppercase',
@@ -60,7 +61,7 @@ function Sidebar({ options, setOptions, showMethods, toggleMethods, children }) 
               color: 'secondary'
             }
         }}>
-        <Text>METHODS<Text sx={sx.arrow}>→</Text></Text>
+        <Text>ABOUT<Text sx={sx.arrow}>→</Text></Text>
         </Box>
       </Box>
     </Flex>

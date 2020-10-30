@@ -11,30 +11,27 @@ function useOptions(map, options) {
     const key = optionKey(options)
     const ranges = colorRanges(options)
 
-    if (options['biomass']) {
-      map.setPaintProperty('biomass', 'circle-color', {
-        property: key,
-        stops: [
-          [ranges.biomass[0], P.rgba(theme.colors.green, 0)],
-          [ranges.biomass[1], theme.colors.green],
-        ],
-      })
-      map.setPaintProperty('biomass', 'circle-opacity', 1)
-    } else {
-      map.setPaintProperty('biomass', 'circle-opacity', 0)
+    const updateLayer = (name, color) => {
+      if (options[name]) {
+        map.setPaintProperty(name, 'circle-color', {
+          property: (name == 'feedbacks') ? '0' : key,
+          stops: [
+            [ranges[name][0], P.rgba(theme.colors[color], 0)],
+            [ranges[name][1], theme.colors[color]],
+          ],
+        })
+        map.setPaintProperty(name, 'circle-opacity', 1)
+      } else {
+        map.setPaintProperty(name, 'circle-opacity', 0)
+      }
     }
-    if (options['fire']) {
-      map.setPaintProperty('fire', 'circle-color', {
-        property: key,
-        stops: [
-          [ranges.fire[0], P.rgba(theme.colors.orange, 0)],
-          [ranges.fire[1], theme.colors.orange],
-        ],
-      })
-      map.setPaintProperty('fire', 'circle-opacity', 1)
-    } else {
-      map.setPaintProperty('fire', 'circle-opacity', 0)
-    }
+
+    updateLayer('biomass', 'green')
+    updateLayer('fire', 'orange')
+    updateLayer('drought', 'blue')
+    updateLayer('insects', 'pink')
+    updateLayer('feedbacks', 'grey')
+
   }, [context, options])
 }
 

@@ -17,7 +17,7 @@ def build_risks():
         '--no-tile-size-limit '
         '--extend-zooms-if-still-dropping '
         '--no-tile-compression '
-        'raw/fire.geojson '
+        'raw/fire.geojson raw/drought.geojson raw/insects.geojson raw/feedbacks.geojson'
     )
 
     cmds.append(

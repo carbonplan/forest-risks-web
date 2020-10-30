@@ -71,6 +71,7 @@ const CirclePicker = ({ map, center, radius, onIdle, onDrag }) => {
         <text
           id='radius-text'
           textAnchor='middle'
+          fontFamily={theme.fonts.monospace}
           fill={theme.colors.primary}
         />
       </g>

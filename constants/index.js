@@ -1,5 +1,4 @@
 export const allOptions = {
-  models: ['BCC-CSM2-MR'],
   scenarios: ['SSP4.5', 'SSP7.0', 'SSP8.5'],
   years: ['2020', '2040', '2060', '2080', '2100'],
 }
@@ -10,7 +9,6 @@ export const optionIndex = (label, value) => {
 
 export const optionKey = (options) => {
   const key = [
-    optionIndex('models', options.model),
     optionIndex('scenarios', options.scenario),
     optionIndex('years', options.year),
   ].join('_')
@@ -30,8 +28,11 @@ export const plotRanges = (options) => {
 
 export const colorRanges = (options) => {
   return {
-    fire: [0, 0.1],
+    fire: [0.01, 0.1],
+    drought: [0.05, 0.3],
+    insects: [0.05, 0.3],
     biomass: [50, 300],
+    feedbacks: [5, 30],
   }
 }
 

@@ -13,7 +13,6 @@ function Viewer() {
     fire: false,
     drought: false,
     insects: false,
-    model: 'BCC-CSM2-MR',
     scenario: 'SSP4.5',
     year: '2020',
   }
@@ -27,7 +26,7 @@ function Viewer() {
 
   useEffect(() => {
     if (!map) return
-    const data = getSelectedData(map, ['biomass', 'fire'], region)
+    const data = getSelectedData(map, ['biomass', 'fire', 'drought', 'insects'], region)
     setSelectedData(data)
   }, [map, options, region, bounds])
 
