@@ -135,7 +135,13 @@ function Main({ options, setOptions, children }) {
           max={2100}
           step={20}
         />
-        <Text sx={{ fontFamily: 'monospace', fontSize: [2], display: 'inline-block' }}>
+        <Text
+          sx={{
+            fontFamily: 'monospace',
+            fontSize: [2],
+            display: 'inline-block',
+          }}
+        >
           2020
         </Text>
         <Text
