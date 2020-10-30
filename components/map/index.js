@@ -29,11 +29,6 @@ function Map({ onMapReady, options, onChangeRegion = (region) => {} }) {
       onMapReady(map)
     })
 
-    map.on('move', () => {
-      console.log(map.getZoom())
-      console.log(map.getCenter())
-    })
-
     return function cleanup() {
       setMap(null)
       map.remove()
