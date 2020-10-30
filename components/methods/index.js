@@ -2,7 +2,6 @@ import { Box, Text } from 'theme-ui'
 import MethodsContent from './methods.md'
 
 function Methods({ showMethods, toggleMethods }) {
-
   return (
     <Box sx={{
       left: 0,
@@ -37,11 +36,13 @@ function Methods({ showMethods, toggleMethods }) {
             position: 'relative',
           }}>←</Text>
         </Box>
-        <Box sx={{
-          position: 'relative',
-          top: '-40px'
-        }}>
-        <MethodsContent/>
+        <Box
+          sx={{
+            position: 'relative',
+            top: '-40px',
+          }}
+        >
+          <MethodsContent />
         </Box>
       </Box>
     </Box>

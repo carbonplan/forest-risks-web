@@ -5,7 +5,13 @@ import Header from './header'
 import Menu from './menu'
 import Main from './main'
 
-function Sidebar({ options, setOptions, showMethods, toggleMethods, children }) {
+function Sidebar({
+  options,
+  setOptions,
+  showMethods,
+  toggleMethods,
+  children,
+}) {
   const [showMenu, setShowMenu] = useState(false)
 
   const sx = {
@@ -33,23 +39,25 @@ function Sidebar({ options, setOptions, showMethods, toggleMethods, children }) 
         borderRightWidth: '1px',
         borderColor: 'muted',
         zIndex: 2000,
-        backgroundColor: 'background'
+        backgroundColor: 'background',
       }}
     >
       <Header showMenu={showMenu} toggleMenu={() => setShowMenu(!showMenu)} />
-      <Box sx={{ 
-        position: 'relative', 
-        flex: 1,
-        overflowY: 'scroll'
-      }}>
+      <Box
+        sx={{
+          position: 'relative',
+          flex: 1,
+          overflowY: 'scroll',
+        }}
+      >
         <Menu visible={showMenu} />
         <Main options={options} setOptions={setOptions}>
           {children}
         </Main>
-        <Box 
+        <Box
           onClick={toggleMethods}
           sx={{
-            px: [3], 
+            px: [3],
             py: [2],
             pb: [3],
             width: 'fit-content',
