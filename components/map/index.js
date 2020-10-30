@@ -14,8 +14,8 @@ function Map({ onMapReady, options, onChangeRegion = (region) => {} }) {
     const map = new mapboxgl.Map({
       container: container.current,
       style: style,
-      center: [-100, 40],
-      zoom: 3.5,
+      center: [-121.90, 43.11],
+      zoom: 6.79,
       minZoom: 3,
       maxZoom: 9,
       maxBounds: [
@@ -27,6 +27,11 @@ function Map({ onMapReady, options, onChangeRegion = (region) => {} }) {
     map.on('load', () => {
       setMap(map)
       onMapReady(map)
+    })
+
+    map.on('move', () => {
+      console.log(map.getZoom())
+      console.log(map.getCenter())
     })
 
     return function cleanup() {

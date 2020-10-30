@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { Text, IconButton } from 'theme-ui'
 
-const Question = ({ children }) => {
+const Question = ({ children, margin }) => {
   const [expanded, setExpanded] = useState(false)
   const toggle = (e) => {setExpanded(!expanded)}
+
+  margin = margin ? margin : 2
 
   const sx = {
     body: {
@@ -13,7 +15,7 @@ const Question = ({ children }) => {
       fontFamily: 'body',
       fontSize: [1],
       mt: [1],
-      mb: [2],
+      mb: [margin],
     },
   }
 

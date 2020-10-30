@@ -151,7 +151,7 @@ function Main({ options, setOptions, children }) {
       <Box sx={sx.group}>
         <Text sx={sx.label}>
           Time
-          <Question>
+          <Question margin={'22px'}>
             We fit models to the past and then simulated future conditions from 2020 through 2100. 
             Moving the slider reveals benefits and risks in the near and far future.
           </Question>

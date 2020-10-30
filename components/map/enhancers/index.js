@@ -9,7 +9,7 @@ import ThemeButton from '../../switch'
 import ResetButton from './reset-button'
 
 export default function Enhancers({ map, options, onChangeRegion }) {
-  const [activeFilter, setActiveFilter] = useState(filterTypes.VIEWPORT)
+  const [activeFilter, setActiveFilter] = useState(filterTypes.CIRCLE)
   const [reset, setReset] = useState([() => {}])
 
   useTheme(map)

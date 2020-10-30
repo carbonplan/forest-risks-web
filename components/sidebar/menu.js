@@ -22,13 +22,13 @@ function Menu({ visible }) {
       sx={{
         opacity: visible ? 1 : 0,
         pointerEvents: visible ? 'all' : 'none',
-        position: 'absolute',
+        position: 'fixed',
         width: visible ? '349px' : '250px',
         height: '100%',
         backgroundColor: 'background',
         textAlign: '-webkit-right',
         zIndex: 1000,
-        pr: [3],
+        pr: ['22px'],
         pt: [3],
         transition: '0.25s',
       }}
@@ -41,27 +41,21 @@ function Menu({ visible }) {
             mr: [0],
           }}
         >
-          <NextLink href='/about'>
-            <a>
-              <Text sx={link}>About</Text>
-            </a>
-          </NextLink>
-          <Link href='/reports' sx={link}>
-            Reports
+          <Link sx={{ textDecoration: 'none' }} href='https://carbonplan.org/about'>
+            <Text sx={link}>About</Text>
           </Link>
-          <Link href='/research' sx={link}>
-            Research
+          <Link sx={{ textDecoration: 'none' }} href='https://carbonplan.org/reports' sx={link}>
+            <Text sx={link}>Reports</Text>
           </Link>
-          <NextLink href='/team'>
-            <a>
-              <Text sx={link}>Team</Text>
-            </a>
-          </NextLink>
-          <NextLink href='/faq'>
-            <a>
-              <Text sx={link}>FAQ</Text>
-            </a>
-          </NextLink>
+          <Link sx={{ textDecoration: 'none' }} href='https://carbonplan.org/research' sx={link}>
+            <Text sx={link}>Research</Text>
+          </Link>
+          <Link sx={{ textDecoration: 'none' }} href='https://carbonplan.org/team' sx={link}>
+            <Text sx={link}>Team</Text>
+          </Link>
+          <Link sx={{ textDecoration: 'none' }} href='https://carbonplan.org/faq' sx={link}>
+            <Text sx={link}>FAQ</Text>
+          </Link>
         </Box>
       </Container>
     </Box>

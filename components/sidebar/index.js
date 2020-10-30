@@ -71,7 +71,7 @@ function Sidebar({
           }}
         >
           <Text>
-            ABOUT<Text sx={sx.arrow}>→</Text>
+            READ MORE<Text sx={sx.arrow}>→</Text>
           </Text>
         </Box>
       </Box>

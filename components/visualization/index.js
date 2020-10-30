@@ -113,7 +113,7 @@ export default function Visualization({ data, options }) {
           scenario: options.scenario,
           year: options.year,
         })
-        if (d.properties[key] > 0.02) return 1
+        if (d.properties[key] > 0.01) return 1
         else return 0
       })
       .reduce((a, b) => a + b, 0) / points['fire'].length
@@ -220,7 +220,7 @@ export default function Visualization({ data, options }) {
       <Box sx={sx.group}>
         <Text sx={sx.label}>
           Biomass
-          <Question>
+          <Question margin={'14px'}>
             The biomass map shows carbon capture potential from continued
             growth in current forests. The growth rate is from models trained on
             historical forests. The distribution of growth rates for the selected
@@ -260,15 +260,16 @@ export default function Visualization({ data, options }) {
       <Box sx={sx.group}>
         <Text sx={sx.label}>
           Risks
-          <Question>
-            Fire, drought, and insects are all risk factors to tree mortality,
-            thus threatening forest carbon permanence. Scores here represent the
+          <Question margin={3}>
+            Fire, drought, and insects are limit forest carbon permanence. Scores here represent the
             average risk of each factor across the selected region, and the shaded
             fraction of the donut represents the fraction of plots where risk was
-            above a threshold.
+            above a threshold. Fire risk is annual probability of very large fire in
+            a 4km grid cell and drought and insect risks are fractional loss in basal
+            area over a year 10 period.
           </Question>
         </Text>
-        <Grid sx={{ mb: ['26px'] }} columns={[3]}>
+        <Grid sx={{ mt: [2], mb: ['26px'] }} columns={[3]}>
           <Box sx={{ mt: [2], position: 'relative' }}>
             <Text sx={{ ...sx.numberCenter, color: 'orange' }}>
               {(fireTotal * 100).toFixed(0)}%
