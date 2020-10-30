@@ -10,9 +10,10 @@ import { getSelectedData } from './map/enhancers/filters/helpers'
 function Viewer() {
   const initialOptions = {
     biomass: true,
-    fire: false,
+    fire: true,
     drought: false,
     insects: false,
+    biophysical: false,
     scenario: 'SSP4.5',
     year: '2020',
   }

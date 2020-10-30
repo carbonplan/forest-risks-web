@@ -134,7 +134,7 @@ const style = {
     dataLayer('risks', 'fire'),
     dataLayer('risks', 'drought'),
     dataLayer('risks', 'insects'),
-    dataLayer('risks', 'feedbacks'),
+    dataLayer('risks', 'biophysical'),
   ],
 }
 

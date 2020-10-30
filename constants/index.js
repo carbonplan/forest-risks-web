@@ -32,7 +32,7 @@ export const colorRanges = (options) => {
     drought: [0.05, 0.3],
     insects: [0.05, 0.3],
     biomass: [50, 300],
-    feedbacks: [5, 30],
+    biophysical: [5, 30],
   }
 }
 

@@ -224,16 +224,16 @@ export default function Visualization({ data, options }) {
             <Donut data={fireFraction} color={'orange'}/>
           </Box>
           <Box sx={{ mt: [2], position: 'relative' }}>
-            <Text sx={{ ...sx.number, color: 'blue' }}>
+            <Text sx={{ ...sx.number, color: 'pink' }}>
               {(droughtTotal * 100).toFixed(0)}%
             </Text>
-            <Donut data={droughtFraction} color={'blue'}/>
+            <Donut data={droughtFraction} color={'pink'}/>
           </Box>
           <Box sx={{ mt: [2], position: 'relative'}}>
-            <Text sx={{ ...sx.number, color: 'pink' }}>
+            <Text sx={{ ...sx.number, color: 'blue' }}>
               {(insectsTotal * 100).toFixed(0)}%
             </Text>
-            <Donut data={insectsFraction} color={'pink'}/>
+            <Donut data={insectsFraction} color={'blue'}/>
           </Box>
         </Grid>
       </Box>

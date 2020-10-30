@@ -114,12 +114,12 @@ function Main({ options, setOptions, children }) {
       <Box sx={sx.group}>
         <Text sx={sx.label}>Risks</Text>
         <Option value='fire' color='orange' />
-        <Option value='drought' color='blue' />
-        <Option value='insects' color='pink' />
-        <Option value='feedbacks' color='grey' />
+        <Option value='drought' color='pink' />
+        <Option value='insects' color='blue' />
+        <Option value='biophysical' color='grey' />
       </Box>
       <Box sx={sx.group}>
-        <Text sx={sx.label}>Climate</Text>
+        <Text sx={sx.label}>Scenarios</Text>
         <Box>
           <Radio value='SSP4.5' name='scenario' color='primary' />
           <Radio value='SSP7.0' name='scenario' color='primary' />
