@@ -14,7 +14,7 @@ function useOptions(map, options) {
       let key
       if (name == 'biophysical') {
         key = '0'
-      } else if ((name == 'drought') || (name == 'insects')) {
+      } else if (name == 'drought' || name == 'insects') {
         key = '0_0'
       } else {
         key = optionKey(options)
@@ -38,7 +38,6 @@ function useOptions(map, options) {
     updateLayer('drought', 'pink')
     updateLayer('insects', 'blue')
     updateLayer('biophysical', 'grey')
-
   }, [context, options])
 }
 

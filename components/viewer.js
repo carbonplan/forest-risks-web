@@ -27,7 +27,11 @@ function Viewer() {
 
   useEffect(() => {
     if (!map) return
-    const data = getSelectedData(map, ['biomass', 'fire', 'drought', 'insects'], region)
+    const data = getSelectedData(
+      map,
+      ['biomass', 'fire', 'drought', 'insects'],
+      region
+    )
     setSelectedData(data)
   }, [map, options, region, bounds])
 

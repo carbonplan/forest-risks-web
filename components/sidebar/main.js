@@ -4,7 +4,6 @@ import { alpha } from '@theme-ui/color'
 import Expander from './expander'
 
 function Main({ options, setOptions, children }) {
-
   const sx = {
     group: {
       p: [3],
