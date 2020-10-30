@@ -1,5 +1,5 @@
 export const allOptions = {
-  scenarios: ['SSP4.5', 'SSP7.0', 'SSP8.5'],
+  scenarios: ['SSP2-4.5', 'SSP3-7.0', 'SSP5-8.5'],
   years: ['2020', '2040', '2060', '2080', '2100'],
 }
 
@@ -18,9 +18,9 @@ export const optionKey = (options) => {
 export const plotRanges = (options) => {
   return {
     fire: {
-      'SSP4.5': [0, 15],
-      'SSP7.0': [0, 35],
-      'SSP8.5': [0, 55],
+      'SSP2-4.5': [0, 15],
+      'SSP3-7.0': [0, 35],
+      'SSP5-8.5': [0, 55],
     }[options['scenario']],
     biomass: [0, 500],
   }

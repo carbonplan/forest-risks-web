@@ -121,9 +121,9 @@ function Main({ options, setOptions, children }) {
       <Box sx={sx.group}>
         <Text sx={sx.label}>Scenarios</Text>
         <Box>
-          <Radio value='SSP4.5' name='scenario' color='primary' />
-          <Radio value='SSP7.0' name='scenario' color='primary' />
-          <Radio value='SSP8.5' name='scenario' color='primary' />
+          <Radio value='SSP2-4.5' name='scenario' color='primary' />
+          <Radio value='SSP3-7.0' name='scenario' color='primary' />
+          <Radio value='SSP5-8.5' name='scenario' color='primary' />
         </Box>
       </Box>
       <Box sx={sx.group}>
@@ -136,7 +136,7 @@ function Main({ options, setOptions, children }) {
           max={2100}
           step={20}
         />
-        <Text sx={{ fontFamily: 'monospace', display: 'inline-block' }}>
+        <Text sx={{ fontFamily: 'monospace', fontSize: [2], display: 'inline-block' }}>
           2020
         </Text>
         <Text

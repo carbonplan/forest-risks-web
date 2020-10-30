@@ -13,32 +13,33 @@ function getAverageForYear(points, key) {
   return sum / points.length
 }
 
-const Sparkline = ({ scales, values }) => {
+const Histogram = ({ scales, values }) => {
     const width = 315
     const height = 63
-    const x = d3.scaleLinear().domain(scales.x).range([0, width])
-    const y = d3.scaleLinear().domain(scales.y).range([height, 0])
-    var line = d3
-      .line()
-      .x(function (d) {
-        return x(d[0])
-      })
-      .y(function (d) {
-        return y(d[1])
-      })
+    const y = d3.scaleLinear().domain([0, 1]).range([0, height])
     return (
       <svg width={width} height={height}>
         {values.map((d, i) => {
-          return <path
-            sx={{
-              stroke: 'green',
-              fill: 'none',
-              strokeWidth: 2,
-              opacity: 0.1
-            }}
-            key={i}
-            d={line(d)}
-          ></path>
+          return <g transform={`translate(${i * 40})`} key={i}>
+            <rect
+              sx={{
+                fill: 'green',
+                opacity: 0.2
+              }}
+              width={32}
+              height={y(1)}
+            ></rect>
+            {!isNaN(d) && <rect
+              sx={{
+                fill: 'green',
+                opacity: 1
+              }}
+              width={32}
+              height={y(d)}
+              transform={`translate(0, ${height - y(d)})`}
+            ></rect>
+            }
+          </g>
           })
         }
       </svg>
@@ -56,17 +57,20 @@ export default function Visualization({ data, options }) {
   const types = Object.keys(points)
 
   const biomassPoints = points['biomass']
-  const biomassTime = biomassPoints.slice(0,100).map((point) => {
-    const array = []
-    years.forEach((year, index) => {
-      const key = optionKey({
-        scenario: options.scenario,
-        year: year,
-      })
-      array.push([parseInt(year), point.properties[key]])
-    })
-    return array
+  const biomassDeltas = biomassPoints.map((d) => {
+    const key = optionIndex('scenarios', options.scenario)
+    return d.properties[key + '_4'] - d.properties[key + '_0']
   })
+  const maxBiomassDelta = biomassDeltas.reduce((a, b) => Math.max(a, b), 0)
+
+  const nBins = 8
+  const binWidth = maxBiomassDelta / 8
+  const binEdges = Array(nBins + 1).fill(0).map((_, i) => i * binWidth)
+  const counts = binEdges.map((b, i) => {
+    return biomassDeltas.filter((d) => (d >= binEdges[i]) & (d < binEdges[i+1])).length
+  }).slice(0, nBins)
+  const maxCount = counts.reduce((a, b) => Math.max(a, b), 0)
+  const histogram = counts.map((d) => d / maxCount)
 
   const stats = {}
   types.forEach((type) => {
@@ -87,16 +91,8 @@ export default function Visualization({ data, options }) {
     })
   })
 
-  const biomassMax = biomassTime
-    .map((d) => d.map((dd) => dd[1]))
-    .map((d) => d.reduce((a, b) => Math.max(a, b), 0))
-    .reduce((a, b) => Math.max(a, b), 0)
-
   const biomass = stats.biomass.averages.map((d) => d.y)
-  const biomassDelta = biomass
-    .slice(1, biomass.length)
-    .map((_, i) => biomass[i + 1] - biomass[i])
-    .reduce((a, b) => a + b, 0)
+  const biomassDelta = biomass[4] - biomass[0]
 
   const key = optionIndex('years', options.year)
 
@@ -140,26 +136,30 @@ export default function Visualization({ data, options }) {
       borderColor: 'muted',
     },
     label: {
-      display: 'inline-block',
       fontFamily: 'heading',
       letterSpacing: 'wide',
       textTransform: 'uppercase',
       mb: [2],
       fontSize: [2],
     },
-    number: {
+    numberCenter: {
       fontFamily: 'monospace',
       letterSpacing: 'monospace',
       fontSize: [4],
       display: 'inline-block',
-      ml: [3],
       position: 'absolute',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       top: '28px',
-      left: '-18px',
       width: '100%'
+    },
+    numberLeft: {
+      fontFamily: 'monospace',
+      letterSpacing: 'monospace',
+      fontSize: [4],
+      display: 'inline-block',
+      ml: [0],
     },
     numberRight: {
       display: 'inline-block',
@@ -170,6 +170,15 @@ export default function Visualization({ data, options }) {
       display: 'inline-block',
       marginTop: '-2px',
       ml: [3],
+    },
+    metric: {
+      fontFamily: 'faux',
+      display: 'inline-block',
+      letterSpacing: 'faux',
+      color: 'text',
+      fontSize: [2],
+      display: 'inline-block',
+      ml: [2],
     },
     unit: {
       fontFamily: 'faux',
@@ -192,48 +201,53 @@ export default function Visualization({ data, options }) {
     <Box>
       <Box sx={sx.group}>
         <Text sx={sx.label}>Biomass</Text>
-        <Text sx={sx.unit}>t / ha</Text>
-        <Text sx={{ ...sx.numberRight, color: 'green' }}>
+        <Text sx={sx.explanation}>
+          The biomass map shows the carbon capture potential from continuing to grow current forests. The growth rate is based upon models trained on historical forests. The distribution of growth rates for the selected area is shown below.
+        </Text>
+        <Text sx={{ ...sx.numberLeft, color: 'green' }}>
           +{biomassDelta.toFixed(2)}
         </Text>
-        <Text sx={sx.explanation}>
-          Our biomass map shows an expected increase
-          due to continued growth in existing forested areas.
-          The degree of growth is based on models fit to historical data.
-          Each line here shows a biomass growth curve from one of the plots
-          within the selection.
-        </Text>
-        <Sparkline 
-          scales={{x: [2020, 2100], y: [0, biomassMax]}}
-          values={biomassTime}
-        />
+        <Text sx={{...sx.unit, mb: [3]}}>t / ha</Text>
+        <Box sx={{ mb: ['28px'] }}>
+          <Histogram 
+            values={histogram}
+          />
+          <Text sx={{float: 'left', fontSize: [1], fontFamily: 'monospace', color: 'secondary', mt: [1] }}>LOW growth</Text>
+          <Text sx={{float: 'right', fontSize: [1], fontFamily: 'monospace', color: 'secondary', mt: [1] }}>HIGH growth</Text>
+        </Box>
       </Box>
       <Box sx={sx.group}>
         <Text sx={sx.label}>Risks</Text>
         <Text sx={sx.explanation}>
-          Risk scores along several dimensions represent threats
-          to forest carbon permanence. Numbers here represent average risk,
-          and the fraction of each donut shows the fraction of plots within the
-          selected region where risk was above a threshold.
+          Fire, drought, and insects are all risk factors to tree mortality, thus threatening forest carbon permanence. Scores here represent the average risk of each factor across the selected region, and the shaded fraction of the donut represents the fraction of plots where risk was above a threshold.
         </Text>
-        <Grid columns={[3]}>
+        <Grid sx={{ mb: ['26px'] }} columns={[3]}>
           <Box sx={{ mt: [2], position: 'relative' }}>
-            <Text sx={{ ...sx.number, color: 'orange' }}>
+            <Text sx={{ ...sx.numberCenter, color: 'orange' }}>
               {(fireTotal * 100).toFixed(0)}%
             </Text>
             <Donut data={fireFraction} color={'orange'}/>
+            <Text sx={{ ...sx.numberCenter, top: '98px', fontSize: [1], color: 'orange' }}>
+              FIRE
+            </Text>
           </Box>
           <Box sx={{ mt: [2], position: 'relative' }}>
-            <Text sx={{ ...sx.number, color: 'pink' }}>
+            <Text sx={{ ...sx.numberCenter, color: 'pink' }}>
               {(droughtTotal * 100).toFixed(0)}%
             </Text>
             <Donut data={droughtFraction} color={'pink'}/>
+            <Text sx={{ ...sx.numberCenter, top: '98px', fontSize: [1], color: 'pink' }}>
+              DROUGHT
+            </Text>
           </Box>
           <Box sx={{ mt: [2], position: 'relative'}}>
-            <Text sx={{ ...sx.number, color: 'blue' }}>
+            <Text sx={{ ...sx.numberCenter, color: 'blue' }}>
               {(insectsTotal * 100).toFixed(0)}%
             </Text>
             <Donut data={insectsFraction} color={'blue'}/>
+            <Text sx={{ ...sx.numberCenter, top: '98px', fontSize: [1], color: 'blue' }}>
+              INSECTS
+            </Text>
           </Box>
         </Grid>
       </Box>

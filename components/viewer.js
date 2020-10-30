@@ -14,7 +14,7 @@ function Viewer() {
     drought: false,
     insects: false,
     biophysical: false,
-    scenario: 'SSP4.5',
+    scenario: 'SSP2-4.5',
     year: '2020',
   }
 
@@ -54,9 +54,6 @@ function Viewer() {
         bottom: 0,
         flexDirection: ['column', 'row', 'row'],
         overflow: 'hidden',
-        '*': {
-          userSelect: 'none',
-        },
       }}
     >
       <Sidebar
