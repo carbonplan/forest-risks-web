@@ -1,9 +1,6 @@
 {
   "routes": [],
   "defaultHeaders": {
-    "Referrer-Policy": "",
-    "ReferrerPolicy": "",
-    "referrer-policy": "",
-    "foo": "bar"
+    "Referrer-Policy": ""
   }
 }
