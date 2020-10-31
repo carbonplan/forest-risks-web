@@ -41,19 +41,38 @@ function Menu({ visible }) {
             mr: [0],
           }}
         >
-          <Link sx={{ textDecoration: 'none' }} href='https://carbonplan.org/about'>
+          <Link
+            sx={{ textDecoration: 'none' }}
+            href='https://carbonplan.org/about'
+          >
             <Text sx={link}>About</Text>
           </Link>
-          <Link sx={{ textDecoration: 'none' }} href='https://carbonplan.org/reports' sx={link}>
+          <Link
+            sx={{ textDecoration: 'none' }}
+            href='https://carbonplan.org/reports'
+            sx={link}
+          >
             <Text sx={link}>Reports</Text>
           </Link>
-          <Link sx={{ textDecoration: 'none' }} href='https://carbonplan.org/research' sx={link}>
+          <Link
+            sx={{ textDecoration: 'none' }}
+            href='https://carbonplan.org/research'
+            sx={link}
+          >
             <Text sx={link}>Research</Text>
           </Link>
-          <Link sx={{ textDecoration: 'none' }} href='https://carbonplan.org/team' sx={link}>
+          <Link
+            sx={{ textDecoration: 'none' }}
+            href='https://carbonplan.org/team'
+            sx={link}
+          >
             <Text sx={link}>Team</Text>
           </Link>
-          <Link sx={{ textDecoration: 'none' }} href='https://carbonplan.org/faq' sx={link}>
+          <Link
+            sx={{ textDecoration: 'none' }}
+            href='https://carbonplan.org/faq'
+            sx={link}
+          >
             <Text sx={link}>FAQ</Text>
           </Link>
         </Box>

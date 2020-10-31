@@ -7,8 +7,9 @@ const Question = ({ children }) => {
   const theme = context.theme
 
   const [expanded, setExpanded] = useState(false)
-  const toggle = (e) => {setExpanded(!expanded)}
-
+  const toggle = (e) => {
+    setExpanded(!expanded)
+  }
 
   const sx = {
     body: {
@@ -49,20 +50,17 @@ const Question = ({ children }) => {
             strokeWidth: '1.4px',
             stroke: expanded ? 'text' : 'muted',
             transform: 'translate(0px, 5px)',
-            transition: '0.1s'
+            transition: '0.1s',
           }}
         >
-            <>
-              <line x1='13' y1='12.3' x2='13' y2='19.5' />
-              <line x1='13' y1='7.9' x2='13' y2='10.1' />
-              <circle cx='13' cy='13' r='12' />
-            </>
+          <>
+            <line x1='13' y1='12.3' x2='13' y2='19.5' />
+            <line x1='13' y1='7.9' x2='13' y2='10.1' />
+            <circle cx='13' cy='13' r='12' />
+          </>
         </svg>
       </IconButton>
-      {expanded && <Text sx={sx.body}>
-        {children}
-      </Text>
-      }
+      {expanded && <Text sx={sx.body}>{children}</Text>}
     </>
   )
 }

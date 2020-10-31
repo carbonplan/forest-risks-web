@@ -221,10 +221,10 @@ export default function Visualization({ data, options }) {
         <Text sx={sx.label}>
           Biomass
           <Question margin={'14px'}>
-            The biomass map shows carbon capture potential from continued
-            growth in current forests. The growth rate is from models trained on
-            historical forests. The distribution of growth rates for the selected
-            area is shown below.
+            The biomass map shows carbon capture potential from continued growth
+            in current forests. The growth rate is from models trained on
+            historical forests. The distribution of growth rates for the
+            selected area is shown below.
           </Question>
         </Text>
         <Text sx={{ ...sx.numberLeft, color: 'green' }}>
@@ -261,12 +261,13 @@ export default function Visualization({ data, options }) {
         <Text sx={sx.label}>
           Risks
           <Question margin={3}>
-            Fire, drought, and insects are limit forest carbon permanence. Scores here represent the
-            average risk of each factor across the selected region, and the shaded
-            fraction of the donut represents the fraction of plots where risk was
-            above a threshold. Fire risk is annual probability of very large fire in
-            a 4km grid cell and drought and insect risks are fractional loss in basal
-            area over a year 10 period.
+            Fire, drought, and insects are limit forest carbon permanence.
+            Scores here represent the average risk of each factor across the
+            selected region, and the shaded fraction of the donut represents the
+            fraction of plots where risk was above a threshold. Fire risk is
+            annual probability of very large fire in a 4km grid cell and drought
+            and insect risks are fractional loss in basal area over a year 10
+            period.
           </Question>
         </Text>
         <Grid sx={{ mt: ['14px'], mb: ['26px'] }} columns={[3]}>

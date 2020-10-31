@@ -42,7 +42,7 @@ function Main({ options, setOptions, children }) {
       letterSpacing: 'faux',
       mr: [2],
       verticalAlign: 'middle',
-    }
+    },
   }
 
   function toggleOption(value) {
@@ -99,8 +99,6 @@ function Main({ options, setOptions, children }) {
     )
   }
 
-  
-
   return (
     <Box
       sx={{
@@ -112,9 +110,10 @@ function Main({ options, setOptions, children }) {
         <Text sx={sx.label}>
           Forests
           <Question>
-            As forests grow they capture carbon in the form of biomass. 
-            This map shows the carbon removal potential of continuing growth in existing forests.
-            It is more similar to an avoided deforestation scenario, as opposed to afforefation or reforestation.
+            As forests grow they capture carbon in the form of biomass. This map
+            shows the carbon removal potential of continuing growth in existing
+            forests. It is more similar to an avoided deforestation scenario, as
+            opposed to afforefation or reforestation.
           </Question>
         </Text>
         <Option value='biomass' color='green' />
@@ -123,9 +122,10 @@ function Main({ options, setOptions, children }) {
         <Text sx={sx.label}>
           Risks
           <Question>
-            Fire, drought, and insects all pose risks to forests and thus limit carbon permanence. 
-            There is also a biophysical warming effect due to trees absorbing light. 
-            Toggling each of these factors reveals competing and compounding risks.
+            Fire, drought, and insects all pose risks to forests and thus limit
+            carbon permanence. There is also a biophysical warming effect due to
+            trees absorbing light. Toggling each of these factors reveals
+            competing and compounding risks.
           </Question>
         </Text>
         <Option value='fire' color='orange' />
@@ -137,10 +137,10 @@ function Main({ options, setOptions, children }) {
         <Text sx={sx.label}>
           Scenarios
           <Question>
-            The climate science community devises multiple scenarios 
-            (Shared Socioeconomic Pathways or “SSPs”) of emissions and warming for the future. 
-            SSP2-4.5 represents an optimistic outlook, 
-            SSP5-8.5 is pessimistic, and SSP3-7.0 is in between. 
+            The climate science community devises multiple scenarios (Shared
+            Socioeconomic Pathways or “SSPs”) of emissions and warming for the
+            future. SSP2-4.5 represents an optimistic outlook, SSP5-8.5 is
+            pessimistic, and SSP3-7.0 is in between.
           </Question>
         </Text>
         <Box>
@@ -153,8 +153,9 @@ function Main({ options, setOptions, children }) {
         <Text sx={sx.label}>
           Time
           <Question margin={'22px'}>
-            We fit models to the past and then simulated future conditions from 2020 through 2100. 
-            Moving the slider reveals benefits and risks in the near and far future.
+            We fit models to the past and then simulated future conditions from
+            2020 through 2100. Moving the slider reveals benefits and risks in
+            the near and far future.
           </Question>
         </Text>
         <Slider

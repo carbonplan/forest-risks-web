@@ -14,7 +14,7 @@ function Map({ onMapReady, options, onChangeRegion = (region) => {} }) {
     const map = new mapboxgl.Map({
       container: container.current,
       style: style,
-      center: [-121.90, 43.11],
+      center: [-121.9, 43.11],
       zoom: 6.79,
       minZoom: 3,
       maxZoom: 9,
