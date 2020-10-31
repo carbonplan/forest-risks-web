@@ -269,7 +269,7 @@ export default function Visualization({ data, options }) {
             area over a year 10 period.
           </Question>
         </Text>
-        <Grid sx={{ mt: [2], mb: ['26px'] }} columns={[3]}>
+        <Grid sx={{ mt: ['14px'], mb: ['26px'] }} columns={[3]}>
           <Box sx={{ mt: [2], position: 'relative' }}>
             <Text sx={{ ...sx.numberCenter, color: 'orange' }}>
               {(fireTotal * 100).toFixed(0)}%

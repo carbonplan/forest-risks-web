@@ -27,6 +27,7 @@ function Main({ options, setOptions, children }) {
       fontFamily: 'heading',
       letterSpacing: 'wide',
       textTransform: 'uppercase',
+      mb: [2],
     },
     sublabel: {
       display: 'inline-block',
