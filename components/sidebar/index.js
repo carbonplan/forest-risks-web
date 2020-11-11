@@ -27,7 +27,7 @@ function Sidebar({
   }
 
   return (
-    <Flex
+    <Box
       sx={{
         minWidth: '250px',
         maxWidth: '350px',
@@ -40,6 +40,7 @@ function Sidebar({
         borderColor: 'muted',
         zIndex: 2000,
         backgroundColor: 'background',
+        display: ['none', 'none', 'flex']
       }}
     >
       <Header showMenu={showMenu} toggleMenu={() => setShowMenu(!showMenu)} />
@@ -75,7 +76,7 @@ function Sidebar({
           </Text>
         </Box>
       </Box>
-    </Flex>
+    </Box>
   )
 }
 
