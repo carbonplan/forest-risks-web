@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, useCallback } from 'react'
-import CirclePicker from './circle-picker-svg'
+import CirclePicker from './circle-picker'
 import { UPDATE_STATS_ON_DRAG } from '@constants'
 import * as turf from '@utils/turf'
 

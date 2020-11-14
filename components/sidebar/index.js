@@ -3,7 +3,7 @@ import { Box, Badge, Text, Flex } from 'theme-ui'
 import { alpha } from '@theme-ui/color'
 import Header from './header'
 import Menu from './menu'
-import Main from './main'
+import Layers from './layers'
 
 function Sidebar({
   options,
@@ -52,9 +52,9 @@ function Sidebar({
         }}
       >
         <Menu visible={showMenu} />
-        <Main options={options} setOptions={setOptions}>
+        <Layers options={options} setOptions={setOptions}>
           {children}
-        </Main>
+        </Layers>
         <Box
           onClick={toggleMethods}
           sx={{

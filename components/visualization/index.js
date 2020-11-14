@@ -3,8 +3,9 @@ import { useState } from 'react'
 import { jsx, Box, Text, Grid } from 'theme-ui'
 import TimeSeries from './time-series'
 import Donut from './donut'
-import Question from '../question'
-import { allOptions, optionKey, optionIndex, plotRanges } from '@constants'
+import Histogram from './histogram'
+import Info from '../info'
+import { allOptions, optionKey, optionIndex } from '@constants'
 import * as d3 from 'd3'
 
 function getAverageForYear(points, key) {
@@ -12,41 +13,6 @@ function getAverageForYear(points, key) {
 
   const sum = points.reduce((_sum, point) => _sum + point.properties[key], 0)
   return sum / points.length
-}
-
-const Histogram = ({ scales, values }) => {
-  const width = 315
-  const height = 63
-  const y = d3.scaleLinear().domain([0, 1]).range([0, height])
-  return (
-    <svg width={width} height={height}>
-      {values.map((d, i) => {
-        return (
-          <g transform={`translate(${i * 40})`} key={i}>
-            <rect
-              sx={{
-                fill: 'green',
-                opacity: 0.2,
-              }}
-              width={32}
-              height={y(1)}
-            ></rect>
-            {!isNaN(d) && (
-              <rect
-                sx={{
-                  fill: 'green',
-                  opacity: 1,
-                }}
-                width={32}
-                height={y(d)}
-                transform={`translate(0, ${height - y(d)})`}
-              ></rect>
-            )}
-          </g>
-        )
-      })}
-    </svg>
-  )
 }
 
 export default function Visualization({ data, options }) {
@@ -220,12 +186,12 @@ export default function Visualization({ data, options }) {
       <Box sx={sx.group}>
         <Text sx={sx.label}>
           Biomass
-          <Question margin={'14px'}>
+          <Info margin={'14px'}>
             The biomass map shows carbon capture potential from continued growth
             in current forests. The growth rate is from models trained on
             historical forests. The distribution of growth rates for the
             selected area is shown below.
-          </Question>
+          </Info>
         </Text>
         <Text sx={{ ...sx.numberLeft, color: 'green' }}>
           +{biomassDelta.toFixed(2)}
@@ -260,7 +226,7 @@ export default function Visualization({ data, options }) {
       <Box sx={sx.group}>
         <Text sx={sx.label}>
           Risks
-          <Question margin={3}>
+          <Info margin={3}>
             Fire, drought, and insects are limit forest carbon permanence.
             Scores here represent the average risk of each factor across the
             selected region, and the shaded fraction of the donut represents the
@@ -268,7 +234,7 @@ export default function Visualization({ data, options }) {
             annual probability of very large fire in a 4km grid cell and drought
             and insect risks are fractional loss in basal area over a year 10
             period.
-          </Question>
+          </Info>
         </Text>
         <Grid sx={{ mt: ['14px'], mb: ['26px'] }} columns={[3]}>
           <Box sx={{ mt: [2], position: 'relative' }}>

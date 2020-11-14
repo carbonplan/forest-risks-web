@@ -1,9 +1,9 @@
 import { useState, useCallback } from 'react'
 import { Box, Slider, Badge, Text } from 'theme-ui'
 import { alpha } from '@theme-ui/color'
-import Question from '../question'
+import Info from '../info'
 
-function Main({ options, setOptions, children }) {
+function Layers({ options, setOptions, children }) {
   const sx = {
     group: {
       p: [3],
@@ -57,9 +57,9 @@ function Main({ options, setOptions, children }) {
     })
   }
 
-  function setYear(value) {
+  function setSlider(name, value) {
     setOptions((options) => {
-      return { ...options, ['year']: value }
+      return { ...options, [name]: value }
     })
   }
 
@@ -109,24 +109,24 @@ function Main({ options, setOptions, children }) {
       <Box sx={sx.group}>
         <Text sx={sx.label}>
           Forests
-          <Question>
+          <Info>
             As forests grow they capture carbon in the form of biomass. This map
             shows the carbon removal potential of continuing growth in existing
             forests. It is more similar to an avoided deforestation scenario, as
             opposed to afforefation or reforestation.
-          </Question>
+          </Info>
         </Text>
         <Option value='biomass' color='green' />
       </Box>
       <Box sx={sx.group}>
         <Text sx={sx.label}>
           Risks
-          <Question>
+          <Info>
             Fire, drought, and insects all pose risks to forests and thus limit
             carbon permanence. There is also a biophysical warming effect due to
             trees absorbing light. Toggling each of these factors reveals
             competing and compounding risks.
-          </Question>
+          </Info>
         </Text>
         <Option value='fire' color='orange' />
         <Option value='drought' color='pink' />
@@ -136,12 +136,12 @@ function Main({ options, setOptions, children }) {
       <Box sx={sx.group}>
         <Text sx={sx.label}>
           Scenarios
-          <Question>
+          <Info>
             The climate science community devises multiple scenarios (Shared
             Socioeconomic Pathways or “SSPs”) of emissions and warming for the
             future. SSP2-4.5 represents an optimistic outlook, SSP5-8.5 is
             pessimistic, and SSP3-7.0 is in between.
-          </Question>
+          </Info>
         </Text>
         <Box>
           <Radio value='SSP2-4.5' name='scenario' color='primary' />
@@ -152,16 +152,16 @@ function Main({ options, setOptions, children }) {
       <Box sx={sx.group}>
         <Text sx={sx.label}>
           Time
-          <Question margin={'22px'}>
+          <Info margin={'22px'}>
             We fit models to the past and then simulated future conditions from
             2020 through 2100. Moving the slider reveals benefits and risks in
             the near and far future.
-          </Question>
+          </Info>
         </Text>
         <Slider
           sx={{ mt: [3], mb: [3] }}
           value={parseFloat(options['year'])}
-          onChange={(e) => setYear(e.target.value)}
+          onChange={(e) => setSlider('year', e.target.value)}
           min={2020}
           max={2100}
           step={20}
@@ -190,4 +190,4 @@ function Main({ options, setOptions, children }) {
   )
 }
 
-export default Main
+export default Layers

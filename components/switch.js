@@ -1,5 +1,4 @@
-/** @jsx jsx */
-import { jsx, IconButton, useColorMode } from 'theme-ui'
+import { IconButton, useColorMode } from 'theme-ui'
 import { useCallback } from 'react'
 
 const Switch = (props) => {

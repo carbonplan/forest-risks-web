@@ -15,17 +15,6 @@ export const optionKey = (options) => {
   return key
 }
 
-export const plotRanges = (options) => {
-  return {
-    fire: {
-      'SSP2-4.5': [0, 15],
-      'SSP3-7.0': [0, 35],
-      'SSP5-8.5': [0, 55],
-    }[options['scenario']],
-    biomass: [0, 500],
-  }
-}
-
 export const colorRanges = (options) => {
   return {
     fire: [0.01, 0.03],

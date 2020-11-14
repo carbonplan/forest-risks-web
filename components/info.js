@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { jsx, Text, IconButton, useThemeUI } from 'theme-ui'
 
-const Question = ({ children }) => {
+const Info = ({ children }) => {
   const context = useThemeUI()
   const theme = context.theme
 
@@ -65,4 +65,4 @@ const Question = ({ children }) => {
   )
 }
 
-export default Question
+export default Info
