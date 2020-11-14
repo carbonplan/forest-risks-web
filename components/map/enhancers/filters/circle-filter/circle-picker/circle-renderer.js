@@ -1,7 +1,14 @@
 import * as d3 from 'd3'
 import { FLOATING_HANDLE, SHOW_RADIUS_GUIDELINE } from '@constants'
-import { getPathMaker } from '@utils/path'
-import * as turf from '@utils/turf'
+import { getPathMaker } from './utils'
+import { 
+  distance, 
+  rewind,
+  rhumbDestination,
+  lineString,
+  lineIntersect,
+  circle as turfCircle,
+} from '@turf/turf'
 import CursorManager from './cursor-manager'
 
 export default function CircleRenderer({
@@ -37,7 +44,7 @@ export default function CircleRenderer({
 
   function addDragHandleListeners() {
     const onMouseMove = (e) => {
-      const r = turf.distance(
+      const r = distance(
         map.unproject(e.point).toArray(),
         [center.lng, center.lat],
         { units: 'miles' }
@@ -139,7 +146,7 @@ export default function CircleRenderer({
   //// CIRCLE ////
 
   function geoCircle(center, radius) {
-    const c = turf.circle([center.lng, center.lat], radius, {
+    const c = turfCircle([center.lng, center.lat], radius, {
       units: 'miles',
       steps: 64,
       properties: {
@@ -149,7 +156,7 @@ export default function CircleRenderer({
     })
 
     // need to rewind or svg fill is inside-out
-    return turf.rewind(c, { reverse: true, mutate: true })
+    return rewind(c, { reverse: true, mutate: true })
   }
 
   //// SETTERS ////
@@ -183,18 +190,18 @@ export default function CircleRenderer({
     const centerXY = map.project(center)
 
     const handleXY = (() => {
-      const lineEnd = turf.rhumbDestination(
+      const lineEnd = rhumbDestination(
         [center.lng, center.lat],
         radius * 2,
         guidelineAngle
       )
 
-      const line = turf.lineString([
+      const line = lineString([
         [center.lng, center.lat],
         lineEnd.geometry.coordinates,
       ])
 
-      const inter = turf.lineIntersect(line, circle)
+      const inter = lineIntersect(line, circle)
 
       return map.project(inter.features[0].geometry.coordinates)
     })()

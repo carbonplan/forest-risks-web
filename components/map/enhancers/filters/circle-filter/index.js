@@ -1,11 +1,11 @@
 import { useEffect, useState, useRef, useCallback } from 'react'
 import CirclePicker from './circle-picker'
 import { UPDATE_STATS_ON_DRAG } from '@constants'
-import * as turf from '@utils/turf'
+import { distance } from '@turf/turf'
 
 function getInitialRadius(map) {
   const bounds = map.getBounds().toArray()
-  const dist = turf.distance(bounds[0], bounds[1], { units: 'miles' })
+  const dist = distance(bounds[0], bounds[1], { units: 'miles' })
   return Math.min(Math.round(dist / 15), 300)
 }
 

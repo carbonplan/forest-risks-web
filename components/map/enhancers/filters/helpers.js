@@ -1,4 +1,4 @@
-import { bbox, booleanPointInPolygon, distance } from '@utils/turf'
+import { bbox, booleanPointInPolygon, distance } from '@turf/turf'
 import pointInPolygon from 'point-in-polygon'
 import { DEDUPE_ON_FILTER, filterTypes } from '@constants'
 
