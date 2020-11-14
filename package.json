@@ -10,8 +10,7 @@
     "start": "next start",
     "export": "next build && next export",
     "serve-tiles": "http-server tiles/processed --cors",
-    "format": "prettier --write README.md '*.js' '{components,hooks,pages,constants,utils}/**/*.js'",
-    "analyze": "ANALYZE=true npm run build"
+    "format": "prettier --write README.md '*.js' '{components,hooks,pages,constants,utils}/**/*.js'"
   },
   "repository": {
     "type": "git",
@@ -32,16 +31,16 @@
   "dependencies": {
     "@carbonplan/components": "^1.0.0",
     "@carbonplan/theme": "^1.1.0",
-    "@mdx-js/loader": "^1.6.19",
+    "@mdx-js/loader": "^1.6.21",
     "@next/bundle-analyzer": "^10.0.1",
-    "@next/mdx": "^9.5.5",
+    "@next/mdx": "^10.0.1",
     "@theme-ui/color": "^0.3.1",
     "@turf/turf": "^5.1.6",
     "d3": "^6.2.0",
     "d3-collection": "^1.0.7",
     "geojson-dissolve": "^3.1.0",
     "mapbox-gl": "^1.12.0",
-    "next": "^9.5.5",
+    "next": "^10.0.1",
     "point-in-polygon": "^1.0.1",
     "polished": "^4.0.3",
     "react": "^16.14.0",
