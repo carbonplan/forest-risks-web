@@ -40,7 +40,7 @@ function Sidebar({
         borderColor: 'muted',
         zIndex: 2000,
         backgroundColor: 'background',
-        display: ['none', 'none', 'flex']
+        display: ['none', 'none', 'flex'],
       }}
     >
       <Header showMenu={showMenu} toggleMenu={() => setShowMenu(!showMenu)} />

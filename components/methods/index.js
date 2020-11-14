@@ -19,7 +19,7 @@ function Methods({ showMethods, toggleMethods }) {
         transition: 'transform 0.2s',
         transform: showMethods ? 'translateX(0px)' : 'translateX(-600px)',
         overflowY: 'scroll',
-        display: ['none', 'none', 'initial']
+        display: ['none', 'none', 'initial'],
       }}
     >
       <Box
