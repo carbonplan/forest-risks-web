@@ -1,8 +1,8 @@
 import * as d3 from 'd3'
 import { FLOATING_HANDLE, SHOW_RADIUS_GUIDELINE } from '@constants'
 import { getPathMaker } from './utils'
-import { 
-  distance, 
+import {
+  distance,
   rewind,
   rhumbDestination,
   lineString,

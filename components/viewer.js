@@ -16,6 +16,7 @@ function Viewer() {
     biophysical: false,
     scenario: 'SSP2-4.5',
     year: '2020',
+    displayYear: '2020',
   }
 
   const [map, setMap] = useState(null)
