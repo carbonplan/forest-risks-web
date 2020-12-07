@@ -227,7 +227,7 @@ export default function Visualization({ data, options }) {
         <Text sx={sx.label}>
           Risks
           <Info margin={3}>
-            Fire, drought, and insects are limit forest carbon permanence.
+            Fire, drought, and insects all limit forest carbon permanence.
             Scores here represent the average risk of each factor across the
             selected region, and the shaded fraction of the donut represents the
             fraction of plots where risk was above a 10% threshold. Risks are estimated
