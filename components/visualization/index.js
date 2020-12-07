@@ -79,7 +79,7 @@ export default function Visualization({ data, options }) {
           scenario: options.scenario,
           year: options.year,
         })
-        if (d.properties[key] > 0.01) return 1
+        if (d.properties[key] > 10) return 1
         else return 0
       })
       .reduce((a, b) => a + b, 0) / points['fire'].length
@@ -230,16 +230,15 @@ export default function Visualization({ data, options }) {
             Fire, drought, and insects are limit forest carbon permanence.
             Scores here represent the average risk of each factor across the
             selected region, and the shaded fraction of the donut represents the
-            fraction of plots where risk was above a threshold. Fire risk is
-            annual probability of very large fire in a 4km grid cell and drought
-            and insect risks are fractional loss in basal area over a year 10
-            period.
+            fraction of plots where risk was above a 10% threshold. Risks are estimated
+            over a 10 year period. Fire risk is the probability of at least one fire, 
+            and drought and insect risks are expected fractional loss in basal area.
           </Info>
         </Text>
         <Grid sx={{ mt: ['14px'], mb: ['26px'] }} columns={[3]}>
           <Box sx={{ mt: [2], position: 'relative' }}>
             <Text sx={{ ...sx.numberCenter, color: 'orange' }}>
-              {(fireTotal * 100).toFixed(0)}%
+              {(fireTotal).toFixed(0)}%
             </Text>
             <Donut data={fireFraction} color={'orange'} />
             <Text
