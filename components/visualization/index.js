@@ -230,15 +230,16 @@ export default function Visualization({ data, options }) {
             Fire, drought, and insects all limit forest carbon permanence.
             Scores here represent the average risk of each factor across the
             selected region, and the shaded fraction of the donut represents the
-            fraction of plots where risk was above a 10% threshold. Risks are estimated
-            over a 10 year period. Fire risk is the probability of at least one fire, 
-            and drought and insect risks are expected fractional loss in basal area.
+            fraction of plots where risk was above a 10% threshold. Risks are
+            estimated over a 10 year period. Fire risk is the probability of at
+            least one fire, and drought and insect risks are expected fractional
+            loss in basal area.
           </Info>
         </Text>
         <Grid sx={{ mt: ['14px'], mb: ['26px'] }} columns={[3]}>
           <Box sx={{ mt: [2], position: 'relative' }}>
             <Text sx={{ ...sx.numberCenter, color: 'orange' }}>
-              {(fireTotal).toFixed(0)}%
+              {fireTotal.toFixed(0)}%
             </Text>
             <Donut data={fireFraction} color={'orange'} />
             <Text
