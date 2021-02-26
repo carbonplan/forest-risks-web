@@ -33,7 +33,7 @@
     "@carbonplan/components": "^1.0.0",
     "@carbonplan/theme": "^1.1.0",
     "@mdx-js/loader": "^1.6.22",
-    "@next/bundle-analyzer": "^10.0.5",
+    "@next/bundle-analyzer": "^10.0.7",
     "@next/mdx": "^10.0.3",
     "@theme-ui/color": "^0.3.5",
     "@theme-ui/css": "^0.3.4",
@@ -44,7 +44,7 @@
     "mapbox-gl": "^1.13.0",
     "next": "^10.0.5",
     "point-in-polygon": "^1.0.1",
-    "polished": "^4.0.5",
+    "polished": "^4.1.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "theme-ui": "^0.3.5"
