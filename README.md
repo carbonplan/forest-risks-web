@@ -3,12 +3,12 @@
   height='48'
 />
 
-# carbonplan / forest-risks
+# carbonplan / forest-risks-web
 
 **interactive web-based forest risks mapping tool**
 
 [![GitHub][github-badge]][github]
-[![CI](https://github.com/carbonplan/forest-risks/actions/workflows/main.yml/badge.svg)](https://github.com/carbonplan/forest-risks/actions/workflows/main.yml)
+[![CI](https://github.com/carbonplan/forest-risks-web/actions/workflows/main.yml/badge.svg)](https://github.com/carbonplan/forest-risks-web/actions/workflows/main.yml)
 ![MIT License][]
 
 [github]: https://github.com/carbonplan/forest-risks
@@ -46,4 +46,4 @@ All the code in this repository is [MIT](https://choosealicense.com/licenses/mit
 
 ## about us
 
-CarbonPlan is a non-profit organization that uses data and science for climate action. We aim to improve the transparency and scientific integrity of carbon removal and climate solutions through open data and tools. Find out more at [carbonplan.org](https://carbonplan.org/) or get in touch by [opening an issue](https://github.com/carbonplan/forest-risks/issues/new) or [sending us an email](mailto:hello@carbonplan.org).
+CarbonPlan is a non-profit organization that uses data and science for climate action. We aim to improve the transparency and scientific integrity of carbon removal and climate solutions through open data and tools. Find out more at [carbonplan.org](https://carbonplan.org/) or get in touch by [opening an issue](https://github.com/carbonplan/forest-risks-web/issues/new) or [sending us an email](mailto:hello@carbonplan.org).
