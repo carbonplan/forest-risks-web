@@ -5,3 +5,4 @@ tiles/processed
 tiles/raw
 tiles/glyphs
 tiles/util.py
+out/
