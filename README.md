@@ -8,11 +8,12 @@
 **interactive web-based mapping tool**
 
 [![GitHub][github-badge]][github]
+[![CI](https://github.com/carbonplan/maps/actions/workflows/main.yml/badge.svg)](https://github.com/carbonplan/maps/actions/workflows/main.yml)
 ![MIT License][]
 
 [github]: https://github.com/carbonplan/maps
-[github-badge]: https://flat.badgen.net/badge/-/github?icon=github&label
-[mit license]: https://flat.badgen.net/badge/license/MIT/blue
+[github-badge]: https://badgen.net/badge/-/github?icon=github&label
+[mit license]: https://badgen.net/badge/license/MIT/blue
 
 ## building the site
 
@@ -45,4 +46,4 @@ All the code in this repository is [MIT](https://choosealicense.com/licenses/mit
 
 ## about us
 
-CarbonPlan is a non-profit organization working on the science and data of carbon removal. We aim to improve the transparency and scientific integrity of carbon removal and climate solutions through open data and tools. Find out more at [carbonplan.org](https://carbonplan.org/) or get in touch by [opening an issue](https://github.com/carbonplan/maps/issues/new) or [sending us an email](mailto:hello@carbonplan.org).
+CarbonPlan is a non-profit organization that uses data and science for climate action. We aim to improve the transparency and scientific integrity of carbon removal and climate solutions through open data and tools. Find out more at [carbonplan.org](https://carbonplan.org/) or get in touch by [opening an issue](https://github.com/carbonplan/carbonplan.org/issues/new) or [sending us an email](mailto:hello@carbonplan.org).
