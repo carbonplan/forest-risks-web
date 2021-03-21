@@ -1,6 +1,5 @@
-/** @jsx jsx */
 import { useState } from 'react'
-import { jsx, Text, IconButton, useThemeUI } from 'theme-ui'
+import { Box, IconButton, useThemeUI } from 'theme-ui'
 
 const Info = ({ children }) => {
   const context = useThemeUI()
@@ -39,7 +38,8 @@ const Info = ({ children }) => {
           p: [0],
         }}
       >
-        <svg
+        <Box
+          as='svg'
           height={'18px'}
           width={'18px'}
           stroke='none'
@@ -53,14 +53,12 @@ const Info = ({ children }) => {
             transition: '0.1s',
           }}
         >
-          <>
-            <line x1='13' y1='12.3' x2='13' y2='19.5' />
-            <line x1='13' y1='7.9' x2='13' y2='10.1' />
-            <circle cx='13' cy='13' r='12' />
-          </>
-        </svg>
+          <line x1='13' y1='12.3' x2='13' y2='19.5' />
+          <line x1='13' y1='7.9' x2='13' y2='10.1' />
+          <circle cx='13' cy='13' r='12' />
+        </Box>
       </IconButton>
-      {expanded && <Text sx={sx.body}>{children}</Text>}
+      {expanded && <Box sx={sx.body}>{children}</Box>}
     </>
   )
 }

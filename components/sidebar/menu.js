@@ -1,5 +1,4 @@
-/** @jsx jsx */
-import { jsx, Box, Container, Link, Text } from 'theme-ui'
+import { Box, Container, Link, Text } from 'theme-ui'
 import { default as NextLink } from 'next/link'
 
 function Menu({ visible }) {
@@ -28,55 +27,43 @@ function Menu({ visible }) {
         backgroundColor: 'background',
         textAlign: '-webkit-right',
         zIndex: 1000,
-        pr: ['22px'],
+        pr: [3],
         pt: [3],
         transition: '0.25s',
       }}
     >
-      <Container>
-        <Box
-          sx={{
-            textAlign: '-webkit-right',
-            width: 'fit-content',
-            mr: [0],
-          }}
-        >
-          <Link
-            sx={{ textDecoration: 'none' }}
-            href='https://carbonplan.org/about'
-          >
-            <Text sx={link}>About</Text>
-          </Link>
-          <Link
-            sx={{ textDecoration: 'none' }}
-            href='https://carbonplan.org/reports'
-            sx={link}
-          >
-            <Text sx={link}>Reports</Text>
+      <Box
+        sx={{
+          position: 'relative',
+        }}
+      >
+        <Box sx={{ position: 'absolute', right: 0 }}>
+          <Link sx={link} href='https://carbonplan.org/about'>
+            About
           </Link>
           <Link
             sx={{ textDecoration: 'none' }}
             href='https://carbonplan.org/research'
             sx={link}
           >
-            <Text sx={link}>Research</Text>
+            Research
           </Link>
           <Link
             sx={{ textDecoration: 'none' }}
             href='https://carbonplan.org/team'
             sx={link}
           >
-            <Text sx={link}>Team</Text>
+            Team
           </Link>
           <Link
             sx={{ textDecoration: 'none' }}
             href='https://carbonplan.org/faq'
             sx={link}
           >
-            <Text sx={link}>FAQ</Text>
+            FAQ
           </Link>
         </Box>
-      </Container>
+      </Box>
     </Box>
   )
 }

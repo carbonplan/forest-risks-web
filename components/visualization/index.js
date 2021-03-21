@@ -1,7 +1,5 @@
-/** @jsx jsx */
 import { useState } from 'react'
-import { jsx, Box, Text, Grid } from 'theme-ui'
-import TimeSeries from './time-series'
+import { Box, Text, Grid } from 'theme-ui'
 import Donut from './donut'
 import Histogram from './histogram'
 import Info from '../info'
@@ -127,8 +125,8 @@ export default function Visualization({ data, options }) {
       fontSize: [2],
     },
     numberCenter: {
-      fontFamily: 'monospace',
-      letterSpacing: 'monospace',
+      fontFamily: 'mono',
+      letterSpacing: 'mono',
       fontSize: [4],
       display: 'inline-block',
       position: 'absolute',
@@ -139,8 +137,8 @@ export default function Visualization({ data, options }) {
       width: '100%',
     },
     numberLeft: {
-      fontFamily: 'monospace',
-      letterSpacing: 'monospace',
+      fontFamily: 'mono',
+      letterSpacing: 'mono',
       fontSize: [4],
       display: 'inline-block',
       ml: [0],
@@ -148,8 +146,8 @@ export default function Visualization({ data, options }) {
     numberRight: {
       display: 'inline-block',
       float: 'right',
-      fontFamily: 'monospace',
-      letterSpacing: 'monospace',
+      fontFamily: 'mono',
+      letterSpacing: 'mono',
       fontSize: [4],
       display: 'inline-block',
       marginTop: '-2px',
@@ -203,7 +201,8 @@ export default function Visualization({ data, options }) {
             sx={{
               float: 'left',
               fontSize: [1],
-              fontFamily: 'monospace',
+              fontFamily: 'mono',
+              letterSpacing: 'mono',
               color: 'secondary',
               mt: [1],
             }}
@@ -214,7 +213,8 @@ export default function Visualization({ data, options }) {
             sx={{
               float: 'right',
               fontSize: [1],
-              fontFamily: 'monospace',
+              fontFamily: 'mono',
+              letterSpacing: 'mono',
               color: 'secondary',
               mt: [1],
             }}

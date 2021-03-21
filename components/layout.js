@@ -1,11 +1,15 @@
-import Seo from './seo'
-import Switch from './switch'
-import { Container, Flex, Box, Text } from 'theme-ui'
+import { Meta } from '@carbonplan/components'
+import { Flex, Box } from 'theme-ui'
 
 const Layout = ({ children }) => {
   return (
     <>
-      <Seo />
+      <Meta
+        description={
+          'Mapping risks to forest carbon due to fire, drought, and insects.'
+        }
+        title={'forest risks / research / carbonplan'}
+      />
       <Flex
         sx={{
           flexDirection: 'column',

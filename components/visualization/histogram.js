@@ -1,6 +1,5 @@
-/** @jsx jsx */
 import * as d3 from 'd3'
-import { jsx } from 'theme-ui'
+import { Box } from 'theme-ui'
 
 const Histogram = ({ scales, values }) => {
   const width = 315
@@ -11,16 +10,18 @@ const Histogram = ({ scales, values }) => {
       {values.map((d, i) => {
         return (
           <g transform={`translate(${i * 40})`} key={i}>
-            <rect
+            <Box
+              as='rect'
               sx={{
                 fill: 'green',
                 opacity: 0.2,
               }}
               width={32}
               height={y(1)}
-            ></rect>
+            ></Box>
             {!isNaN(d) && (
-              <rect
+              <Box
+                as='rect'
                 sx={{
                   fill: 'green',
                   opacity: 1,
@@ -28,7 +29,7 @@ const Histogram = ({ scales, values }) => {
                 width={32}
                 height={y(d)}
                 transform={`translate(0, ${height - y(d)})`}
-              ></rect>
+              ></Box>
             )}
           </g>
         )

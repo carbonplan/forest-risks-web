@@ -63,7 +63,7 @@ function Sidebar({
             pb: [3],
             width: 'fit-content',
             fontFamily: 'heading',
-            letterSpacing: 'wide',
+            letterSpacing: 'smallcaps',
             textTransform: 'uppercase',
             cursor: 'pointer',
             '&:hover': {
@@ -71,9 +71,7 @@ function Sidebar({
             },
           }}
         >
-          <Text>
-            READ MORE<Text sx={sx.arrow}>→</Text>
-          </Text>
+          READ MORE<Text sx={sx.arrow}>→</Text>
         </Box>
       </Box>
     </Box>

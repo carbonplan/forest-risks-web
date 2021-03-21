@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { Box, Slider, Badge, Text } from 'theme-ui'
+import { Box, Slider, Text } from 'theme-ui'
 import { alpha } from '@theme-ui/color'
+import { Tag } from '@carbonplan/components'
 import Info from '../info'
 
 function Layers({ options, setOptions, children }) {
@@ -27,7 +28,7 @@ function Layers({ options, setOptions, children }) {
     },
     label: {
       fontFamily: 'heading',
-      letterSpacing: 'wide',
+      letterSpacing: 'smallcaps',
       textTransform: 'uppercase',
       mb: [2],
     },
@@ -67,8 +68,7 @@ function Layers({ options, setOptions, children }) {
 
   const Option = ({ value, color, disabled }) => {
     return (
-      <Badge
-        variant='primary'
+      <Tag
         onClick={() => toggleOption(value)}
         sx={{
           mr: [3],
@@ -78,14 +78,13 @@ function Layers({ options, setOptions, children }) {
         }}
       >
         {value}
-      </Badge>
+      </Tag>
     )
   }
 
   const Radio = ({ name, value, color, disabled }) => {
     return (
-      <Badge
-        variant='primary'
+      <Tag
         onClick={() => toggleRadio(name, value)}
         sx={{
           mr: [3],
@@ -97,7 +96,7 @@ function Layers({ options, setOptions, children }) {
         }}
       >
         {value}
-      </Badge>
+      </Tag>
     )
   }
 
@@ -181,20 +180,23 @@ function Layers({ options, setOptions, children }) {
             textAlign: 'center',
           }}
         >
-          <Text
+          <Box
             sx={{
-              fontFamily: 'monospace',
-              fontSize: [2],
+              fontFamily: 'mono',
+              letterSpacing: 'mono',
+              fontSize: [1],
               display: 'inline-block',
               float: 'left',
             }}
           >
             2020
-          </Text>
-          <Text
+          </Box>
+          <Box
             sx={{
-              fontFamily: 'monospace',
+              fontFamily: 'mono',
+              letterSpacing: 'mono',
               display: 'inline-block',
+              fontSize: [1],
               ml: 'auto',
               mr: 'auto',
               color: 'secondary',
@@ -203,17 +205,19 @@ function Layers({ options, setOptions, children }) {
             }}
           >
             {options.displayYear}
-          </Text>
-          <Text
+          </Box>
+          <Box
             sx={{
-              fontFamily: 'monospace',
+              fontFamily: 'mono',
+              letterSpacing: 'mono',
+              fontSize: [1],
               float: 'right',
               display: 'inline-block',
               mr: ['4px'],
             }}
           >
             2100
-          </Text>
+          </Box>
         </Box>
       </Box>
       {children}

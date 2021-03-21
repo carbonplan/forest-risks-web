@@ -5,7 +5,7 @@ import Toolbar, { Divider } from './toolbar'
 import { Filters, FilterButtons } from './filters'
 import { filterTypes } from '@constants'
 import { RulerButton } from './ruler'
-import ThemeButton from '../../switch'
+import { Dimmer } from '@carbonplan/components'
 import ResetButton from './reset-button'
 
 export default function Enhancers({ map, options, onChangeRegion }) {
@@ -38,7 +38,7 @@ export default function Enhancers({ map, options, onChangeRegion }) {
       </Toolbar>
       <Toolbar map={map} position={'right'}>
         <RulerButton map={map} />
-        <ThemeButton />
+        <Dimmer />
       </Toolbar>
       <Filters
         map={map}

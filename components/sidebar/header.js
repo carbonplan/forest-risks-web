@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, Box, Flex, IconButton } from 'theme-ui'
-import Logo from './logo'
+import { Logo } from '@carbonplan/components'
 
 const Header = ({ showMenu, toggleMenu }) => {
   return (
