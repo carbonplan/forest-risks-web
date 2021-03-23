@@ -6,7 +6,7 @@ const Layout = ({ children }) => {
     <>
       <Meta
         description={
-          'Mapping risks to forest carbon due to fire, drought, and insects.'
+          'Mapping risks to forest carbon due to fire, drought, and biotic agents.'
         }
         title={'forest risks / research / carbonplan'}
       />
