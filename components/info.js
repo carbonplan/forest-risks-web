@@ -12,7 +12,7 @@ const Info = ({ children }) => {
 
   const sx = {
     body: {
-      ontFamily: 'body',
+      fontFamily: 'body',
       letterSpacing: 'body',
       textTransform: 'none',
       fontFamily: 'body',
@@ -29,8 +29,8 @@ const Info = ({ children }) => {
         sx={{
           cursor: 'pointer',
           display: 'inline-block',
-          position: 'absolute',
-          right: 10,
+          float: 'right',
+          mr: '-8px',
           mt: '-6px',
           '&:hover > #icon': {
             stroke: 'text',

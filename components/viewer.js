@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Box, Flex } from 'theme-ui'
+import { Box, Flex, Container } from 'theme-ui'
 import Sidebar from './sidebar'
 import Map from './map'
 import Visualization from './visualization'
@@ -13,7 +13,6 @@ function Viewer() {
     fire: true,
     drought: false,
     insects: false,
-    biophysical: false,
     scenario: 'SSP2-4.5',
     year: '2020',
     displayYear: '2020',
@@ -59,6 +58,8 @@ function Viewer() {
         bottom: 0,
         flexDirection: ['column', 'row', 'row'],
         overflow: 'hidden',
+        maxWidth: '1920px',
+        margin: 'auto'
       }}
     >
       <Sidebar

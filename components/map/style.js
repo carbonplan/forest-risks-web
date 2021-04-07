@@ -61,17 +61,6 @@ const style = {
       },
     },
     {
-      id: 'land',
-      type: 'fill',
-      source: 'basemap',
-      'source-layer': 'ne_10m_land',
-      layout: { visibility: 'visible' },
-      paint: {
-        'fill-antialias': false,
-        'fill-opacity': 0,
-      },
-    },
-    {
       id: 'lakes',
       type: 'fill',
       source: 'basemap',
@@ -134,7 +123,6 @@ const style = {
     dataLayer('risks', 'fire'),
     dataLayer('risks', 'drought'),
     dataLayer('risks', 'insects'),
-    dataLayer('risks', 'biophysical'),
   ],
 }
 

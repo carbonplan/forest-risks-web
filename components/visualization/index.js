@@ -77,7 +77,7 @@ export default function Visualization({ data, options }) {
           scenario: options.scenario,
           year: options.year,
         })
-        if (d.properties[key] > 10) return 1
+        if (d.properties[key] > 4) return 1
         else return 0
       })
       .reduce((a, b) => a + b, 0) / points['fire'].length
@@ -110,7 +110,8 @@ export default function Visualization({ data, options }) {
 
   const sx = {
     group: {
-      p: [3],
+      py: [4],
+      px: [5],
       position: 'relative',
       borderStyle: 'solid',
       borderWidth: '0px',
@@ -127,31 +128,22 @@ export default function Visualization({ data, options }) {
     numberCenter: {
       fontFamily: 'mono',
       letterSpacing: 'mono',
-      fontSize: [4],
+      fontSize: ['22px'],
       display: 'inline-block',
       position: 'absolute',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       top: '28px',
+      left: '-1px',
       width: '100%',
     },
     numberLeft: {
       fontFamily: 'mono',
       letterSpacing: 'mono',
-      fontSize: [4],
+      fontSize: ['22px'],
       display: 'inline-block',
       ml: [0],
-    },
-    numberRight: {
-      display: 'inline-block',
-      float: 'right',
-      fontFamily: 'mono',
-      letterSpacing: 'mono',
-      fontSize: [4],
-      display: 'inline-block',
-      marginTop: '-2px',
-      ml: [3],
     },
     metric: {
       fontFamily: 'faux',
@@ -183,6 +175,70 @@ export default function Visualization({ data, options }) {
     <Box>
       <Box sx={sx.group}>
         <Text sx={sx.label}>
+          Risks
+          <Info margin={3}>
+            Fire, drought, and insects all limit forest carbon permanence.
+            Scores here represent the average risk of each factor across the
+            selected region, and the shaded fraction of the donut represents the
+            fraction of plots where risk was above a 10% threshold. Risks are
+            estimated over a 10 year period. Fire risk is the probability of at
+            least one fire, and drought and insect risks are expected fractional
+            loss in basal area.
+          </Info>
+        </Text>
+        <Grid sx={{ mt: ['14px'], mb: ['26px'] }} columns={[3]}>
+          <Box sx={{ mt: [2], position: 'relative' }}>
+            <Text sx={{ ...sx.numberCenter, color: 'orange' }}>
+              {fireTotal ? fireTotal.toFixed(0) : 0}%
+            </Text>
+            <Donut data={fireTotal / 100} color={'orange'} />
+            <Text
+              sx={{
+                ...sx.numberCenter,
+                top: '98px',
+                fontSize: [1],
+                color: 'orange',
+              }}
+            >
+              FIRE
+            </Text>
+          </Box>
+          <Box sx={{ mt: [2], position: 'relative' }}>
+            <Text sx={{ ...sx.numberCenter, color: 'pink' }}>
+              {(Math.min(droughtTotal * 20, 100)).toFixed(0)}%
+            </Text>
+            <Donut data={droughtTotal * 20 / 100} color={'pink'} />
+            <Text
+              sx={{
+                ...sx.numberCenter,
+                top: '98px',
+                fontSize: [1],
+                color: 'pink',
+              }}
+            >
+              DROUGHT
+            </Text>
+          </Box>
+          <Box sx={{ mt: [2], position: 'relative' }}>
+            <Text sx={{ ...sx.numberCenter, color: 'blue' }}>
+              {(Math.min(insectsTotal * 20, 100)).toFixed(0)}%
+            </Text>
+            <Donut data={insectsTotal * 20 / 100} color={'blue'} />
+            <Text
+              sx={{
+                ...sx.numberCenter,
+                top: '98px',
+                fontSize: [1],
+                color: 'blue',
+              }}
+            >
+              INSECTS
+            </Text>
+          </Box>
+        </Grid>
+      </Box>
+      <Box sx={sx.group}>
+        <Box sx={sx.label}>
           Biomass
           <Info margin={'14px'}>
             The biomass map shows carbon capture potential from continued growth
@@ -190,11 +246,11 @@ export default function Visualization({ data, options }) {
             historical forests. The distribution of growth rates for the
             selected area is shown below.
           </Info>
-        </Text>
-        <Text sx={{ ...sx.numberLeft, color: 'green' }}>
+        </Box>
+        <Box sx={{ ...sx.numberLeft, color: 'green' }}>
           +{biomassDelta.toFixed(2)}
-        </Text>
-        <Text sx={{ ...sx.unit, mb: [3] }}>t / ha</Text>
+        </Box>
+        <Box sx={{ ...sx.unit, mb: [3] }}>t / ha</Box>
         <Box sx={{ mb: ['28px'] }}>
           <Histogram values={histogram} />
           <Text
@@ -222,70 +278,6 @@ export default function Visualization({ data, options }) {
             HIGH growth
           </Text>
         </Box>
-      </Box>
-      <Box sx={sx.group}>
-        <Text sx={sx.label}>
-          Risks
-          <Info margin={3}>
-            Fire, drought, and insects all limit forest carbon permanence.
-            Scores here represent the average risk of each factor across the
-            selected region, and the shaded fraction of the donut represents the
-            fraction of plots where risk was above a 10% threshold. Risks are
-            estimated over a 10 year period. Fire risk is the probability of at
-            least one fire, and drought and insect risks are expected fractional
-            loss in basal area.
-          </Info>
-        </Text>
-        <Grid sx={{ mt: ['14px'], mb: ['26px'] }} columns={[3]}>
-          <Box sx={{ mt: [2], position: 'relative' }}>
-            <Text sx={{ ...sx.numberCenter, color: 'orange' }}>
-              {fireTotal.toFixed(0)}%
-            </Text>
-            <Donut data={fireFraction} color={'orange'} />
-            <Text
-              sx={{
-                ...sx.numberCenter,
-                top: '98px',
-                fontSize: [1],
-                color: 'orange',
-              }}
-            >
-              FIRE
-            </Text>
-          </Box>
-          <Box sx={{ mt: [2], position: 'relative' }}>
-            <Text sx={{ ...sx.numberCenter, color: 'pink' }}>
-              {(droughtTotal * 100).toFixed(0)}%
-            </Text>
-            <Donut data={droughtFraction} color={'pink'} />
-            <Text
-              sx={{
-                ...sx.numberCenter,
-                top: '98px',
-                fontSize: [1],
-                color: 'pink',
-              }}
-            >
-              DROUGHT
-            </Text>
-          </Box>
-          <Box sx={{ mt: [2], position: 'relative' }}>
-            <Text sx={{ ...sx.numberCenter, color: 'blue' }}>
-              {(insectsTotal * 100).toFixed(0)}%
-            </Text>
-            <Donut data={insectsFraction} color={'blue'} />
-            <Text
-              sx={{
-                ...sx.numberCenter,
-                top: '98px',
-                fontSize: [1],
-                color: 'blue',
-              }}
-            >
-              INSECTS
-            </Text>
-          </Box>
-        </Grid>
       </Box>
     </Box>
   )

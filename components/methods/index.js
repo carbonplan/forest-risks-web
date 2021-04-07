@@ -7,24 +7,39 @@ function Methods({ showMethods, toggleMethods }) {
       sx={{
         left: 0,
         position: 'absolute',
-        zIndex: 1000,
+        zIndex: 200,
         borderStyle: 'solid',
         borderWidth: 0,
         borderRightWidth: showMethods ? 1 : 0,
         borderColor: 'muted',
         height: '100%',
-        left: 350,
+        left: [
+          0,
+          'calc(2 * 100vw / 6 + 18px)',
+          'calc(3 * 100vw / 12 + 24px)',
+          'min(calc(3 * 100vw / 12 + 36px), 516px)',
+        ],
         backgroundColor: 'background',
-        width: 600,
+        width: [
+          0,
+          'calc(3 * 100vw / 6)',
+          'calc(5 * 100vw / 12 - 12px)',
+          'min(calc(5 * 100vw / 12 - 18px), 782px)',
+        ],
         transition: 'transform 0.2s',
-        transform: showMethods ? 'translateX(0px)' : 'translateX(-600px)',
+        transform: showMethods ? 'translateX(0px)' : [
+          'translateX(-700px)',
+          'translateX(-700px)',
+          'translateX(-700px)',
+          'translateX(-800px)',
+        ],
         overflowY: 'scroll',
-        display: ['none', 'none', 'initial'],
+        display: ['none', 'initial', 'initial'],
       }}
     >
       <Box
         sx={{
-          px: [4],
+          px: [3, 4, 5, 6],
           opacity: 1,
         }}
       >

@@ -5,7 +5,7 @@ import * as P from 'polished'
 
 export default function Donut({ data, color }) {
   const boxRef = useRef(null)
-  const { theme } = useThemeUI()
+  const { theme: { rawColors: colors } } = useThemeUI()
 
   data = isNaN(data) ? 0 : data
 
@@ -32,7 +32,7 @@ export default function Donut({ data, color }) {
     var colorScale = d3
       .scaleOrdinal()
       .domain([0, 1])
-      .range([P.rgba(theme.colors[color], 0.2), theme.colors[color]])
+      .range([P.rgba(colors[color], 0.2), colors[color]])
 
     var pie = d3
       .pie()
@@ -55,7 +55,7 @@ export default function Donut({ data, color }) {
     return function cleanup() {
       boxRef.current.innerHTML = ''
     }
-  }, [data, theme])
+  }, [data, colors])
 
   return <Box ref={boxRef} sx={{ height: '100px', width: '100px' }} />
 }

@@ -17,7 +17,7 @@ def build_risks():
         '--no-tile-size-limit '
         '--extend-zooms-if-still-dropping '
         '--no-tile-compression '
-        'raw/fire.geojson raw/drought.geojson raw/insects.geojson raw/biophysical.geojson'
+        'raw/fire.geojson raw/drought.geojson raw/insects.geojson'
     )
 
     cmds.append(
@@ -74,12 +74,12 @@ def build_basemap():
     cmds.append(
         'tippecanoe '
         '-z5 '
-        '-o tmp/land_water.mbtiles '
+        '-o tmp/water.mbtiles '
         '--no-feature-limit '
         '--no-tile-size-limit '
         '--extend-zooms-if-still-dropping '
         '--no-tile-compression '
-        'raw/ne_10m_land.geojson raw/ne_10m_lakes.geojson '
+        'raw/ne_10m_lakes.geojson '
     )
 
     cmds.append(
@@ -123,7 +123,7 @@ def build_basemap():
         '-o tmp/basemap.mbtiles '
         '--no-tile-compression '
         '--no-tile-size-limit '
-        'tmp/land_water.mbtiles '
+        'tmp/water.mbtiles '
         'tmp/countries.mbtiles '
         'tmp/provinces.mbtiles '
         'tmp/roads.mbtiles '

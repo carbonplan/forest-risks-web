@@ -67,6 +67,7 @@ export default function Toolbar({ map, children, position }) {
       sx={{
         position: 'absolute',
         zIndex: 2,
+        display: ['none', 'initial', 'initial'],
         ...styles.guide,
       }}
     >
@@ -79,7 +80,8 @@ export default function Toolbar({ map, children, position }) {
           borderStyle: 'solid',
           borderColor: 'muted',
           cursor: 'default',
-          padding: '12px',
+          px: '16px',
+          py: '12px',
           ...styles.outer,
         }}
       >

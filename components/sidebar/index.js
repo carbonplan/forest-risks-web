@@ -29,8 +29,12 @@ function Sidebar({
   return (
     <Box
       sx={{
-        minWidth: '250px',
-        maxWidth: '350px',
+        maxWidth: [
+          0, 
+          'calc(2 * 100vw / 6 + 18px)',
+          'calc(3 * 100vw / 12 + 24px)',
+          'min(calc(3 * 100vw / 12 + 36px), 516px)'
+        ],
         height: '100%',
         flexBasis: '100%',
         flexDirection: 'column',
@@ -38,9 +42,9 @@ function Sidebar({
         borderWidth: '0px',
         borderRightWidth: '1px',
         borderColor: 'muted',
-        zIndex: 2000,
+        zIndex: 900,
         backgroundColor: 'background',
-        display: ['none', 'none', 'flex'],
+        display: ['none', 'flex', 'flex'],
       }}
     >
       <Header showMenu={showMenu} toggleMenu={() => setShowMenu(!showMenu)} />
@@ -52,15 +56,45 @@ function Sidebar({
         }}
       >
         <Menu visible={showMenu} />
+        <Box sx={{borderStyle: 'solid', borderColor: 'muted', borderWidth: '0px', borderBottomWidth: '1px'}}>
+        <Box
+          onClick={toggleMethods}
+          sx={{
+            px: [3, 4, 5, 6],
+            pt: [4],
+            pb: [3],
+            fontSize: [6, 6, 6, 7],
+            width: 'fit-content',
+            fontFamily: 'heading',
+            lineHeight: 'heading',
+          }}
+        >
+          Forest risks
+        </Box>
+        <Box
+          onClick={toggleMethods}
+          sx={{
+            px: [3, 4, 5, 6],
+            pt: [0],
+            pb: [4],
+            fontSize: [2, 2, 2, 3],
+            fontFamily: 'body',
+            lineHeight: 'body',
+          }}
+        >
+          This map shows harmonized projections of risks to forest carbon from fire, drought, and insects.
+          Browse the raw data and read the article for more.
+        </Box>
+        </Box>
         <Layers options={options} setOptions={setOptions}>
           {children}
         </Layers>
         <Box
           onClick={toggleMethods}
           sx={{
-            px: [3],
-            py: [2],
-            pb: [3],
+            px: [3, 4, 5, 6],
+            py: [4],
+            fontSize: [2, 2, 2, 3],
             width: 'fit-content',
             fontFamily: 'heading',
             letterSpacing: 'smallcaps',
@@ -71,7 +105,7 @@ function Sidebar({
             },
           }}
         >
-          READ MORE<Text sx={sx.arrow}>→</Text>
+          READ METHODS<Text sx={sx.arrow}>→</Text>
         </Box>
       </Box>
     </Box>

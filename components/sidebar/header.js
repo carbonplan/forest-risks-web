@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx, Box, Flex, IconButton } from 'theme-ui'
+import { jsx, Box, Flex, Link, IconButton } from 'theme-ui'
 import { Logo } from '@carbonplan/components'
 
 const Header = ({ showMenu, toggleMenu }) => {
@@ -9,18 +9,24 @@ const Header = ({ showMenu, toggleMenu }) => {
         margin: '0 auto',
         width: '100%',
         justifyContent: 'space-between',
-        pt: [3],
-        pb: [3],
-        pl: [3],
-        pr: [3],
+        pt: ['12px'],
+        pb: ['9px'],
+        height: '56px',
+        px: [3, 4, 5, 6],
         borderStyle: 'solid',
         borderWidth: '0px',
         borderBottomWidth: '1px',
         borderColor: 'muted',
       }}
     >
-      <Box>
-        <Logo></Logo>
+      <Box sx={{ display: 'block', width: 'fit-content' }}>
+        <Link
+          href='https://carbonplan.org'
+          aria-label='CarbonPlan Homepage'
+          sx={{ display: 'block' }}
+        >
+          <Logo sx={{ cursor: 'pointer' }} />
+        </Link>
       </Box>
       <Box>
         <IconButton
@@ -29,6 +35,7 @@ const Header = ({ showMenu, toggleMenu }) => {
             cursor: 'pointer',
             fill: 'none',
             strokeWidth: '2px',
+            mr: ['-4px'],
             stroke: 'text',
             '.paren': {
               opacity: '0',

@@ -5,7 +5,7 @@ function Menu({ visible }) {
   const link = {
     width: 'fit-content',
     color: 'text',
-    fontSize: [5, 5, 6],
+    fontSize: [5, 5, 6, 7],
     pb: [0],
     textDecoration: 'none',
     display: 'block',
@@ -22,12 +22,22 @@ function Menu({ visible }) {
         opacity: visible ? 1 : 0,
         pointerEvents: visible ? 'all' : 'none',
         position: 'fixed',
-        width: visible ? '349px' : '250px',
+        width: visible ? [
+          0, 
+          'calc(2 * 100vw / 6 + 18px - 1px)',
+          'calc(3 * 100vw / 12 + 24px - 1px)',
+          'min(calc(3 * 100vw / 12 + 36px), 516px)'
+        ] : [
+          0, 
+          'calc(1 * 100vw / 6 + 18px)',
+          'calc(2 * 100vw / 12 + 24px)',
+          'min(calc(2 * 100vw / 12 + 36px), 516px)'
+        ],
         height: '100%',
         backgroundColor: 'background',
         textAlign: '-webkit-right',
         zIndex: 1000,
-        pr: [3],
+        pr: [3, 4, 5, 6],
         pt: [3],
         transition: '0.25s',
       }}

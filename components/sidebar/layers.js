@@ -9,7 +9,9 @@ function Layers({ options, setOptions, children }) {
 
   const sx = {
     group: {
-      p: [3],
+      pt: [4],
+      pb: ['22px'],
+      px: [3, 4, 5, 6],
       borderStyle: 'solid',
       borderColor: 'muted',
       borderWidth: '0px',
@@ -17,7 +19,8 @@ function Layers({ options, setOptions, children }) {
       width: '100%',
     },
     groupFinal: {
-      p: [3],
+      py: [4],
+      px: [5],
       borderStyle: 'solid',
       borderColor: 'muted',
       borderWidth: '0px',
@@ -27,6 +30,7 @@ function Layers({ options, setOptions, children }) {
       bottom: 0,
     },
     label: {
+      fontSize: [2, 2, 2, 3],
       fontFamily: 'heading',
       letterSpacing: 'smallcaps',
       textTransform: 'uppercase',
@@ -72,6 +76,7 @@ function Layers({ options, setOptions, children }) {
         onClick={() => toggleOption(value)}
         sx={{
           mr: [3],
+          mb: [2],
           color: options[value] & !disabled ? color : alpha(color, 0.2),
           borderColor: options[value] & !disabled ? color : alpha(color, 0.2),
           cursor: disabled ? 'default' : 'pointer',
@@ -88,6 +93,7 @@ function Layers({ options, setOptions, children }) {
         onClick={() => toggleRadio(name, value)}
         sx={{
           mr: [3],
+          mb: [2],
           color:
             (options[name] == value) & !disabled ? color : alpha(color, 0.2),
           borderColor:
@@ -108,7 +114,7 @@ function Layers({ options, setOptions, children }) {
       }}
     >
       <Box sx={sx.group}>
-        <Text sx={sx.label}>
+        <Box sx={sx.label}>
           Forests
           <Info>
             As forests grow they capture carbon in the form of biomass. This map
@@ -116,11 +122,11 @@ function Layers({ options, setOptions, children }) {
             forests. It is more similar to an avoided deforestation scenario, as
             opposed to afforefation or reforestation.
           </Info>
-        </Text>
+        </Box>
         <Option value='biomass' color='green' />
       </Box>
       <Box sx={sx.group}>
-        <Text sx={sx.label}>
+        <Box sx={sx.label}>
           Risks
           <Info>
             Fire, drought, and insects all pose risks to forests and thus limit
@@ -128,14 +134,13 @@ function Layers({ options, setOptions, children }) {
             trees absorbing light. Toggling each of these factors reveals
             competing and compounding risks.
           </Info>
-        </Text>
+        </Box>
         <Option value='fire' color='orange' />
         <Option value='drought' color='pink' />
         <Option value='insects' color='blue' />
-        <Option value='biophysical' color='grey' />
       </Box>
       <Box sx={sx.group}>
-        <Text sx={sx.label}>
+        <Box sx={sx.label}>
           Scenarios
           <Info>
             The climate science community devises multiple scenarios (Shared
@@ -143,7 +148,7 @@ function Layers({ options, setOptions, children }) {
             future. SSP2-4.5 represents an optimistic outlook, SSP5-8.5 is
             pessimistic, and SSP3-7.0 is in between.
           </Info>
-        </Text>
+        </Box>
         <Box>
           <Radio value='SSP2-4.5' name='scenario' color='primary' />
           <Radio value='SSP3-7.0' name='scenario' color='primary' />
@@ -151,16 +156,17 @@ function Layers({ options, setOptions, children }) {
         </Box>
       </Box>
       <Box sx={sx.group}>
-        <Text sx={sx.label}>
+        <Box sx={sx.label}>
           Time
           <Info margin={'22px'}>
             We fit models to the past and then simulated future conditions from
             2020 through 2100. Moving the slider reveals benefits and risks in
             the near and far future.
           </Info>
-        </Text>
+        </Box>
+        <Box sx={{mt: [3], mb: [3], mr: ['4px']}}>
         <Slider
-          sx={{ mt: [3], mb: [3], width: '314px' }}
+          sx={{ width: '100%' }}
           value={parseFloat(options['displayYear'])}
           onMouseUp={(e) => {
             setSlider('year', e.target.value)
@@ -171,10 +177,11 @@ function Layers({ options, setOptions, children }) {
           onMouseDown={() => {
             setSliderChanging(true)
           }}
-          min={2020}
-          max={2100}
-          step={20}
+          min={2010}
+          max={2090}
+          step={10}
         />
+        </Box>
         <Box
           sx={{
             textAlign: 'center',
@@ -189,7 +196,7 @@ function Layers({ options, setOptions, children }) {
               float: 'left',
             }}
           >
-            2020
+            2010
           </Box>
           <Box
             sx={{
@@ -216,7 +223,7 @@ function Layers({ options, setOptions, children }) {
               mr: ['4px'],
             }}
           >
-            2100
+            2090
           </Box>
         </Box>
       </Box>

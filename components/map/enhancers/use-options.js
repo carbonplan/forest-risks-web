@@ -4,27 +4,20 @@ import { optionKey, colorRanges } from '@constants'
 import * as P from 'polished'
 
 function useOptions(map, options) {
-  const context = useThemeUI()
-  const theme = context.theme
+  const { theme: { rawColors: colors } } = useThemeUI()
 
   useEffect(() => {
     const ranges = colorRanges(options)
 
     const updateLayer = (name, color) => {
       let key
-      if (name == 'biophysical') {
-        key = '0'
-      } else if (name == 'drought' || name == 'insects') {
-        key = '0_0'
-      } else {
-        key = optionKey(options)
-      }
+      key = optionKey(options)
       if (options[name]) {
         map.setPaintProperty(name, 'circle-color', {
           property: key,
           stops: [
-            [ranges[name][0], P.rgba(theme.colors[color], 0)],
-            [ranges[name][1], theme.colors[color]],
+            [ranges[name][0], P.rgba(colors[color], 0)],
+            [ranges[name][1], colors[color]],
           ],
         })
         map.setPaintProperty(name, 'circle-opacity', 1)
@@ -37,8 +30,7 @@ function useOptions(map, options) {
     updateLayer('fire', 'orange')
     updateLayer('drought', 'pink')
     updateLayer('insects', 'blue')
-    updateLayer('biophysical', 'grey')
-  }, [context, options])
+  }, [colors, options])
 }
 
 export default useOptions
