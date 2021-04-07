@@ -30,7 +30,9 @@ const withMDX = require('@next/mdx')({
 module.exports = withMDX(
   withBundleAnalyzer({
     pageExtensions: ['jsx', 'js', 'md', 'mdx'],
-    assetPrefix: isDev ? '' : 'https://victorious-sky-0813bc21e.azurestaticapps.net',
+    assetPrefix: isDev
+      ? ''
+      : 'https://victorious-sky-0813bc21e.azurestaticapps.net',
     webpack: (config, options) => {
       config.resolve.alias = {
         ...config.resolve.alias,

@@ -27,12 +27,14 @@ function Methods({ showMethods, toggleMethods }) {
           'min(calc(5 * 100vw / 12 - 18px), 782px)',
         ],
         transition: 'transform 0.2s',
-        transform: showMethods ? 'translateX(0px)' : [
-          'translateX(-700px)',
-          'translateX(-700px)',
-          'translateX(-700px)',
-          'translateX(-800px)',
-        ],
+        transform: showMethods
+          ? 'translateX(0px)'
+          : [
+              'translateX(-700px)',
+              'translateX(-700px)',
+              'translateX(-700px)',
+              'translateX(-800px)',
+            ],
         overflowY: 'scroll',
         display: ['none', 'initial', 'initial'],
       }}

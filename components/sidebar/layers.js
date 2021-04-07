@@ -1,11 +1,15 @@
 import { useState } from 'react'
-import { Box, Slider, Text } from 'theme-ui'
+import { useThemeUI, Box, Slider, Text } from 'theme-ui'
 import { alpha } from '@theme-ui/color'
 import { Tag } from '@carbonplan/components'
 import Info from '../info'
 
 function Layers({ options, setOptions, children }) {
+  const {
+    theme: { rawColors: colors },
+  } = useThemeUI()
   const [sliderChanging, setSliderChanging] = useState(false)
+  const [tick, setTick] = useState(false)
 
   const sx = {
     group: {
@@ -164,23 +168,49 @@ function Layers({ options, setOptions, children }) {
             the near and far future.
           </Info>
         </Box>
-        <Box sx={{mt: [3], mb: [3], mr: ['4px']}}>
-        <Slider
-          sx={{ width: '100%' }}
-          value={parseFloat(options['displayYear'])}
-          onMouseUp={(e) => {
-            setSlider('year', e.target.value)
-            setSlider('displayYear', e.target.value)
-            setSliderChanging(false)
-          }}
-          onChange={(e) => setSlider('displayYear', e.target.value)}
-          onMouseDown={() => {
-            setSliderChanging(true)
-          }}
-          min={2010}
-          max={2090}
-          step={10}
-        />
+        <Box sx={{ mt: [3], mb: [3], mr: ['4px'] }}>
+          <Slider
+            type='range'
+            sx={{
+              width: '100%',
+              '&::-webkit-slider-thumb': {
+                height: [18, 18, 16],
+                width: [18, 18, 16],
+              },
+              ':focus-visible': {
+                outline: 'none !important',
+                background: `${colors.secondary} !important`,
+              },
+              ':focus': {
+                '&::-webkit-slider-thumb': {
+                  boxShadow: `0 0 0 4px ${colors.secondary}`,
+                },
+              },
+            }}
+            value={parseFloat(options['displayYear'])}
+            onMouseUp={(e) => {
+              setSlider('year', e.target.value)
+              setSlider('displayYear', e.target.value)
+              setSliderChanging(false)
+            }}
+            onChange={(e) => setSlider('displayYear', e.target.value)}
+            onMouseDown={() => {
+              setSliderChanging(true)
+            }}
+            onKeyDown={(e) => {
+              if (tick) clearTimeout(tick)
+              setSliderChanging(true)
+              setTick(
+                setTimeout(() => {
+                  setSliderChanging(false)
+                }, 250)
+              )
+            }}
+            onKeyUp={(e) => setSlider('year', e.target.value)}
+            min={2010}
+            max={2090}
+            step={10}
+          />
         </Box>
         <Box
           sx={{

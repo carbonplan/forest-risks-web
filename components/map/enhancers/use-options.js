@@ -4,7 +4,9 @@ import { optionKey, colorRanges } from '@constants'
 import * as P from 'polished'
 
 function useOptions(map, options) {
-  const { theme: { rawColors: colors } } = useThemeUI()
+  const {
+    theme: { rawColors: colors },
+  } = useThemeUI()
 
   useEffect(() => {
     const ranges = colorRanges(options)

@@ -59,7 +59,7 @@ function Viewer() {
         flexDirection: ['column', 'row', 'row'],
         overflow: 'hidden',
         maxWidth: '1920px',
-        margin: 'auto'
+        margin: 'auto',
       }}
     >
       <Sidebar

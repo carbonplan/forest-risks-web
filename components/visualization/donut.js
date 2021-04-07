@@ -5,7 +5,9 @@ import * as P from 'polished'
 
 export default function Donut({ data, color }) {
   const boxRef = useRef(null)
-  const { theme: { rawColors: colors } } = useThemeUI()
+  const {
+    theme: { rawColors: colors },
+  } = useThemeUI()
 
   data = isNaN(data) ? 0 : data
 

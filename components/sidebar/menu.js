@@ -22,17 +22,19 @@ function Menu({ visible }) {
         opacity: visible ? 1 : 0,
         pointerEvents: visible ? 'all' : 'none',
         position: 'fixed',
-        width: visible ? [
-          0, 
-          'calc(2 * 100vw / 6 + 18px - 1px)',
-          'calc(3 * 100vw / 12 + 24px - 1px)',
-          'min(calc(3 * 100vw / 12 + 36px), 516px)'
-        ] : [
-          0, 
-          'calc(1 * 100vw / 6 + 18px)',
-          'calc(2 * 100vw / 12 + 24px)',
-          'min(calc(2 * 100vw / 12 + 36px), 516px)'
-        ],
+        width: visible
+          ? [
+              0,
+              'calc(2 * 100vw / 6 + 18px - 1px)',
+              'calc(3 * 100vw / 12 + 24px - 1px)',
+              'min(calc(3 * 100vw / 12 + 36px), 516px)',
+            ]
+          : [
+              0,
+              'calc(1 * 100vw / 6 + 18px)',
+              'calc(2 * 100vw / 12 + 24px)',
+              'min(calc(2 * 100vw / 12 + 36px), 516px)',
+            ],
         height: '100%',
         backgroundColor: 'background',
         textAlign: '-webkit-right',

@@ -6,8 +6,8 @@ function Index() {
   return (
     <Layout
       description={
-          'Mapping risks to forest carbon due to fire, drought, and biotic agents.'
-        }
+        'Mapping risks to forest carbon due to fire, drought, and biotic agents.'
+      }
       title='forest risks / research / carbonplan'
       header={false}
       dimmer={false}

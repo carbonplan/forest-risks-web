@@ -205,9 +205,9 @@ export default function Visualization({ data, options }) {
           </Box>
           <Box sx={{ mt: [2], position: 'relative' }}>
             <Text sx={{ ...sx.numberCenter, color: 'pink' }}>
-              {(Math.min(droughtTotal * 20, 100)).toFixed(0)}%
+              {Math.min(droughtTotal, 100).toFixed(0)}%
             </Text>
-            <Donut data={droughtTotal * 20 / 100} color={'pink'} />
+            <Donut data={droughtTotal / 100} color={'pink'} />
             <Text
               sx={{
                 ...sx.numberCenter,
@@ -221,9 +221,9 @@ export default function Visualization({ data, options }) {
           </Box>
           <Box sx={{ mt: [2], position: 'relative' }}>
             <Text sx={{ ...sx.numberCenter, color: 'blue' }}>
-              {(Math.min(insectsTotal * 20, 100)).toFixed(0)}%
+              {Math.min(insectsTotal * 20, 100).toFixed(0)}%
             </Text>
-            <Donut data={insectsTotal * 20 / 100} color={'blue'} />
+            <Donut data={(insectsTotal * 20) / 100} color={'blue'} />
             <Text
               sx={{
                 ...sx.numberCenter,

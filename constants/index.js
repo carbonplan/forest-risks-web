@@ -1,6 +1,16 @@
 export const allOptions = {
   scenarios: ['SSP2-4.5', 'SSP3-7.0', 'SSP5-8.5'],
-  years: ['2010', '2020', '2030', '2040', '2050', '2060', '2070', '2080', '2090'],
+  years: [
+    '2010',
+    '2020',
+    '2030',
+    '2040',
+    '2050',
+    '2060',
+    '2070',
+    '2080',
+    '2090',
+  ],
 }
 
 export const optionIndex = (label, value) => {
@@ -18,8 +28,8 @@ export const optionKey = (options) => {
 export const colorRanges = (options) => {
   return {
     fire: [2, 10],
-    drought: [0.75, 4],
-    insects: [0.5, 4],
+    drought: [15, 80],
+    insects: [10, 80],
     biomass: [50, 300],
     biophysical: [5, 30],
   }

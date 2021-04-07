@@ -30,10 +30,10 @@ function Sidebar({
     <Box
       sx={{
         maxWidth: [
-          0, 
+          0,
           'calc(2 * 100vw / 6 + 18px)',
           'calc(3 * 100vw / 12 + 24px)',
-          'min(calc(3 * 100vw / 12 + 36px), 516px)'
+          'min(calc(3 * 100vw / 12 + 36px), 516px)',
         ],
         height: '100%',
         flexBasis: '100%',
@@ -56,34 +56,42 @@ function Sidebar({
         }}
       >
         <Menu visible={showMenu} />
-        <Box sx={{borderStyle: 'solid', borderColor: 'muted', borderWidth: '0px', borderBottomWidth: '1px'}}>
         <Box
           sx={{
-            px: [3, 4, 5, 6],
-            pt: [3],
-            pb: [3],
-            fontSize: [6, 6, 6, 7],
-            width: 'fit-content',
-            fontFamily: 'heading',
-            lineHeight: 'heading',
+            borderStyle: 'solid',
+            borderColor: 'muted',
+            borderWidth: '0px',
+            borderBottomWidth: '1px',
           }}
         >
-          Forest risks
-        </Box>
-        <Box
-          sx={{
-            px: [3, 4, 5, 6],
-            pt: [0],
-            pb: [4],
-            mb: [1],
-            fontSize: [2, 2, 2, 3],
-            fontFamily: 'body',
-            lineHeight: 'body',
-          }}
-        >
-          This map shows harmonized projections of risks to forest carbon from fire, drought, and insects.
-          Browse the raw data and read the article for more.
-        </Box>
+          <Box
+            sx={{
+              px: [3, 4, 5, 6],
+              pt: [3],
+              pb: [3],
+              fontSize: [6, 6, 6, 7],
+              width: 'fit-content',
+              fontFamily: 'heading',
+              lineHeight: 'heading',
+            }}
+          >
+            Forest risks
+          </Box>
+          <Box
+            sx={{
+              px: [3, 4, 5, 6],
+              pt: [0],
+              pb: [4],
+              mb: [1],
+              fontSize: [2, 2, 2, 3],
+              fontFamily: 'body',
+              lineHeight: 'body',
+            }}
+          >
+            This map shows harmonized projections of risks to forest carbon from
+            fire, drought, and insects. Browse the raw data and read the article
+            for more.
+          </Box>
         </Box>
         <Layers options={options} setOptions={setOptions}>
           {children}
