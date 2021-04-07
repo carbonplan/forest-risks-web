@@ -11,13 +11,48 @@ def build_risks():
 
     cmds.append(
         'tippecanoe '
-        '-z5 '
-        '-o tmp/risks.mbtiles '
+        '-Z3 '
+        '-z3 '
+        '-o tmp/risks_z3.mbtiles '
         '--no-feature-limit '
         '--no-tile-size-limit '
         '--extend-zooms-if-still-dropping '
         '--no-tile-compression '
-        'raw/fire.geojson raw/drought.geojson raw/insects.geojson'
+        'raw/d4/fire.geojson raw/d4/drought.geojson raw/d4/insects.geojson'
+    )
+
+    cmds.append(
+        'tippecanoe '
+        '-Z4 '
+        '-z4 '
+        '-o tmp/risks_z4.mbtiles '
+        '--no-feature-limit '
+        '--no-tile-size-limit '
+        '--extend-zooms-if-still-dropping '
+        '--no-tile-compression '
+        'raw/d2/fire.geojson raw/d2/drought.geojson raw/d2/insects.geojson'
+    )
+
+    cmds.append(
+        'tippecanoe '
+        '-Z5 '
+        '-z5 '
+        '-o tmp/risks_z5.mbtiles '
+        '--no-feature-limit '
+        '--no-tile-size-limit '
+        '--extend-zooms-if-still-dropping '
+        '--no-tile-compression '
+        'raw/d1/fire.geojson raw/d1/drought.geojson raw/d1/insects.geojson'
+    )
+
+    cmds.append(
+        'tile-join '
+        '-o tmp/risks.mbtiles '
+        '--no-tile-compression '
+        '--no-tile-size-limit '
+        'tmp/risks_z3.mbtiles '
+        'tmp/risks_z4.mbtiles '
+        'tmp/risks_z5.mbtiles '
     )
 
     cmds.append(
@@ -42,13 +77,48 @@ def build_forests():
 
     cmds.append(
         'tippecanoe '
-        '-z5 '
-        '-o tmp/forests.mbtiles '
+        '-Z3 '
+        '-z3 '
+        '-o tmp/forests_z3.mbtiles '
         '--no-feature-limit '
         '--no-tile-size-limit '
         '--extend-zooms-if-still-dropping '
         '--no-tile-compression '
-        'raw/biomass.geojson '
+        'raw/d4/biomass.geojson'
+    )
+
+    cmds.append(
+        'tippecanoe '
+        '-Z4 '
+        '-z4 '
+        '-o tmp/forests_z4.mbtiles '
+        '--no-feature-limit '
+        '--no-tile-size-limit '
+        '--extend-zooms-if-still-dropping '
+        '--no-tile-compression '
+        'raw/d2/biomass.geojson'
+    )
+
+    cmds.append(
+        'tippecanoe '
+        '-Z5 '
+        '-z5 '
+        '-o tmp/forests_z5.mbtiles '
+        '--no-feature-limit '
+        '--no-tile-size-limit '
+        '--extend-zooms-if-still-dropping '
+        '--no-tile-compression '
+        'raw/d1/biomass.geojson'
+    )
+
+    cmds.append(
+        'tile-join '
+        '-o tmp/forests.mbtiles '
+        '--no-tile-compression '
+        '--no-tile-size-limit '
+        'tmp/forests_z3.mbtiles '
+        'tmp/forests_z4.mbtiles '
+        'tmp/forests_z5.mbtiles '
     )
 
     cmds.append(

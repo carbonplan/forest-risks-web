@@ -58,10 +58,9 @@ function Sidebar({
         <Menu visible={showMenu} />
         <Box sx={{borderStyle: 'solid', borderColor: 'muted', borderWidth: '0px', borderBottomWidth: '1px'}}>
         <Box
-          onClick={toggleMethods}
           sx={{
             px: [3, 4, 5, 6],
-            pt: [4],
+            pt: [3],
             pb: [3],
             fontSize: [6, 6, 6, 7],
             width: 'fit-content',
@@ -72,11 +71,11 @@ function Sidebar({
           Forest risks
         </Box>
         <Box
-          onClick={toggleMethods}
           sx={{
             px: [3, 4, 5, 6],
             pt: [0],
             pb: [4],
+            mb: [1],
             fontSize: [2, 2, 2, 3],
             fontFamily: 'body',
             lineHeight: 'body',
@@ -92,8 +91,11 @@ function Sidebar({
         <Box
           onClick={toggleMethods}
           sx={{
-            px: [3, 4, 5, 6],
-            py: [4],
+            mx: [3, 4, 5, 6],
+            pt: [1],
+            mt: ['12px'],
+            pb: [2],
+            mb: [3],
             fontSize: [2, 2, 2, 3],
             width: 'fit-content',
             fontFamily: 'heading',
