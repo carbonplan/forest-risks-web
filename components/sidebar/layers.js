@@ -185,6 +185,7 @@ function Layers({ options, setOptions, children }) {
               '&::-webkit-slider-thumb': {
                 height: [18, 18, 16],
                 width: [18, 18, 16],
+                transition: '0.15s',
               },
               ':focus-visible': {
                 outline: 'none !important',
@@ -192,7 +193,8 @@ function Layers({ options, setOptions, children }) {
               },
               ':focus': {
                 '&::-webkit-slider-thumb': {
-                  boxShadow: `0 0 0 4px ${colors.secondary}`,
+                  boxShadow: `0 0 0 4px ${colors.background}`,
+                  transform: 'scale(1.2)',
                 },
               },
             }}
