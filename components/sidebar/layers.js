@@ -119,7 +119,7 @@ function Layers({ options, setOptions, children }) {
             As forests grow they capture carbon in the form of biomass. This map
             shows the carbon removal potential of continuing growth in existing
             forests. As such, it projects avoided deforestation as opposed to
-            afforefation or reforestation.
+            afforestation or reforestation.
           </Info>
         </Box>
         <Option value='biomass' color='green' />

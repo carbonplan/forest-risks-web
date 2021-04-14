@@ -17,7 +17,7 @@ const Info = ({ children }) => {
       letterSpacing: 'body',
       textTransform: 'none',
       fontFamily: 'body',
-      fontSize: [1],
+      fontSize: [1, 1, 1, 2],
       maxWidth: '100%',
       pb: [2],
     },

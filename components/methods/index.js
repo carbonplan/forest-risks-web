@@ -43,32 +43,52 @@ function Methods({ showMethods, toggleMethods }) {
         sx={{
           px: [3, 4, 5, 6],
           opacity: 1,
+          pt: ['12px'],
+          mb: [4],
         }}
       >
         <Box
           onClick={toggleMethods}
           sx={{
             cursor: 'pointer',
-            '&:hover': {
-              color: 'secondary',
+            '&:hover > #arrow': {
+              color: 'primary',
+            },
+            '&:hover > #label': {
+              color: 'primary',
             },
           }}
         >
           <Text
+            id='arrow'
             sx={{
               display: 'inline-block',
-              fontSize: [6],
-              top: '-3px',
+              fontSize: ['20px'],
+              color: 'secondary',
+              top: '1px',
+              mr: [2],
               position: 'relative',
+              transition: 'color 0.15s',
             }}
           >
             ←
           </Text>
+          <Box
+            as='span'
+            id='label'
+            sx={{
+              transition: 'color 0.15s',
+              fontSize: [2, 2, 2, 3],
+              color: 'secondary',
+            }}
+          >
+            Back
+          </Box>
         </Box>
         <Box
           sx={{
             position: 'relative',
-            top: '-40px',
+            top: '-3px',
           }}
         >
           <MethodsContent />
