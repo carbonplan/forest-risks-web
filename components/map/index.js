@@ -52,24 +52,25 @@ function Map({ onMapReady, options, onChangeRegion = (region) => {} }) {
           onChangeRegion={onChangeRegion}
         />
       )}
-      {!map && (
-        <Flex
-          sx={{
-            font: 'inherit',
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: '100%',
-            height: '100%',
-            fontFamily: 'mono',
-            textTransform: 'uppercase',
-            letterSpacing: 'mono',
-            color: 'secondary',
-            fontSize: [2, 2, 2, 3],
-          }}
-        >
-          map loading...
-        </Flex>
-      )}
+      <Flex
+        sx={{
+          font: 'inherit',
+          justifyContent: 'center',
+          lineHeight: 'body',
+          alignItems: 'center',
+          width: '100%',
+          height: '100%',
+          fontFamily: 'mono',
+          textTransform: 'uppercase',
+          letterSpacing: 'mono',
+          color: 'secondary',
+          fontSize: [2, 2, 2, 3],
+          transition: 'opacity 0.15s',
+          opacity: map ? 0 : 1,
+        }}
+      >
+        map loading...
+      </Flex>
     </Box>
   )
 }
