@@ -48,7 +48,7 @@
     "react-animate-height": "^2.0.23",
     "react-dom": "^16.14.0",
     "styled-jsx": "^3.4.4",
-    "theme-ui": "^0.6.0",
+    "theme-ui": "^0.6.2",
     "topojson-simplify": "^3.0.3"
   },
   "devDependencies": {
