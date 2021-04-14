@@ -74,7 +74,7 @@ function Layers({ options, setOptions, children }) {
     })
   }
 
-  const Option = ({ value, color, disabled }) => {
+  const Option = ({ value, label, color, disabled }) => {
     return (
       <Tag
         onClick={() => toggleOption(value)}
@@ -86,12 +86,12 @@ function Layers({ options, setOptions, children }) {
           cursor: disabled ? 'default' : 'pointer',
         }}
       >
-        {value}
+        {label || value}
       </Tag>
     )
   }
 
-  const Radio = ({ name, value, color, disabled }) => {
+  const Radio = ({ name, value, label, color, disabled }) => {
     return (
       <Tag
         onClick={() => toggleRadio(name, value)}
@@ -105,26 +105,21 @@ function Layers({ options, setOptions, children }) {
           cursor: disabled ? 'default' : 'pointer',
         }}
       >
-        {value}
+        {label}
       </Tag>
     )
   }
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
+    <Box>
       <Box sx={sx.group}>
         <Box sx={sx.label}>
           Forests
           <Info>
             As forests grow they capture carbon in the form of biomass. This map
             shows the carbon removal potential of continuing growth in existing
-            forests. It is more similar to an avoided deforestation scenario, as
-            opposed to afforefation or reforestation.
+            forests. As such, it projects avoided deforestation as opposed to
+            afforefation or reforestation.
           </Info>
         </Box>
         <Option value='biomass' color='green' />
@@ -134,38 +129,52 @@ function Layers({ options, setOptions, children }) {
           Risks
           <Info>
             Fire, drought, and insects all pose risks to forests and thus limit
-            carbon permanence. There is also a biophysical warming effect due to
-            trees absorbing light. Toggling each of these factors reveals
-            competing and compounding risks.
+            carbon permanence. As shown, fire risks are projected into the
+            future using climate models. *Models for insect and drought risks
+            remain in development so the map only displays historical mortality
+            patterns for these risks.
           </Info>
         </Box>
         <Option value='fire' color='orange' />
-        <Option value='drought' color='pink' />
-        <Option value='insects' color='blue' />
+        <Option value='drought' label='drought*' color='pink' />
+        <Option value='insects' label='insects*' color='blue' />
       </Box>
       <Box sx={sx.group}>
         <Box sx={sx.label}>
-          Scenarios
+          warming Scenarios
           <Info>
-            The climate science community devises multiple scenarios (Shared
-            Socioeconomic Pathways or “SSPs”) of emissions and warming for the
-            future. SSP2-4.5 represents an optimistic outlook, SSP5-8.5 is
-            pessimistic, and SSP3-7.0 is in between.
+            The climate science community has devised multiple scenarios (Shared
+            Socioeconomic Pathways or “SSPs”) of emissions and warming in the
+            future. SSP2-4.5 represents an optimistic outlook (with lower
+            emissions), SSP5-8.5 is pessimistic (with very high emissions), and
+            SSP3-7.0 is in between.
           </Info>
         </Box>
         <Box>
-          <Radio value='SSP2-4.5' name='scenario' color='primary' />
-          <Radio value='SSP3-7.0' name='scenario' color='primary' />
-          <Radio value='SSP5-8.5' name='scenario' color='primary' />
+          <Radio value='SSP2-4.5' label='low' name='scenario' color='primary' />
+          <Radio
+            value='SSP3-7.0'
+            label='medium'
+            name='scenario'
+            color='primary'
+          />
+          <Radio
+            value='SSP5-8.5'
+            label='high'
+            name='scenario'
+            color='primary'
+          />
         </Box>
       </Box>
       <Box sx={sx.group}>
         <Box sx={sx.label}>
-          Time
+          Year
           <Info margin={'22px'}>
-            We fit models to the past and then simulated future conditions from
-            2020 through 2100. Moving the slider reveals benefits and risks in
-            the near and far future.
+            We fit models to the past and simulate future conditions through the
+            21st century. Estimates are averaged within 20 year windows. Moving
+            the slider reveals potential and risks in the near and far future.
+            *Drought and insect risks are constant as models are still in
+            development.
           </Info>
         </Box>
         <Box sx={{ mt: [3], mb: [3], mr: ['4px'] }}>

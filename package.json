@@ -45,6 +45,7 @@
     "point-in-polygon": "^1.0.1",
     "polished": "^4.1.1",
     "react": "^16.14.0",
+    "react-animate-height": "^2.0.23",
     "react-dom": "^16.14.0",
     "styled-jsx": "^3.4.4",
     "theme-ui": "^0.6.0",

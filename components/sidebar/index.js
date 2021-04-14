@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Box, Badge, Text, Flex } from 'theme-ui'
+import { Box, Badge, Text, Flex, Link } from 'theme-ui'
 import { alpha } from '@theme-ui/color'
 import Header from './header'
 import Menu from './menu'
@@ -89,8 +89,12 @@ function Sidebar({
             }}
           >
             This map shows harmonized projections of risks to forest carbon from
-            fire, drought, and insects. Browse the raw data and read the article
-            for more.
+            fire, drought, and insects under a changing climate. Results are
+            preliminary and models are still in{' '}
+            <Link href='https://github.com/carbonplan/forest-risks'>
+              development
+            </Link>
+            .
           </Box>
         </Box>
         <Layers options={options} setOptions={setOptions}>
