@@ -54,7 +54,10 @@ export default function Visualization({ data, options }) {
     }
     years.forEach((year, index) => {
       const key = optionKey({
-        scenario: options.scenario,
+        scenario:
+          type == 'drought' || type == 'insects'
+            ? 'SSP2-4.5'
+            : options.scenario,
         year: year,
       })
       stats[type].averages[index] = {
@@ -69,44 +72,10 @@ export default function Visualization({ data, options }) {
 
   const key = optionIndex('years', options.year)
 
+  // currently only using first year
   const fireTotal = stats.fire.averages.map((d) => d.y)[key]
-  const fireFraction =
-    points['fire']
-      .map((d) => {
-        const key = optionKey({
-          scenario: options.scenario,
-          year: options.year,
-        })
-        if (d.properties[key] > 4) return 1
-        else return 0
-      })
-      .reduce((a, b) => a + b, 0) / points['fire'].length
-
-  const droughtTotal = stats.drought.averages.map((d) => d.y)[key]
-  const droughtFraction =
-    points['drought']
-      .map((d) => {
-        const key = optionKey({
-          scenario: options.scenario,
-          year: options.year,
-        })
-        if (d.properties[key] > 0.1) return 1
-        else return 0
-      })
-      .reduce((a, b) => a + b, 0) / points['drought'].length
-
-  const insectsTotal = stats.insects.averages.map((d) => d.y)[key]
-  const insectsFraction =
-    points['insects']
-      .map((d) => {
-        const key = optionKey({
-          scenario: options.scenario,
-          year: options.year,
-        })
-        if (d.properties[key] > 0.1) return 1
-        else return 0
-      })
-      .reduce((a, b) => a + b, 0) / points['insects'].length
+  const droughtTotal = stats.drought.averages.map((d) => d.y)[0]
+  const insectsTotal = stats.insects.averages.map((d) => d.y)[0]
 
   const sx = {
     group: {
@@ -188,11 +157,11 @@ export default function Visualization({ data, options }) {
         </Text>
         <Grid sx={{ mt: ['14px'], mb: ['26px'] }} columns={[3]}>
           <Box sx={{ mt: [2], position: 'relative' }}>
-            <Text sx={{ ...sx.numberCenter, color: 'orange' }}>
+            <Box sx={{ ...sx.numberCenter, color: 'orange' }}>
               {fireTotal ? fireTotal.toFixed(0) : 0}%
-            </Text>
+            </Box>
             <Donut data={fireTotal / 100} color={'orange'} />
-            <Text
+            <Box
               sx={{
                 ...sx.numberCenter,
                 top: '98px',
@@ -201,14 +170,14 @@ export default function Visualization({ data, options }) {
               }}
             >
               FIRE
-            </Text>
+            </Box>
           </Box>
           <Box sx={{ mt: [2], position: 'relative' }}>
-            <Text sx={{ ...sx.numberCenter, color: 'pink' }}>
+            <Box sx={{ ...sx.numberCenter, color: 'pink' }}>
               {Math.min(droughtTotal, 100).toFixed(0)}%
-            </Text>
+            </Box>
             <Donut data={droughtTotal / 100} color={'pink'} />
-            <Text
+            <Box
               sx={{
                 ...sx.numberCenter,
                 top: '98px',
@@ -217,14 +186,14 @@ export default function Visualization({ data, options }) {
               }}
             >
               DROUGHT
-            </Text>
+            </Box>
           </Box>
           <Box sx={{ mt: [2], position: 'relative' }}>
-            <Text sx={{ ...sx.numberCenter, color: 'blue' }}>
-              {Math.min(insectsTotal * 20, 100).toFixed(0)}%
-            </Text>
-            <Donut data={(insectsTotal * 20) / 100} color={'blue'} />
-            <Text
+            <Box sx={{ ...sx.numberCenter, color: 'blue' }}>
+              {Math.min(insectsTotal, 100).toFixed(0)}%
+            </Box>
+            <Donut data={insectsTotal / 100} color={'blue'} />
+            <Box
               sx={{
                 ...sx.numberCenter,
                 top: '98px',
@@ -233,7 +202,7 @@ export default function Visualization({ data, options }) {
               }}
             >
               INSECTS
-            </Text>
+            </Box>
           </Box>
         </Grid>
       </Box>

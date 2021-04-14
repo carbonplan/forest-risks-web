@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useThemeUI, Box, Slider, Text } from 'theme-ui'
 import { alpha } from '@theme-ui/color'
 import { Tag } from '@carbonplan/components'
@@ -193,8 +193,7 @@ function Layers({ options, setOptions, children }) {
               },
               ':focus': {
                 '&::-webkit-slider-thumb': {
-                  boxShadow: `0 0 0 4px ${colors.background}`,
-                  transform: 'scale(1.2)',
+                  boxShadow: `0 0 0 4px ${colors.secondary}`,
                 },
               },
             }}
@@ -232,7 +231,7 @@ function Layers({ options, setOptions, children }) {
             sx={{
               fontFamily: 'mono',
               letterSpacing: 'mono',
-              fontSize: [1],
+              fontSize: [1, 1, 1, 2],
               display: 'inline-block',
               float: 'left',
             }}
@@ -244,7 +243,7 @@ function Layers({ options, setOptions, children }) {
               fontFamily: 'mono',
               letterSpacing: 'mono',
               display: 'inline-block',
-              fontSize: [1],
+              fontSize: [1, 1, 1, 2],
               ml: 'auto',
               mr: 'auto',
               color: 'secondary',
@@ -258,7 +257,7 @@ function Layers({ options, setOptions, children }) {
             sx={{
               fontFamily: 'mono',
               letterSpacing: 'mono',
-              fontSize: [1],
+              fontSize: [1, 1, 1, 2],
               float: 'right',
               display: 'inline-block',
               mr: ['4px'],

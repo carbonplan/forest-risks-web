@@ -4,6 +4,7 @@ import Sidebar from './sidebar'
 import Map from './map'
 import Visualization from './visualization'
 import Methods from './methods'
+import Loading from './loading'
 import { filterTypes } from '@constants'
 import { getSelectedData } from './map/enhancers/filters/helpers'
 
@@ -24,6 +25,7 @@ function Viewer() {
   const [options, setOptions] = useState(initialOptions)
   const [selectedData, setSelectedData] = useState(null)
   const [showMethods, setShowMethods] = useState(false)
+  const [scrollSidebar, setScrollSidebar] = useState(false)
 
   useEffect(() => {
     if (!map) return
@@ -67,11 +69,18 @@ function Viewer() {
         setOptions={setOptions}
         showMethods={showMethods}
         toggleMethods={toggleMethods}
+        scrollSidebar={scrollSidebar}
       >
         <Visualization data={selectedData} options={options} />
       </Sidebar>
       <Methods showMethods={showMethods} toggleMethods={toggleMethods} />
-      <Map options={options} onChangeRegion={setRegion} onMapReady={setMap} />
+      <Map
+        options={options}
+        onChangeRegion={setRegion}
+        onMapReady={setMap}
+        setScrollSidebar={setScrollSidebar}
+      />
+      <Loading map={map} />
     </Flex>
   )
 }

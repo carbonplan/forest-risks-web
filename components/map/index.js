@@ -6,7 +6,12 @@ import Enhancers from './enhancers'
 
 mapboxgl.accessToken = ''
 
-function Map({ onMapReady, options, onChangeRegion = (region) => {} }) {
+function Map({
+  onMapReady,
+  options,
+  setScrollSidebar,
+  onChangeRegion = (region) => {},
+}) {
   const container = useRef(null)
   const [map, setMap] = useState(null)
 
@@ -49,28 +54,10 @@ function Map({ onMapReady, options, onChangeRegion = (region) => {} }) {
         <Enhancers
           map={map}
           options={options}
+          setScrollSidebar={setScrollSidebar}
           onChangeRegion={onChangeRegion}
         />
       )}
-      <Flex
-        sx={{
-          font: 'inherit',
-          justifyContent: 'center',
-          lineHeight: 'body',
-          alignItems: 'center',
-          width: '100%',
-          height: '100%',
-          fontFamily: 'mono',
-          textTransform: 'uppercase',
-          letterSpacing: 'mono',
-          color: 'secondary',
-          fontSize: [2, 2, 2, 3],
-          transition: 'opacity 0.15s',
-          opacity: map ? 0 : 1,
-        }}
-      >
-        map loading...
-      </Flex>
     </Box>
   )
 }

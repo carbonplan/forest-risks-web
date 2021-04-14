@@ -59,5 +59,9 @@ export default function Donut({ data, color }) {
     }
   }, [data, colors])
 
-  return <Box ref={boxRef} sx={{ height: '100px', width: '100px' }} />
+  return (
+    <Flex sx={{ justifyContent: 'center' }}>
+      <Box ref={boxRef} sx={{ height: '100px', width: '100px' }} />
+    </Flex>
+  )
 }

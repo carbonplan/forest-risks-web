@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Box, Badge, Text, Flex, Link } from 'theme-ui'
 import { alpha } from '@theme-ui/color'
 import Header from './header'
@@ -11,8 +11,33 @@ function Sidebar({
   showMethods,
   toggleMethods,
   children,
+  scrollSidebar,
 }) {
   const [showMenu, setShowMenu] = useState(false)
+
+  useEffect(() => {
+    if (scrollSidebar) {
+      setTimeout(() => {
+        const el = document.getElementById('sidebar')
+        if (!el) return
+        el.scrollTo({
+          top: 1000,
+          left: 0,
+          behavior: 'smooth',
+        })
+      }, 100)
+    } else {
+      setTimeout(() => {
+        const el = document.getElementById('sidebar')
+        if (!el) return
+        el.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: 'smooth',
+        })
+      }, 0)
+    }
+  }, [scrollSidebar])
 
   const sx = {
     arrow: {
@@ -49,6 +74,7 @@ function Sidebar({
     >
       <Header showMenu={showMenu} toggleMenu={() => setShowMenu(!showMenu)} />
       <Box
+        id='sidebar'
         sx={{
           position: 'relative',
           flex: 1,

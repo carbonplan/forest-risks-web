@@ -8,7 +8,12 @@ import { RulerButton } from './ruler'
 import { Dimmer } from '@carbonplan/components'
 import ResetButton from './reset-button'
 
-export default function Enhancers({ map, options, onChangeRegion }) {
+export default function Enhancers({
+  map,
+  options,
+  onChangeRegion,
+  setScrollSidebar,
+}) {
   const [activeFilter, setActiveFilter] = useState(filterTypes.VIEWPORT)
   const [reset, setReset] = useState([() => {}])
 
@@ -22,6 +27,14 @@ export default function Enhancers({ map, options, onChangeRegion }) {
     },
     [activeFilter]
   )
+
+  useEffect(() => {
+    if (activeFilter == filterTypes.CIRCLE) {
+      setScrollSidebar(true)
+    } else {
+      setScrollSidebar(false)
+    }
+  }, [activeFilter])
 
   return (
     <>
