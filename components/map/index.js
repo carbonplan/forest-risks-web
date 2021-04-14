@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-import { Box } from 'theme-ui'
+import { Box, Flex } from 'theme-ui'
 import mapboxgl from 'mapbox-gl'
 import style from './style'
 import Enhancers from './enhancers'
@@ -51,6 +51,24 @@ function Map({ onMapReady, options, onChangeRegion = (region) => {} }) {
           options={options}
           onChangeRegion={onChangeRegion}
         />
+      )}
+      {!map && (
+        <Flex
+          sx={{
+            font: 'inherit',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+            height: '100%',
+            fontFamily: 'mono',
+            textTransform: 'uppercase',
+            letterSpacing: 'mono',
+            color: 'secondary',
+            fontSize: [2, 2, 2, 3],
+          }}
+        >
+          map loading...
+        </Flex>
       )}
     </Box>
   )

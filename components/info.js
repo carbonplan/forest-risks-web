@@ -19,7 +19,7 @@ const Info = ({ children }) => {
       fontFamily: 'body',
       fontSize: [1],
       maxWidth: '100%',
-      pb: [2]
+      pb: [2],
     },
   }
 
@@ -60,14 +60,14 @@ const Info = ({ children }) => {
           <circle cx='13' cy='13' r='12' />
         </Box>
       </IconButton>
-      <Box sx={{pt: [2], mb: [-2]}}>
-      <AnimateHeight
-        duration={100}
-        height={expanded ? 'auto' : 0}
-        easing={'linear'}
-      >
-      <Box sx={sx.body}>{children}</Box>
-      </AnimateHeight>
+      <Box sx={{ pt: [2], mb: [-2] }}>
+        <AnimateHeight
+          duration={100}
+          height={expanded ? 'auto' : 0}
+          easing={'linear'}
+        >
+          <Box sx={sx.body}>{children}</Box>
+        </AnimateHeight>
       </Box>
     </>
   )
