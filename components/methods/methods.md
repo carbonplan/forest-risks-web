@@ -3,27 +3,51 @@ import { alpha } from '@theme-ui/color'
 
 ## Summary
 
-These maps — built in collaboration between CarbonPlan and a team of researchers — show risks to forest carbon alongside the potential carbon removal associated with forest growth  across the contiguous US. Models are fit to historical data and then projected into the future using climate model data. Model predictions are shown for three scenarios of future warming for the 21st century. *Note: drought and insect models are still in development so we currently only show historical risks for these disturbance types.
+These maps — built in collaboration between CarbonPlan and a team of researchers — show risks to forest carbon alongside the potential carbon removal associated with forest growth across the contiguous US. Models are fit to historical data and then projected into the future using climate model data. Model predictions are shown for three scenarios of future warming for the 21st century. \*Note: drought and insect models are still in development so we currently only show historical risks for these disturbance types.
 
 ## Usage
 
-In the sidebar on the left you can click to turn different layers on and off, and select different climate scenarios. For each selection, the results reflect an ensemble average of six climate models for that scenario. Clicking the magnifying glass (lower left) displays a circular focus window, which can be dragged around to see spatially-averaged risks for forests within that circle for the given timestep. 
+In the sidebar on the left you can click to turn different layers on and off, and select different climate scenarios. For each selection, the results reflect an ensemble average of six climate models for that scenario. Clicking the magnifying glass (lower left) displays a circular focus window, which can be dragged around to see spatially-averaged risks for forests within that circle for the given timestep.
 
 ## Data access
 
 Raster data underlying all primary map layers in the web UI are available in the [`zarr`](https://github.com/zarr-developers/zarr-python) format at the following locations.
 
-<Box sx={{bg: alpha('muted', 0.5), borderRadius: '2px', p: [3]}}>
-<Box as='span' sx={{overflowWrap: 'break-word', fontFamily: 'mono', fontSize: [2]}}>FIRE: <br/>https://carbonplan.blob.core.windows.net/carbonplan-forests/risks/results/web/fire.zarr</Box>
-<br/>
-<br/>
-<Box as='span' sx={{overflowWrap: 'break-word', fontFamily: 'mono', fontSize: [2]}}>BIOMASS: <br/>https://carbonplan.blob.core.windows.net/carbonplan-forests/risks/results/web/biomass.zarr</Box>
-<br/>
-<br/>
-<Box as='span' sx={{overflowWrap: 'break-word', fontFamily: 'mono', fontSize: [2]}}>DROUGHT: <br/>https://carbonplan.blob.core.windows.net/carbonplan-forests/risks/results/web/drought.zarr</Box>
-<br/>
-<br/>
-<Box as='span' sx={{overflowWrap: 'break-word', fontFamily: 'mono', fontSize: [2]}}>INSECTS: <br/>https://carbonplan.blob.core.windows.net/carbonplan-forests/risks/results/web/insects.zarr</Box>
+<Box sx={{ bg: alpha('muted', 0.5), borderRadius: '2px', p: [3] }}>
+  <Box
+    as='span'
+    sx={{ overflowWrap: 'break-word', fontFamily: 'mono', fontSize: [2] }}
+  >
+    FIRE: <br />
+    https://carbonplan.blob.core.windows.net/carbonplan-forests/risks/results/web/fire.zarr
+  </Box>
+  <br />
+  <br />
+  <Box
+    as='span'
+    sx={{ overflowWrap: 'break-word', fontFamily: 'mono', fontSize: [2] }}
+  >
+    BIOMASS: <br />
+    https://carbonplan.blob.core.windows.net/carbonplan-forests/risks/results/web/biomass.zarr
+  </Box>
+  <br />
+  <br />
+  <Box
+    as='span'
+    sx={{ overflowWrap: 'break-word', fontFamily: 'mono', fontSize: [2] }}
+  >
+    DROUGHT: <br />
+    https://carbonplan.blob.core.windows.net/carbonplan-forests/risks/results/web/drought.zarr
+  </Box>
+  <br />
+  <br />
+  <Box
+    as='span'
+    sx={{ overflowWrap: 'break-word', fontFamily: 'mono', fontSize: [2] }}
+  >
+    INSECTS: <br />
+    https://carbonplan.blob.core.windows.net/carbonplan-forests/risks/results/web/insects.zarr
+  </Box>
 </Box>
 
 ## Methods
@@ -38,17 +62,25 @@ The model was fit to historical data from the US Forest Service Forest Inventory
 
 We fit a three-parameter logistic growth function with Gamma-distributed noise relating biomass to age. The model was defined as:
 
-<Box sx={{fontFamily: 'mono', bg: alpha('muted', 0.5), borderRadius: '2px', p: [3], fontSize: [2, 2, 2, 3]}}>
-biomass ~ Gamma(shape, scale)
-<br/>
-<br/>
-shape = mu / scale
-<br/>
-<br/>
-mu = amplitude * (1 / (1 + c * exp(-b * age)) - (1 / (1 + c))) * ((c + 1) / c)
-<br/>
-<br/>
-amplitude = a + w_tavg * tavg + w_ppt * ppt
+<Box
+  sx={{
+    fontFamily: 'mono',
+    bg: alpha('muted', 0.5),
+    borderRadius: '2px',
+    p: [3],
+    fontSize: [2, 2, 2, 3],
+  }}
+>
+  biomass ~ Gamma(shape, scale)
+  <br />
+  <br />
+  shape = mu / scale
+  <br />
+  <br />
+  mu = amplitude * (1 / (1 + c * exp(-b * age)) - (1 / (1 + c))) * ((c + 1) / c)
+  <br />
+  <br />
+  amplitude = a + w_tavg * tavg + w_ppt * ppt
 </Box>
 
 Because the mean of the Gamma distribution is the product of the shape and the scale, the mean of this parameterization’s distribution is given directly by the logistic function and the scale defines the noise. The parameter `b` controls the slope and the amplitude is controlled by a constant plus a weighted function of climate variables.
@@ -71,11 +103,11 @@ The model was fit to historical fire data from the Monitoring Trends in Burn Sev
 
 For vegetation, we used the National Forest Type Dataset (NFTD, see below). To limit the number of variables, spatially sparse forest groups were aggregated into supersets by combining any forest group with spatial area less than 1.76M ha with the most spatially similar, larger forest group (areas ranged from 51k ha to 67M). This grouping removed 8 out of 25 groups, and had little effect on model behavior. Thus, the result of our preprocessing was a (17) x (1209) x (783) forest group regressor raster.
 
-We fit a “hurdle” regression model to predict burned area as a function of climate and vegetation variables. This model jointly predicts the probability of a non-zero value and, if a non-zero value is present, its continuous value (Cragg, 1971).  Intuitively, this model can be thought of as combining a classifier (“was there fire?”) and a regression (“if there was fire, how large was the burned area?”).
+We fit a “hurdle” regression model to predict burned area as a function of climate and vegetation variables. This model jointly predicts the probability of a non-zero value and, if a non-zero value is present, its continuous value (Cragg, 1971). Intuitively, this model can be thought of as combining a classifier (“was there fire?”) and a regression (“if there was fire, how large was the burned area?”).
 
 We formally represented the hurdle model using a sequence of two generalized linear models: a Binomial model with logit link function predicting zero vs non-zero values, and a linear Gaussian model with normal link function predicting burn area in the locations where it was non-zero. We implemented the hurdle model in Python using scikit-learn by combining the LogisticRegression and LinearRegression methods (Pedregosa et al., 2011).
 
-In addition to the variables described above, we included two additional regressors to better capture inter-annual trends, which the model might otherwise ignore given that variation within years is substantially greater than variation across years. To create this regressor we calculated a CONUS-average temperature and precipitation time series and then calculated, on a monthly rolling basis, the 12-month maximum temperature and precipitation time series. We used the resulting time series as a regressor which was the same at all locations but varied over time. Conceptually, the temperature regressor provides a measure of longer term drought stress than the short term monthly time series. The precipitation regressor captures the sharpness of precipitation regimes, which has been shown to amplify wildfire risk in California (Swain et al., 2020). 
+In addition to the variables described above, we included two additional regressors to better capture inter-annual trends, which the model might otherwise ignore given that variation within years is substantially greater than variation across years. To create this regressor we calculated a CONUS-average temperature and precipitation time series and then calculated, on a monthly rolling basis, the 12-month maximum temperature and precipitation time series. We used the resulting time series as a regressor which was the same at all locations but varied over time. Conceptually, the temperature regressor provides a measure of longer term drought stress than the short term monthly time series. The precipitation regressor captures the sharpness of precipitation regimes, which has been shown to amplify wildfire risk in California (Swain et al., 2020).
 
 In practice, including these extra regressors improved overall model performance only slightly, but allowed the model to better reproduce both monthly trends and the observed increase in burned area over the observation period, a large fraction of which has been attributed to climate change (Abatzoglou and Williams, 2016). Fire risk is thresholded to locations that are more than 50% forested according to NLCD 2016.
 
@@ -85,13 +117,13 @@ See the [GitHub repository](https://github.com/carbonplan/forest-risks) for all 
 
 Note: We are currently refining and validating these models. To ensure confidence in our projections, we are currently only showing historical maps for Drought and Insects, obtained by fitting the models described below and evaluating them on a historical period matched to the FIA record.
 
-We aggregated FIA data on live and dead basal area from a tree-level to a 'condition' level, grouping together conditions representing repeated inventories of the same location. To construct drought and insect risk models, we screened for plots that had at least 2 inventory measurements, which enables estimating a true mortality rate. We next screened out plots that had a "fire" or "human" disturbance code or a "cutting" treatment code to remove major confounding disturbances. We estimated the fraction of mortality over a census interval, which we define as a pair of measurements in two successive years (t₀, t₁). 
+We aggregated FIA data on live and dead basal area from a tree-level to a 'condition' level, grouping together conditions representing repeated inventories of the same location. To construct drought and insect risk models, we screened for plots that had at least 2 inventory measurements, which enables estimating a true mortality rate. We next screened out plots that had a "fire" or "human" disturbance code or a "cutting" treatment code to remove major confounding disturbances. We estimated the fraction of mortality over a census interval, which we define as a pair of measurements in two successive years (t₀, t₁).
 
-The fraction of mortality is defined as the ratio of dead basal area in t₁ to the total live basal area in t₀, which was then normalized by the census length to give annual mortality rates. We computed this ratio separately for each condition. Given that several plots only had one repeated measure (only one census interval), we used the first census interval for all conditions. We modeled ‘drought-related’ mortality as the mortality that occurred during this census interval (with other confounding mortality drivers excluded, see above) and ‘insect-related’ mortality using the “agent code” (AGENTCD) tree-level data, where codes of 10-19 indicate insects as the primary causal agent of death. We note that the drought mortality models include mortality from insects, which was a deliberate decision because insects and drought often co-occur and interact to kill trees in many forests across the US (Anderegg et al. 2015). We also included stand and self-thinning dynamics in model construction (see below). 
+The fraction of mortality is defined as the ratio of dead basal area in t₁ to the total live basal area in t₀, which was then normalized by the census length to give annual mortality rates. We computed this ratio separately for each condition. Given that several plots only had one repeated measure (only one census interval), we used the first census interval for all conditions. We modeled ‘drought-related’ mortality as the mortality that occurred during this census interval (with other confounding mortality drivers excluded, see above) and ‘insect-related’ mortality using the “agent code” (AGENTCD) tree-level data, where codes of 10-19 indicate insects as the primary causal agent of death. We note that the drought mortality models include mortality from insects, which was a deliberate decision because insects and drought often co-occur and interact to kill trees in many forests across the US (Anderegg et al. 2015). We also included stand and self-thinning dynamics in model construction (see below).
 
-We fit a statistical model predicting mortality as a function of climatic and stand variables. Given the large prevalence of zeros in our mortality data, we modeled mortality using a "hurdle" model as described in the fire model description, differing only in that the linear model for predicting non-zero values used a beta-distributed (as opposed to Gaussian) link function. The beta-distributed link function for the linear regression was chosen based on inspecting the behavior of the raw data distributions. We implemented the hurdle model in R using the ‘glm’ and ‘betareg’ packages (Cribri-Neto and Zeileis, 2010). 
+We fit a statistical model predicting mortality as a function of climatic and stand variables. Given the large prevalence of zeros in our mortality data, we modeled mortality using a "hurdle" model as described in the fire model description, differing only in that the linear model for predicting non-zero values used a beta-distributed (as opposed to Gaussian) link function. The beta-distributed link function for the linear regression was chosen based on inspecting the behavior of the raw data distributions. We implemented the hurdle model in R using the ‘glm’ and ‘betareg’ packages (Cribri-Neto and Zeileis, 2010).
 
-For each condition, we extracted the mean, minimum, and maximum over the census interval for six annual climate variables that were selected based on their importance in the drought and insect mortality literature: precipitation, temperature, palmer drought severity index (PDSI), potential evapotranspiration (PET), climatic water deficit (CWD), and vapor pressure deficit (VPD) (Bentz et al. 2010; Williams et al. 2013; Creeden et al. 2014; Anderegg et al. 2015; Grossiard et al. 2020). We also extracted the stand age for each condition from FIA and the community-weighted mean and range of the functional trait of the water potential at 50% loss of hydraulic conductivity (P50) from 0.25 degree maps published in a recent study (Trugman et al. 2020). This trait has been widely linked to drought-driven mortality risk in site-level studies (Urli et al. 2013; Nardini et al. 2015) and meta-analyses (Anderegg et al. 2016). We also included in the mortality models two stand variables of age or age-squared to account for background ecological dynamics such as self-thinning and background mortality, following Hember et al. (2017). All predictor variables were z-scored across the full dataset for that variable to ensure that variable ranges did not drive model outputs. 
+For each condition, we extracted the mean, minimum, and maximum over the census interval for six annual climate variables that were selected based on their importance in the drought and insect mortality literature: precipitation, temperature, palmer drought severity index (PDSI), potential evapotranspiration (PET), climatic water deficit (CWD), and vapor pressure deficit (VPD) (Bentz et al. 2010; Williams et al. 2013; Creeden et al. 2014; Anderegg et al. 2015; Grossiard et al. 2020). We also extracted the stand age for each condition from FIA and the community-weighted mean and range of the functional trait of the water potential at 50% loss of hydraulic conductivity (P50) from 0.25 degree maps published in a recent study (Trugman et al. 2020). This trait has been widely linked to drought-driven mortality risk in site-level studies (Urli et al. 2013; Nardini et al. 2015) and meta-analyses (Anderegg et al. 2016). We also included in the mortality models two stand variables of age or age-squared to account for background ecological dynamics such as self-thinning and background mortality, following Hember et al. (2017). All predictor variables were z-scored across the full dataset for that variable to ensure that variable ranges did not drive model outputs.
 
 Drought and insect mortality models were fit independently for each forest type, which was chosen as an intermediate compromise to capture the diversity of responses across US forests but aggregate above a species-level to adequately estimate mortality levels. To ensure that each forest type had 50 or more condition measurements, we aggregated some sparse forest types into more common ones (59 were so aggregated out of the initial set of 171), leading to 112 initial forest types in our dataset. Because FIA plots are inherently small and may not estimate accurate mortality rates at a plot-level, we subsequently aggregated condition-level mortality rates, age, climate data, and functional traits to a 0.25 degree grid for each forest type. This grid size was chosen through sensitivity analyses to determine the optimal aggregation where the coefficient of variation of mortality rate stabilized but large-scale climate variation was preserved. All drought and insect mortality models were fit on this 0.25 degree grid. Model predictions were then conducted at the condition level and interpolated to the 4km grid as with biomass.
 
@@ -109,7 +141,7 @@ We downloaded FIA data from the [FIA Data Mart in CSV format](https://apps.fs.us
 
 ### NFTD
 
-The National Forest Type Dataset, based upon FIA, is a collection of rasters which encode the most common forest type and forest group at 250 m. For each forest group, we constructed a raster resampled to the same 4-km grid encoding, for each grid cell, the fraction of that forest group present. 
+The National Forest Type Dataset, based upon FIA, is a collection of rasters which encode the most common forest type and forest group at 250 m. For each forest group, we constructed a raster resampled to the same 4-km grid encoding, for each grid cell, the fraction of that forest group present.
 
 We downloaded NFTD data from the [FSGeodata Clearinghouse](https://data.fs.usda.gov/geodata/rastergateway/forest_type/).
 
@@ -167,7 +199,7 @@ Cannon et al. (2015) Bias Correction of GCM Precipitation by Quantile Mapping: H
 
 Cragg (1971) Some Statistical Models for Limited Dependent Variables with Application to the Demand for Durable Goods, Econometrica, [DOI](http://dx.doi.org/10.2307/1909582)
 
-Cribari-Neto F, Zeileis A (2010). “Beta Regression in R.” Journal of Statistical Software, 1–24.  [DOI](http://dx.doi.org/10.18637/jss.v034.i02)
+Cribari-Neto F, Zeileis A (2010). “Beta Regression in R.” Journal of Statistical Software, 1–24. [DOI](http://dx.doi.org/10.18637/jss.v034.i02)
 
 Eidenshink et al. (2007) A project for monitoring trends in burn severity, Fire Ecology, [DOI](https://doi.org/10.4996/fireecology.0301003)
 
@@ -177,7 +209,7 @@ Gillespie (1999) Rationale for a national annual forest inventory program, Journ
 
 Hember et al. (2017) Relationships between individual‐tree mortality and water‐balance variables indicate positive trends in water stress‐induced tree mortality across North America, Global Change Biology, [DOI](https://doi.org/10.1111/gcb.13428)
 
-Li, H et al. (2010) Bias correction of monthly precipitation and temperature fields from Intergovernmental Panel on Climate Change AR4 models using equidistant quantile matching, Journal of Geophysica Research, [DOI](https://doi.org/10.1029/2009JD012882) 
+Li, H et al. (2010) Bias correction of monthly precipitation and temperature fields from Intergovernmental Panel on Climate Change AR4 models using equidistant quantile matching, Journal of Geophysica Research, [DOI](https://doi.org/10.1029/2009JD012882)
 
 Maraun et al (2015) VALUE: A framework to validate downscaling approaches for climate change studies, Earth's Future [DOI](https://doi.org/10.1002/2014EF000259).
 
