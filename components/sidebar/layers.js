@@ -145,9 +145,9 @@ function Layers({ options, setOptions, children }) {
           <Info>
             The climate science community has devised multiple scenarios (Shared
             Socioeconomic Pathways or “SSPs”) of emissions and warming in the
-            future. SSP2-4.5 represents an optimistic outlook (with lower
-            emissions), SSP5-8.5 is pessimistic (with very high emissions), and
-            SSP3-7.0 is in between.
+            future. SSP2-4.5 or "Low" represents an optimistic outlook with
+            lower emissions, SSP5-8.5 or "High" is pessimistic with very high
+            emissions, and SSP3-7.0 or "Medium" is in between.
           </Info>
         </Box>
         <Box>
