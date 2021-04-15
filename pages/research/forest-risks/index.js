@@ -6,7 +6,7 @@ function Index() {
   return (
     <Layout
       description={
-        'Mapping risks to forest carbon from fire, drought, and insects.'
+        'Mapping climate risks to forest carbon from fire, drought, and insects.'
       }
       title='forest risks / research / carbonplan'
       card='https://images.carbonplan.org/social/forest-risks.png'
