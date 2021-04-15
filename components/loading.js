@@ -45,7 +45,7 @@ const Loading = ({ map }) => {
             fontSize: [2, 2, 2, 3],
           }}
         >
-          map loading...
+          loading map...
         </Flex>
       </Box>
     </Box>
