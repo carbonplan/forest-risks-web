@@ -15,7 +15,7 @@ function Index() {
       footer={false}
       metadata={false}
     >
-      <Guide />
+      <Guide color='teal' />
       <Viewer />
     </Layout>
   )

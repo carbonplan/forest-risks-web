@@ -55,7 +55,7 @@ export default function Donut({ data, color }) {
       })
 
     return function cleanup() {
-      boxRef.current.innerHTML = ''
+      if (boxRef.current) boxRef.current.innerHTML = ''
     }
   }, [data, colors])
 

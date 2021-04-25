@@ -1,4 +1,3 @@
-/** @jsx jsx */
 import { useState, useEffect } from 'react'
 import * as d3 from 'd3'
 import { jsx, IconButton, useThemeUI } from 'theme-ui'

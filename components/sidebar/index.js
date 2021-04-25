@@ -56,7 +56,7 @@ function Sidebar({
       sx={{
         maxWidth: [
           0,
-          'calc(2 * 100vw / 6 + 18px)',
+          'calc(3 * 100vw / 8 + 18px)',
           'calc(3 * 100vw / 12 + 24px)',
           'min(calc(3 * 100vw / 12 + 36px), 516px)',
         ],

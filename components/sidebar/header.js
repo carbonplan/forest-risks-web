@@ -1,5 +1,4 @@
-/** @jsx jsx */
-import { jsx, Box, Flex, Link, IconButton } from 'theme-ui'
+import { Box, Flex, Link, IconButton } from 'theme-ui'
 import { Logo } from '@carbonplan/components'
 
 const Header = ({ showMenu, toggleMenu }) => {
@@ -12,7 +11,8 @@ const Header = ({ showMenu, toggleMenu }) => {
         pt: ['12px'],
         pb: ['9px'],
         height: '56px',
-        px: [3, 4, 5, 6],
+        pl: [3, 4, 5, 6],
+        pr: [3, 5, 5, 6],
         borderStyle: 'solid',
         borderWidth: '0px',
         borderBottomWidth: '1px',
@@ -47,7 +47,8 @@ const Header = ({ showMenu, toggleMenu }) => {
           aria-label='Toggle Menu'
         >
           {!showMenu && (
-            <svg
+            <Box
+              as='svg'
               sx={{
                 width: '50px',
                 height: '30px',
@@ -60,20 +61,23 @@ const Header = ({ showMenu, toggleMenu }) => {
               <line x1='52' y1='29.9' x2='16' y2='29.9' />
               <line x1='52' y1='6.1' x2='16' y2='6.1' />
               <line x1='52' y1='18' x2='16' y2='18' />
-              <path
+              <Box
+                as='path'
                 sx={{ transition: 'all 0.25s' }}
                 className='paren'
                 d='M6.4,1.2c-6.3,10.3-6.3,23.3,0,33.6'
               />
-              <path
+              <Box
+                as='path'
                 sx={{ transition: 'all 0.25s' }}
                 className='paren'
                 d='M61.6,34.8c6.3-10.3,6.3-23.3,0-33.6'
               />
-            </svg>
+            </Box>
           )}
           {showMenu && (
-            <svg
+            <Box
+              as='svg'
               sx={{
                 width: '50px',
                 height: '30px',
@@ -95,7 +99,7 @@ const Header = ({ showMenu, toggleMenu }) => {
                 className='paren'
                 d='M61.6,34.8c6.3-10.3,6.3-23.3,0-33.6'
               />
-            </svg>
+            </Box>
           )}
         </IconButton>
       </Box>

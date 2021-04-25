@@ -15,7 +15,8 @@ function Layers({ options, setOptions, children }) {
     group: {
       pt: [4],
       pb: ['22px'],
-      px: [3, 4, 5, 6],
+      pl: [3, 4, 5, 6],
+      pr: [3, 5, 5, 6],
       borderStyle: 'solid',
       borderColor: 'muted',
       borderWidth: '0px',
@@ -177,7 +178,7 @@ function Layers({ options, setOptions, children }) {
             development.
           </Info>
         </Box>
-        <Box sx={{ mt: [3], mb: [3], mr: ['4px'] }}>
+        <Box sx={{ mt: [3], mb: [3], mr: [0, 0, 0, 0] }}>
           <Slider
             type='range'
             sx={{

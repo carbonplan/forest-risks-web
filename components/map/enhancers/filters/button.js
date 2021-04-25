@@ -1,5 +1,4 @@
-/** @jsx jsx */
-import { jsx, IconButton } from 'theme-ui'
+import { Box, IconButton } from 'theme-ui'
 
 const Button = ({ svg, onClick, sx, active, label }) => (
   <IconButton

@@ -15,14 +15,14 @@ function Methods({ showMethods, toggleMethods }) {
         height: '100%',
         left: [
           0,
-          'calc(2 * 100vw / 6 + 18px)',
+          'calc(3 * 100vw / 8 + 18px)',
           'calc(3 * 100vw / 12 + 24px)',
           'min(calc(3 * 100vw / 12 + 36px), 516px)',
         ],
         backgroundColor: 'background',
         width: [
           0,
-          'calc(3 * 100vw / 6)',
+          'calc(4 * 100vw / 8 - 8px)',
           'calc(5 * 100vw / 12 - 12px)',
           'min(calc(5 * 100vw / 12 - 18px), 782px)',
         ],
@@ -41,7 +41,7 @@ function Methods({ showMethods, toggleMethods }) {
     >
       <Box
         sx={{
-          px: [3, 4, 5, 6],
+          px: [3, 5, 5, 6],
           opacity: 1,
           pt: ['12px'],
           mb: [4],
