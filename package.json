@@ -10,7 +10,9 @@
     "start": "next start",
     "export": "next build && next export",
     "serve-tiles": "http-server tiles/processed --cors",
-    "format": "prettier --write README.md '*.js' '{components,hooks,pages,constants,utils}/**/*.js'"
+    "format": "npm run format-js && npm run format-md",
+    "format-js": "prettier --write README.md '*.js' '{components,hooks,pages,constants,utils}/**/*.js'",
+    "format-md": "prettier --write README.md '{components,}/**/*.md' --parser mdx"
   },
   "repository": {
     "type": "git",
