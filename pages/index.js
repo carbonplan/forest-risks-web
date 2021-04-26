@@ -1,18 +1,30 @@
 import { Box } from 'theme-ui'
-import { Layout } from '@carbonplan/components'
+import { Buttons, Links } from '@carbonplan/components'
+
+const { InternalLink } = Links
+const { ArrowButton } = Buttons
 
 function Index() {
   return (
-    <Layout
-      title='forest risks / research / carbonplan'
-      description='Mapping risks to forest carbon from fire, drought, and insects.'
-      header={false}
-      footer={false}
-      dimmer={false}
-      metadata={false}
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+      }}
     >
-      <Box>Hello! Please go to /research/forest-risks</Box>
-    </Layout>
+      <InternalLink
+        sx={{
+          display: 'block',
+          textDecoration: 'none',
+          mt: [-1, -2, -3, -4],
+        }}
+        href='/research/forest-risks'
+      >
+        <ArrowButton size='xl' fill='green' label='go to map' />
+      </InternalLink>
+    </Box>
   )
 }
 
