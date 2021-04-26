@@ -22,7 +22,7 @@ function Index() {
         }}
         href='/research/forest-risks'
       >
-        <ArrowButton size='xl' fill='green' label='go to map' />
+        <ArrowButton size='xl' fill='orange' label='go to map' />
       </InternalLink>
     </Box>
   )
