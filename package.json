@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/carbonplan/maps#readme",
   "dependencies": {
-    "@babel/core": "^7.13.1",
+    "@babel/core": "^7.14.0",
     "@carbonplan/components": "^7.1.1",
     "@carbonplan/theme": "^5.0.0",
     "@mdx-js/loader": "^1.6.22",
