@@ -27,9 +27,9 @@ export const optionKey = (options) => {
 
 export const colorRanges = (options) => {
   return {
-    fire: [2, 10],
-    drought: [15, 80],
-    insects: [10, 120],
+    fire: [2.5, 10],
+    drought: [15, 60],
+    insects: [10, 30],
     biomass: [50, 300],
   }
 }
