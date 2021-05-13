@@ -9,6 +9,7 @@ function Layers({ options, setOptions, children }) {
     theme: { rawColors: colors },
   } = useThemeUI()
   const [sliderChanging, setSliderChanging] = useState(false)
+  const [displayYear, setDisplayYear] = useState(options.year)
   const [tick, setTick] = useState(false)
 
   const sx = {
@@ -130,15 +131,14 @@ function Layers({ options, setOptions, children }) {
           Risks
           <Info>
             Fire, drought, and insects all pose risks to forests and thus limit
-            carbon permanence. As shown, fire risks are projected into the
-            future using climate models. *Models for insect and drought risks
-            remain in development so the map only displays historical mortality
-            patterns for these risks.
+            carbon permanence. Risks are projected into the
+            future using climate models. These models have several assumptions and caveats, 
+            so future projections should be interpreted with care.
           </Info>
         </Box>
         <Option value='fire' color='orange' />
-        <Option value='drought' label='drought*' color='pink' />
-        <Option value='insects' label='insects*' color='blue' />
+        <Option value='drought' label='drought' color='pink' />
+        <Option value='insects' label='insects' color='blue' />
       </Box>
       <Box sx={sx.group}>
         <Box sx={sx.label}>
@@ -198,13 +198,13 @@ function Layers({ options, setOptions, children }) {
                 },
               },
             }}
-            value={parseFloat(options['displayYear'])}
+            value={parseFloat(displayYear)}
             onMouseUp={(e) => {
               setSlider('year', e.target.value)
-              setSlider('displayYear', e.target.value)
+              setDisplayYear(e.target.value)
               setSliderChanging(false)
             }}
-            onChange={(e) => setSlider('displayYear', e.target.value)}
+            onChange={(e) => setDisplayYear(e.target.value)}
             onMouseDown={() => {
               setSliderChanging(true)
             }}
@@ -252,7 +252,7 @@ function Layers({ options, setOptions, children }) {
               transition: '0.2s',
             }}
           >
-            {options.displayYear}
+            {displayYear}
           </Box>
           <Box
             sx={{

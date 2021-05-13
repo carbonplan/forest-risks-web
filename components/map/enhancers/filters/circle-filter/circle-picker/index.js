@@ -6,8 +6,6 @@ const CirclePicker = ({ map, center, radius, onIdle, onDrag }) => {
   const [renderer, setRenderer] = useState(null)
   const { theme } = useThemeUI()
 
-  console.log(theme)
-
   useEffect(() => {
     const renderer = CircleRenderer({
       map,

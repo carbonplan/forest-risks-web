@@ -54,10 +54,7 @@ export default function Visualization({ data, options }) {
     }
     years.forEach((year, index) => {
       const key = optionKey({
-        scenario:
-          type == 'drought' || type == 'insects'
-            ? 'SSP2-4.5'
-            : options.scenario,
+        scenario: options.scenario,
         year: year,
       })
       stats[type].averages[index] = {
@@ -74,8 +71,8 @@ export default function Visualization({ data, options }) {
 
   // currently only using first year
   const fireTotal = stats.fire.averages.map((d) => d.y)[key]
-  const droughtTotal = stats.drought.averages.map((d) => d.y)[0]
-  const insectsTotal = stats.insects.averages.map((d) => d.y)[0]
+  const droughtTotal = stats.drought.averages.map((d) => d.y)[key]
+  const insectsTotal = stats.insects.averages.map((d) => d.y)[key]
 
   const sx = {
     group: {

@@ -29,9 +29,8 @@ export const colorRanges = (options) => {
   return {
     fire: [2, 10],
     drought: [15, 80],
-    insects: [10, 80],
+    insects: [10, 100],
     biomass: [50, 300],
-    biophysical: [5, 30],
   }
 }
 

@@ -15,23 +15,13 @@ function useOptions(map, options) {
       let key
       key = optionKey(options)
       if (options[name]) {
-        if (name === 'drought' || name === 'insects') {
-          map.setPaintProperty(name, 'circle-color', {
-            property: '0_0',
-            stops: [
-              [ranges[name][0], P.rgba(colors[color], 0)],
-              [ranges[name][1], colors[color]],
-            ],
-          })
-        } else {
-          map.setPaintProperty(name, 'circle-color', {
-            property: key,
-            stops: [
-              [ranges[name][0], P.rgba(colors[color], 0)],
-              [ranges[name][1], colors[color]],
-            ],
-          })
-        }
+        map.setPaintProperty(name, 'circle-color', {
+          property: key,
+          stops: [
+            [ranges[name][0], P.rgba(colors[color], 0)],
+            [ranges[name][1], colors[color]],
+          ],
+        })
         map.setPaintProperty(name, 'circle-opacity', 1)
       } else {
         map.setPaintProperty(name, 'circle-opacity', 0)
