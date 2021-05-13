@@ -115,12 +115,15 @@ function Sidebar({
             }}
           >
             This map shows harmonized projections of risks to forest carbon from
-            fire, drought, and insects under a changing climate. Results are
-            preliminary and models are still in{' '}
-            <Link href='https://github.com/carbonplan/forest-risks'>
-              development
-            </Link>
-            .
+            fire, drought, and insects under a changing climate. Read our{' '}
+            <Link href='https://carbonplan.org/research/forest-risks-explainer'>
+              explainer
+            </Link>{' '}
+            or our{' '}
+            <Link href='https://www.biorxiv.org/content/10.1101/2021.05.11.443688v1'>
+              preprint
+            </Link>{' '}
+            for more details.
           </Box>
         </Box>
         <Layers options={options} setOptions={setOptions}>

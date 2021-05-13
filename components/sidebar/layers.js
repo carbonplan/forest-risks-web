@@ -131,9 +131,9 @@ function Layers({ options, setOptions, children }) {
           Risks
           <Info>
             Fire, drought, and insects all pose risks to forests and thus limit
-            carbon permanence. Risks are projected into the
-            future using climate models. These models have several assumptions and caveats, 
-            so future projections should be interpreted with care.
+            carbon permanence. Risks are projected into the future using climate
+            models. These models have several assumptions and caveats, so future
+            projections should be interpreted with care.
           </Info>
         </Box>
         <Option value='fire' color='orange' />
