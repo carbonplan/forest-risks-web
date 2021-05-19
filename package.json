@@ -36,7 +36,7 @@
     "@carbonplan/theme": "^5.0.0",
     "@mdx-js/loader": "^1.6.22",
     "@next/mdx": "^10.0.3",
-    "@theme-ui/color": "^0.7.5",
+    "@theme-ui/color": "^0.8.4",
     "@turf/turf": "^5.1.6",
     "d3-array": "^2.12.1",
     "d3-axis": "^2.1.0",
