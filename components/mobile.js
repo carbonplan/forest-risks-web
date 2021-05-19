@@ -28,11 +28,11 @@ function Mobile({ expanded }) {
 
   return (
     <>
-      <Box
+      {section === 'map' && <Box
         sx={{
           width: 'calc(100vw)',
           height: 'calc(100vh - 120px)',
-          display: [section === 'map' ? 'flex' : 'none'],
+          display: 'flex',
           ml: [-3],
         }}
       >
@@ -44,6 +44,7 @@ function Mobile({ expanded }) {
         />
         <Loading map={map} mobile />
       </Box>
+      }
       <Tray
         expanded={expanded}
         sx={{
@@ -93,7 +94,7 @@ function Mobile({ expanded }) {
               borderStyle: 'solid',
               borderColor: 'muted',
               borderWidth: '0px',
-              borderLeftWidth: '1px',
+              borderLeftWidth: '0px',
               borderRightWidth: '1px',
               cursor: 'pointer',
               bg: section === 'map' ? alpha('muted', 0.5) : 'background',
