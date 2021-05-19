@@ -27,7 +27,6 @@ function useOptions(map, options) {
         map.setPaintProperty(name, 'circle-opacity', 0)
       }
     }
-
     updateLayer('biomass', 'green')
     updateLayer('fire', 'orange')
     updateLayer('drought', 'pink')

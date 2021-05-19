@@ -104,28 +104,3 @@ export function getSelectedData(map, layers, selectedRegion) {
 
   return selectedData
 }
-
-/////////////// querySourceFeatures ///////////////
-
-// export function getSelectedData(map, layers, selectedRegion) {
-//   const selectedData = {
-//     region: selectedRegion
-//       ? selectedRegion.properties
-//       : { type: 'Viewport', bounds: map.getBounds().toArray() },
-//     points: {}
-//   }
-//
-//   layers.forEach(layer => {
-//     let points = map.querySourceFeatures(layer, { sourceLayer: layer })
-//
-//     points = selectedRegion
-//       ? points.filter((p) => isPointInPolygon(p, selectedRegion))
-//       : points
-//
-//     if (DEDUPE_ON_FILTER) points = dedupedPoints(points)
-//
-//     selectedData.points[layer] = points
-//   })
-//
-//   return selectedData
-// }

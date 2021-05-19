@@ -35,19 +35,24 @@
     "@carbonplan/components": "^7.1.1",
     "@carbonplan/theme": "^5.0.0",
     "@mdx-js/loader": "^1.6.22",
-    "@next/bundle-analyzer": "^10.0.7",
     "@next/mdx": "^10.0.3",
-    "@theme-ui/color": "^0.7.3",
+    "@theme-ui/color": "^0.7.5",
     "@turf/turf": "^5.1.6",
-    "d3": "^6.3.1",
+    "d3-array": "^2.12.1",
+    "d3-axis": "^2.1.0",
+    "d3-geo": "^1.7.1",
+    "d3-scale": "^3.3.0",
+    "d3-selection": "^2.0.0",
+    "d3-shape": "^2.1.0",
     "mapbox-gl": "^1.13.0",
     "next": "^10.0.6",
     "polished": "^4.1.2",
     "react": "^17.0.2",
     "react-animate-height": "^2.0.23",
     "react-dom": "^17.0.2",
+    "react-use": "^17.2.4",
     "styled-jsx": "^3.4.4",
-    "theme-ui": "^0.7.3"
+    "theme-ui": "^0.7.5"
   },
   "devDependencies": {
     "prettier": "2.2.1"

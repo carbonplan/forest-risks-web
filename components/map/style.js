@@ -1,6 +1,6 @@
 import config from '@config'
 
-const dataLayer = (source, name) => {
+const dataLayer = (source, name, background) => {
   return {
     id: name,
     type: 'circle',
@@ -9,6 +9,7 @@ const dataLayer = (source, name) => {
     layout: { visibility: 'visible' },
     paint: {
       'circle-opacity': 0,
+      'circle-color': background,
       'circle-radius': [
         'interpolate',
         ['exponential', 2],
@@ -32,7 +33,10 @@ const dataLayer = (source, name) => {
   }
 }
 
-const style = {
+const style = (colors) => {
+  const { background, primary, muted } = colors
+
+  return {
   version: 8,
   glyphs: `https://storage.googleapis.com/carbonplan-data/tiles/glyphs/{fontstack}/{range}.pbf`,
   sources: {
@@ -69,6 +73,7 @@ const style = {
       paint: {
         'fill-antialias': false,
         'fill-opacity': 0,
+        'fill-color': muted
       },
     },
     {
@@ -85,6 +90,7 @@ const style = {
         'line-blur': 0.4,
         'line-opacity': 0,
         'line-width': 0.8,
+        'line-color': primary
       },
     },
     {
@@ -101,6 +107,7 @@ const style = {
         'line-blur': 0.4,
         'line-opacity': 0,
         'line-width': 0.8,
+        'line-color': primary
       },
     },
     {
@@ -117,13 +124,15 @@ const style = {
         'line-blur': 0.4,
         'line-opacity': 0,
         'line-width': 0.8,
+        'line-color': primary
       },
     },
-    dataLayer('forests', 'biomass'),
-    dataLayer('risks', 'fire'),
-    dataLayer('risks', 'drought'),
-    dataLayer('risks', 'insects'),
+    dataLayer('forests', 'biomass', background),
+    dataLayer('risks', 'fire', background),
+    dataLayer('risks', 'drought', background),
+    dataLayer('risks', 'insects', background),
   ],
+}
 }
 
 export default style

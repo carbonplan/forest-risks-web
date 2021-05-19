@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-import { Box, Flex } from 'theme-ui'
+import { useThemeUI, Box } from 'theme-ui'
 import mapboxgl from 'mapbox-gl'
 import style from './style'
 import Enhancers from './enhancers'
@@ -15,10 +15,14 @@ function Map({
   const container = useRef(null)
   const [map, setMap] = useState(null)
 
+  const {
+    theme: { rawColors: colors },
+  } = useThemeUI()
+
   useEffect(() => {
     const map = new mapboxgl.Map({
       container: container.current,
-      style: style,
+      style: style(colors),
       center: [-121.9, 43.11],
       zoom: 6.79,
       minZoom: 3,
