@@ -32,11 +32,12 @@
   "homepage": "https://github.com/carbonplan/maps#readme",
   "dependencies": {
     "@babel/core": "^7.13.1",
-    "@carbonplan/components": "^7.1.1",
+    "@carbonplan/components": "^7.8.0",
     "@carbonplan/theme": "^5.0.0",
     "@mdx-js/loader": "^1.6.22",
     "@next/mdx": "^10.0.3",
-    "@theme-ui/color": "^0.7.5",
+    "@theme-ui/color": "^0.8.4",
+    "@theme-ui/match-media": "^0.8.4",
     "@turf/turf": "^5.1.6",
     "d3-array": "^2.12.1",
     "d3-axis": "^2.1.0",
@@ -50,9 +51,7 @@
     "react": "^17.0.2",
     "react-animate-height": "^2.0.23",
     "react-dom": "^17.0.2",
-    "react-use": "^17.2.4",
-    "styled-jsx": "^3.4.4",
-    "theme-ui": "^0.7.5"
+    "theme-ui": "^0.8.4"
   },
   "devDependencies": {
     "prettier": "2.2.1"

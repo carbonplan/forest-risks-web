@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { Box } from 'theme-ui'
-import { useMedia } from 'react-use'
+import { useBreakpointIndex } from '@theme-ui/match-media'
 import { Layout } from '@carbonplan/components'
 import Desktop from '../../../components/desktop'
 import Mobile from '../../../components/mobile'
 
 function Index() {
-  const isWide = useMedia('(min-width: 40em)')
+  const isWide = useBreakpointIndex() > 0
   const [expanded, setExpanded] = useState(false)
   return (
     <>
