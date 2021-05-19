@@ -15,17 +15,16 @@ const withMDX = require('@next/mdx')({
 })
 
 module.exports = withMDX({
-    pageExtensions: ['jsx', 'js', 'md', 'mdx'],
-    assetPrefix: isDev
-      ? ''
-      : 'https://victorious-sky-0813bc21e.azurestaticapps.net',
-    webpack: (config, options) => {
-      config.resolve.alias = {
-        ...config.resolve.alias,
-        ...aliases,
-      }
+  pageExtensions: ['jsx', 'js', 'md', 'mdx'],
+  assetPrefix: isDev
+    ? ''
+    : 'https://victorious-sky-0813bc21e.azurestaticapps.net',
+  webpack: (config, options) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      ...aliases,
+    }
 
-      return config
-    },
-  }
-)
+    return config
+  },
+})

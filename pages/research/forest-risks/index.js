@@ -10,7 +10,8 @@ function Index() {
   const [expanded, setExpanded] = useState(false)
   return (
     <>
-      {isWide && <Layout
+      {isWide && (
+        <Layout
           description={
             'Mapping climate risks to forest carbon from fire, drought, and insects.'
           }
@@ -24,26 +25,30 @@ function Index() {
         >
           <Desktop />
         </Layout>
-      }
-      {!isWide && <Box sx={{display: ['initial', 'none', 'none', 'none']}}>
-        <Layout
-          description={
-            'Mapping climate risks to forest carbon from fire, drought, and insects.'
-          }
-          title='forest risks / research / carbonplan'
-          card='https://images.carbonplan.org/social/forest-risks.png'
-          header={true}
-          nav={'researc'}
-          dimmer={true}
-          metadata={false}
-          footer={false}
-          guide={'teal'}
-          settings={{ value: expanded, onClick: () => setExpanded(!expanded) }}
-        >
-          <Mobile expanded={expanded} />
-        </Layout>
+      )}
+      {!isWide && (
+        <Box sx={{ display: ['initial', 'none', 'none', 'none'] }}>
+          <Layout
+            description={
+              'Mapping climate risks to forest carbon from fire, drought, and insects.'
+            }
+            title='forest risks / research / carbonplan'
+            card='https://images.carbonplan.org/social/forest-risks.png'
+            header={true}
+            nav={'researc'}
+            dimmer={true}
+            metadata={false}
+            footer={false}
+            guide={'teal'}
+            settings={{
+              value: expanded,
+              onClick: () => setExpanded(!expanded),
+            }}
+          >
+            <Mobile expanded={expanded} />
+          </Layout>
         </Box>
-      }
+      )}
     </>
   )
 }

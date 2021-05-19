@@ -52,7 +52,8 @@ function useRuler(map, mode = AXES) {
 
       const xAxis = (g, x) =>
         g
-          .call(axisBottom(x)
+          .call(
+            axisBottom(x)
               .tickValues(x.domain())
               .tickFormat((d) => `${d}°`)
               .tickSize(TICK_SIZE)
@@ -69,7 +70,8 @@ function useRuler(map, mode = AXES) {
 
       const yAxis = (g, y) =>
         g
-          .call(axisLeft(y)
+          .call(
+            axisLeft(y)
               .tickValues(y.domain())
               .tickFormat((d) => `${d}°`)
               .tickSize(TICK_SIZE)
