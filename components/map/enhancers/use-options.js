@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useThemeUI } from 'theme-ui'
 import { optionKey, colorRanges } from '@constants'
-import * as P from 'polished'
+import { rgba } from 'polished'
 
 function useOptions(map, options) {
   const {
@@ -18,7 +18,7 @@ function useOptions(map, options) {
         map.setPaintProperty(name, 'circle-color', {
           property: key,
           stops: [
-            [ranges[name][0], P.rgba(colors[color], 0)],
+            [ranges[name][0], rgba(colors[color], 0)],
             [ranges[name][1], colors[color]],
           ],
         })

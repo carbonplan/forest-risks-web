@@ -3,6 +3,7 @@ import { useThemeUI, Box, Flex, Button } from 'theme-ui'
 import { arc, pie } from 'd3-shape'
 import { scaleOrdinal } from 'd3-scale'
 import { select } from 'd3-selection'
+import { rgba } from 'polished'
 
 export default function Donut({ data, color }) {
   const boxRef = useRef(null)
@@ -33,7 +34,7 @@ export default function Donut({ data, color }) {
 
     var colorScale = scaleOrdinal()
       .domain([0, 1])
-      .range([colors[color], colors[color]])
+      .range([rgba(colors[color], 0.2), colors[color]])
 
     var generator = pie()
       .value(function (d) {
