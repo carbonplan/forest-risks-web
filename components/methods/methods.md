@@ -3,7 +3,7 @@ import { alpha } from '@theme-ui/color'
 
 ## Summary
 
-These maps — built in collaboration between CarbonPlan and a team of researchers — show risks to forest carbon alongside the potential carbon removal associated with forest growth across the contiguous US. Models are fit to historical data and then projected into the future using climate model data. Model predictions are shown for three scenarios of future warming for the 21st century. \*Note: drought and insect models are still in development so we currently only show historical risks for these disturbance types.
+These maps — built in collaboration between CarbonPlan and a team of researchers — show risks to forest carbon alongside the potential carbon removal associated with forest growth across the contiguous US. Models are fit to historical data and then projected into the future using climate model data. Model predictions are shown for three scenarios of future warming for the 21st century.
 
 ## Usage
 
@@ -13,46 +13,34 @@ In the sidebar on the left you can click to turn different layers on and off, an
 
 Raster data underlying all primary map layers in the web UI are available in the [`zarr`](https://github.com/zarr-developers/zarr-python) format at the following locations.
 
-<Box sx={{ bg: alpha('muted', 0.5), borderRadius: '2px', p: [3] }}>
-  <Box
-    as='span'
-    sx={{ overflowWrap: 'break-word', fontFamily: 'mono', fontSize: [2] }}
-  >
-    FIRE: <br />
-    https://carbonplan.blob.core.windows.net/carbonplan-forests/risks/results/web/fire.zarr
-  </Box>
-  <br />
-  <br />
-  <Box
-    as='span'
-    sx={{ overflowWrap: 'break-word', fontFamily: 'mono', fontSize: [2] }}
-  >
-    BIOMASS: <br />
-    https://carbonplan.blob.core.windows.net/carbonplan-forests/risks/results/web/biomass.zarr
-  </Box>
-  <br />
-  <br />
-  <Box
-    as='span'
-    sx={{ overflowWrap: 'break-word', fontFamily: 'mono', fontSize: [2] }}
-  >
-    DROUGHT: <br />
-    https://carbonplan.blob.core.windows.net/carbonplan-forests/risks/results/web/drought.zarr
-  </Box>
-  <br />
-  <br />
-  <Box
-    as='span'
-    sx={{ overflowWrap: 'break-word', fontFamily: 'mono', fontSize: [2] }}
-  >
-    INSECTS: <br />
-    https://carbonplan.blob.core.windows.net/carbonplan-forests/risks/results/web/insects.zarr
-  </Box>
-</Box>
+```
+FIRE:
+https://carbonplan.blob.core.windows.net/carbonplan-forests/risks/results/web/fire.zarr
+
+BIOMASS:
+https://carbonplan.blob.core.windows.net/carbonplan-forests/risks/results/web/biomass.zarr
+
+DROUGHT:
+https://carbonplan.blob.core.windows.net/carbonplan-forests/risks/results/web/drought.zarr
+
+INSECTS:
+https://carbonplan.blob.core.windows.net/carbonplan-forests/risks/results/web/insects.zarr
+```
+
+Below is a code example demonstrating how these datasets can be accessed using Python.
+
+```
+import xarray as xr
+import fsspec
+
+store = fsspec.get_mapper('https://carbonplan.blob.core.windows.net/carbonplan-forests/risks/results/web/fire.zarr')
+
+ds = xr.open_zarr(store, consolidated=True)
+```
 
 ## Methods
 
-The biomass map and the risk maps for fire, drought mortality, and insect mortality are based on several datasets, including field observations, remote sensing estimates, and downscaled climate projections — all of which are described below. Our maps are aligned to a common 4km Albers equal-area grid. All input data are available in public cloud storage and Python code for reproducing our analyses is available on [Github](https://github.com/carbonplan/forest-risks). We expect to continue to iterate and improve these models over time and will update our code and the description of these methods accordingly.
+The biomass map and the risk maps for fire, drought mortality, and insect mortality are based on several datasets, including field observations, remote sensing estimates, and downscaled climate projections — all of which are described below. Our maps are aligned to a common 4km Albers equal-area grid. All input data are available in public cloud storage and Python code for reproducing our analyses is available on [GithHb](https://github.com/carbonplan/forest-risks). We expect to continue to iterate and improve these models over time and will update our code and the description of these methods accordingly.
 
 ### Biomass
 
@@ -62,26 +50,15 @@ The model was fit to historical data from the US Forest Service Forest Inventory
 
 We fit a three-parameter logistic growth function with Gamma-distributed noise relating biomass to age. The model was defined as:
 
-<Box
-  sx={{
-    fontFamily: 'mono',
-    bg: alpha('muted', 0.5),
-    borderRadius: '2px',
-    p: [3],
-    fontSize: [2, 2, 2, 3],
-  }}
->
-  biomass ~ Gamma(shape, scale)
-  <br />
-  <br />
-  shape = mu / scale
-  <br />
-  <br />
-  mu = amplitude * (1 / (1 + c * exp(-b * age)) - (1 / (1 + c))) * ((c + 1) / c)
-  <br />
-  <br />
-  amplitude = a + w_tavg * tavg + w_ppt * ppt
-</Box>
+```
+biomass ~ Gamma(shape, scale)
+
+shape = mu / scale
+
+mu = amplitude * (1 / (1 + c * exp(-b * age)) - (1 / (1 + c))) * ((c + 1) / c)
+
+amplitude = a + w_tavg * tavg + w_ppt * ppt
+```
 
 Because the mean of the Gamma distribution is the product of the shape and the scale, the mean of this parameterization’s distribution is given directly by the logistic function and the scale defines the noise. The parameter `b` controls the slope and the amplitude is controlled by a constant plus a weighted function of climate variables.
 
@@ -91,7 +68,7 @@ A Gamma distribution was used as the noise model, rather than a Gaussian, becaus
 
 The model was fit independently to each of 112 forest types, with a median number of 1057 conditions per forest type (min of 60, max of 27874). To ensure that each forest type had 50 or more condition measurements, we aggregated some sparse forest types into more common ones (59 were so aggregated out of the initial set of 171). Each model was fit using all conditions from a given forest type regardless of their specific inventory year. We did not explicitly model the inventory year or whether a condition was inventoried repeatedly, i.e. conditions with repeated inventories were treated as independent samples. Our drought and insect models (described in the 'Drought and Insects' subsection) leverage repeated inventories explicitly.
 
-All parameters were fit jointly using maximum likelihood as defined by the Gamma distribution. Constrained nonlinear optimization was performed in Python with the [`scipy.optimize.minimize` function](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html) using the `trust-constrained` algorithm. Parameters `a` and `b` were bounded below at 1e-5 and parameter `c` was bounded below at 1. Otherwise parameters were unbounded. Although the model was fit using maximum likelihood, for interpretability model performance was also assessed using `R²` between predicted and actual biomass, with a median of 0.29 across the 112 forest types, a minimum of 0.050, and a maximum of 0.63. In general, the effects of climatic variables in the model were weak, variable across forest types, and increased model performance only slightly. Average fitted parameters showed a positive relationship with precipitation (increased maximum amplitude of biomass with higher precipitation) and negative relationship with temperature (decreased maximum amplitude of biomass with higher temperatures), but these relationships were variable across forest types. While principled model selection might suggest dropping these variables from the model, we include them for comparability with our other models, all of which include climatic variables.
+All parameters were fit jointly using maximum likelihood as defined by the Gamma distribution. Constrained nonlinear optimization was performed in Python with the [`scipy.optimize.minimize`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html) function using the `trust-constrained` algorithm. Parameters `a` and `b` were bounded below at 1e-5 and parameter `c` was bounded below at 1. Otherwise parameters were unbounded. Although the model was fit using maximum likelihood, for interpretability model performance was also assessed using `R²` between predicted and actual biomass, with a median of 0.29 across the 112 forest types, a minimum of 0.050, and a maximum of 0.63. In general, the effects of climatic variables in the model were weak, variable across forest types, and increased model performance only slightly. Average fitted parameters showed a positive relationship with precipitation (increased maximum amplitude of biomass with higher precipitation) and negative relationship with temperature (decreased maximum amplitude of biomass with higher temperatures), but these relationships were variable across forest types. While principled model selection might suggest dropping these variables from the model, we include them for comparability with our other models, all of which include climatic variables.
 
 To predict future biomass, we "grew" forests starting in the year 2010 and proceeding in 10-year increments, based on fitted growth curves and climate data from CMIP6 projections (see below). We set the initial stand age based on the measured stand age plus the elapsed time between that measurement and 2010. For example, a condition that was inventoried in 1990 with a stand age of 35 would be assigned a starting age of 55 in 2010 (`t₀`), reflecting its growth since the latest measured stand age. Then, at each future timestep `t₁`, we computed a growth delta by predicting biomass with the climate in year `t₁` and the age in year `t₁` minus the biomass with the climate in year `t₁` and the age in year `t₀`. This delta was then added to the total biomass from year `t₀` to obtain a biomass in year `t₁`. We created the predictions at the condition level and then used gridded interpolation via the [`verde`](https://github.com/fatiando/verde) library to map the predictions to a common 4km grid. These estimates were finally scaled by multiplying by a raster of fractional forest area from the National Land Cover Database from 2016 (NLCD, see below), and thresholded to only show locations with forests exceeding 50%.
 
@@ -111,11 +88,7 @@ In addition to the variables described above, we included two additional regress
 
 In practice, including these extra regressors improved overall model performance only slightly, but allowed the model to better reproduce both monthly trends and the observed increase in burned area over the observation period, a large fraction of which has been attributed to climate change (Abatzoglou and Williams, 2016). Fire risk is thresholded to locations that are more than 50% forested according to NLCD 2016.
 
-See the [GitHub repository](https://github.com/carbonplan/forest-risks) for all of the code to reproduce our results.
-
 ### Drought and Insects
-
-Note: We are currently refining and validating these models. To ensure confidence in our projections, we are currently only showing historical maps for Drought and Insects, obtained by fitting the models described below and evaluating them on a historical period matched to the FIA record.
 
 We aggregated FIA data on live and dead basal area from a tree-level to a 'condition' level, grouping together conditions representing repeated inventories of the same location. To construct drought and insect risk models, we screened for plots that had at least 2 inventory measurements, which enables estimating a true mortality rate. We next screened out plots that had a "fire" or "human" disturbance code or a "cutting" treatment code to remove major confounding disturbances. We estimated the fraction of mortality over a census interval, which we define as a pair of measurements in two successive years (t₀, t₁).
 
@@ -127,7 +100,7 @@ For each condition, we extracted the mean, minimum, and maximum over the census 
 
 Drought and insect mortality models were fit independently for each forest type, which was chosen as an intermediate compromise to capture the diversity of responses across US forests but aggregate above a species-level to adequately estimate mortality levels. To ensure that each forest type had 50 or more condition measurements, we aggregated some sparse forest types into more common ones (59 were so aggregated out of the initial set of 171), leading to 112 initial forest types in our dataset. Because FIA plots are inherently small and may not estimate accurate mortality rates at a plot-level, we subsequently aggregated condition-level mortality rates, age, climate data, and functional traits to a 0.25 degree grid for each forest type. This grid size was chosen through sensitivity analyses to determine the optimal aggregation where the coefficient of variation of mortality rate stabilized but large-scale climate variation was preserved. All drought and insect mortality models were fit on this 0.25 degree grid. Model predictions were then conducted at the condition level and interpolated to the 4km grid as with biomass.
 
-Finally, we imposed one further set of criteria on drought and insect models to project risks only where our models showed robust performance. For any forest types with fewer than 20 grid cells featuring mortality observed in the historical record, or where cross-validated AUC was less than 0.6, we set the historical mortality equal to the mean of observed mortality for that forest type. This constraint led to risks being modeled as a function of climate variables for 23 forest types in the insect models and 53 forest types in the drought models. As with biomass and fire, drought and insect risks are only shown for regions which were greater than 50% forested according to the National Land Cover Database (NLCD, see below)
+Finally, we imposed one further set of criteria on drought and insect models to project risks only where our models showed robust performance. For any forest types with fewer than 20 grid cells featuring mortality observed in the historical record, or where cross-validated AUC was less than 0.6, we set future projections to the mean of observed mortality for that forest type. This constraint led to risks being modeled as a function of climate variables for 23 forest types in the insect models and 53 forest types in the drought models. As with biomass and fire, drought and insect risks are only shown for regions which were greater than 50% forested according to the National Land Cover Database (NLCD, see below)
 
 ## Data sources
 
@@ -165,7 +138,7 @@ To process the TerraClimate dataset, we regridded the data from its global 1/24t
 
 ### CMIP6
 
-Future projections of biomass and fire risk were made using climate model data from the Coupled Model Intercomparison Project Phase 6 (CMIP6; Eyring et al, 2016). We used the Pangeo Project’s archive of the CMIP6 dataset available on [Google Cloud Platform](https://console.cloud.google.com/marketplace/product/noaa-public/cmip6?_ga=2.46871527.-1119720002.1551810800). For our analysis, we extracted monthly mean fields for the variables precipitation (pr), minimum daily temperature (tasmin), and maximum daily temperature (tasmax), and relative humidity (shum). Of the available data, we selected 6 climate models (CanESM5-CanOE, MIROC-ES2L, ACCESS-CM2, ACCESS-ESM1-5, MRI-ESM2-0, MPI-ESM1-2-LR) and 3 SSPs (2-4.5, 3-7.0, 5-8.5) based on data availability as of February 2020.
+Future projections of biomass and fire risk were made using climate model data from the Coupled Model Intercomparison Project Phase 6 (CMIP6; Eyring et al, 2016). We used the Pangeo Project’s archive of the CMIP6 dataset available on [Google Cloud Platform](https://pangeo-data.github.io/pangeo-cmip6-cloud/). For our analysis, we extracted monthly mean fields for the variables precipitation (pr), minimum daily temperature (tasmin), and maximum daily temperature (tasmax), and relative humidity (shum). Of the available data, we selected 6 climate models (CanESM5-CanOE, MIROC-ES2L, ACCESS-CM2, ACCESS-ESM1-5, MRI-ESM2-0, MPI-ESM1-2-LR) and 3 SSPs (2-4.5, 3-7.0, 5-8.5) based on data availability as of February 2020.
 
 Our processing of the individual CMIP6 datasets included regridding the data from its native global grid to our 4km grid. This process was done using [Xesmf’s](https://xesmf.readthedocs.io/en/latest/index.html) bilinear interpolation.
 

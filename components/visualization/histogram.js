@@ -1,10 +1,9 @@
-import * as d3 from 'd3'
+import { scaleLinear } from 'd3-scale'
 import { Box } from 'theme-ui'
 
 const Histogram = ({ scales, values }) => {
-  const width = 315
   const height = 63
-  const y = d3.scaleLinear().domain([0, 1]).range([0, height])
+  const y = scaleLinear().domain([0, 1]).range([0, height])
   return (
     <svg width='100%' height={height} preserveAspectRatio='none'>
       {values.map((d, i) => {

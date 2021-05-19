@@ -1,11 +1,11 @@
 import { Box, Flex } from 'theme-ui'
 
-const Loading = ({ map }) => {
+const Loading = ({ map, mobile = false }) => {
   return (
     <Box
       sx={{
         width: '100%',
-        height: '100%',
+        height: mobile ? 'calc(100vh - 120px)' : '100%',
         fontFamily: 'mono',
         transition: 'opacity 0.15s',
         opacity: map ? 0 : 1,
@@ -39,7 +39,7 @@ const Loading = ({ map }) => {
             alignItems: 'center',
             textTransform: 'uppercase',
             letterSpacing: 'mono',
-            height: '100vh',
+            height: mobile ? 'calc(100vh - 120px)' : '100vh',
             width: '100%',
             color: 'secondary',
             fontSize: [2, 2, 2, 3],

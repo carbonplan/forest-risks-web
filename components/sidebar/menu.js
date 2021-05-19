@@ -1,21 +1,31 @@
 import { Box, Container, Link, Text } from 'theme-ui'
 import { default as NextLink } from 'next/link'
+import { Row, Column, Arrow } from '@carbonplan/components'
+
+const link = {
+  color: 'text',
+  fontSize: [6, 6, 6, 7],
+  fontFamily: 'heading',
+  letterSpacing: 'heading',
+  py: [3, 3, 3, 5],
+  borderStyle: 'solid',
+  borderColor: 'muted',
+  borderWidth: '0px',
+  borderBottomWidth: '1px',
+  textDecoration: 'none',
+  position: 'relative',
+  display: 'block',
+  '@media (hover: hover) and (pointer: fine)': {
+    '&:hover > #arrow': {
+      opacity: 1,
+    },
+  },
+  '&:hover': {
+    color: 'text',
+  },
+}
 
 function Menu({ visible }) {
-  const link = {
-    width: 'fit-content',
-    color: 'text',
-    fontSize: [5, 6, 6, 7],
-    pb: [0],
-    textDecoration: 'none',
-    display: 'block',
-    '&:hover': {
-      color: 'secondary',
-      borderBottomWidth: '1px',
-      borderColor: 'secondary',
-    },
-  }
-
   return (
     <Box
       sx={{
@@ -27,36 +37,45 @@ function Menu({ visible }) {
               0,
               'calc(3 * 100vw / 8 + 18px - 1px)',
               'calc(3 * 100vw / 12 + 24px - 1px)',
-              'min(calc(3 * 100vw / 12 + 36px), 516px)',
+              'min(calc(3 * 100vw / 12 + 35px), 515px)',
             ]
           : [
               0,
               'calc(2 * 100vw / 8 + 18px)',
               'calc(2 * 100vw / 12 + 24px)',
-              'min(calc(2 * 100vw / 12 + 36px), 516px)',
+              'min(calc(2 * 100vw / 12 + 35px), 515px)',
             ],
         height: '100%',
         backgroundColor: 'background',
-        textAlign: '-webkit-right',
         zIndex: 1000,
         pr: [3, 5, 5, 6],
-        pt: [3],
+        pl: [3, 4, 5, 6],
+        pt: [5, 5, 5, 6],
+        mt: '-12px',
         transition: '0.25s',
       }}
     >
-      <Box
-        sx={{
-          position: 'relative',
-        }}
-      >
-        <Box sx={{ position: 'absolute', right: 0 }}>
-          <Link sx={link} href='https://carbonplan.org/about'>
+      <Row columns={[3]}>
+        <Column start={[1]} width={[3]} sx={{ mt: [5] }}>
+          <Link
+            sx={{
+              ...link,
+              borderTopWidth: '1px',
+            }}
+            href='https://carbonplan.org/about'
+          >
             About
           </Link>
           <Link
             sx={{ textDecoration: 'none' }}
             href='https://carbonplan.org/research'
-            sx={link}
+            sx={{
+              ...link,
+              color: 'secondary',
+              '&:hover': {
+                color: 'secondary',
+              },
+            }}
           >
             Research
           </Link>
@@ -74,8 +93,8 @@ function Menu({ visible }) {
           >
             FAQ
           </Link>
-        </Box>
-      </Box>
+        </Column>
+      </Row>
     </Box>
   )
 }
