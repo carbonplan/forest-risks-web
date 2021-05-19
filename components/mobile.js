@@ -28,23 +28,24 @@ function Mobile({ expanded }) {
 
   return (
     <>
-      {section === 'map' && <Box
-        sx={{
-          width: 'calc(100vw)',
-          height: 'calc(100vh - 120px)',
-          display: 'flex',
-          ml: [-3],
-        }}
-      >
-        <Map
-          options={options}
-          onChangeRegion={() => {}}
-          onMapReady={setMap}
-          setScrollSidebar={() => {}}
-        />
-        <Loading map={map} mobile />
-      </Box>
-      }
+      {section === 'map' && (
+        <Box
+          sx={{
+            width: 'calc(100vw)',
+            height: 'calc(100vh - 120px)',
+            display: 'flex',
+            ml: [-3],
+          }}
+        >
+          <Map
+            options={options}
+            onChangeRegion={() => {}}
+            onMapReady={setMap}
+            setScrollSidebar={() => {}}
+          />
+          <Loading map={map} mobile />
+        </Box>
+      )}
       <Tray
         expanded={expanded}
         sx={{
