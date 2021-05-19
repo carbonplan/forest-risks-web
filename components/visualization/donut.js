@@ -1,7 +1,9 @@
 import { useRef, useEffect } from 'react'
 import { useThemeUI, Box, Flex, Button } from 'theme-ui'
-import * as d3 from 'd3'
-import * as P from 'polished'
+import { arc, pie } from 'd3-shape'
+import { scaleOrdinal } from 'd3-scale'
+import { select } from 'd3-selection'
+import { rgba } from 'polished'
 
 export default function Donut({ data, color }) {
   const boxRef = useRef(null)
@@ -18,11 +20,10 @@ export default function Donut({ data, color }) {
 
     var radius = Math.min(width, height) / 2 - margin
 
-    const svg = d3
-      .select(boxRef.current)
+    const svg = select(boxRef.current)
       .append('svg')
-      .attr('width', width)
-      .attr('height', height)
+      .attr('width', '100%')
+      .attr('viewBox', '0 0 90 90')
       .append('g')
       .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
 
@@ -31,25 +32,23 @@ export default function Donut({ data, color }) {
       { key: 1, value: data },
     ]
 
-    var colorScale = d3
-      .scaleOrdinal()
+    var colorScale = scaleOrdinal()
       .domain([0, 1])
-      .range([P.rgba(colors[color], 0.2), colors[color]])
+      .range([rgba(colors[color], 0.2), colors[color]])
 
-    var pie = d3
-      .pie()
+    var generator = pie()
       .value(function (d) {
         return d.value
       })
       .sort(null)
-    var dataReady = pie(entries)
+    var dataReady = generator(entries)
 
     svg
       .selectAll('.pie')
       .data(dataReady)
       .enter()
       .append('path')
-      .attr('d', d3.arc().innerRadius(28).outerRadius(radius))
+      .attr('d', arc().innerRadius(28).outerRadius(radius))
       .attr('fill', function (d) {
         return colorScale(d.data.key)
       })
@@ -60,8 +59,8 @@ export default function Donut({ data, color }) {
   }, [data, colors])
 
   return (
-    <Flex sx={{ justifyContent: 'center' }}>
-      <Box ref={boxRef} sx={{ height: '100px', width: '100px' }} />
+    <Flex sx={{ justifyContent: 'center', alignItems: 'center' }}>
+      <Box ref={boxRef} sx={{ height: 'auto', width: '100%' }} />
     </Flex>
   )
 }

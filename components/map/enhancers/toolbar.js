@@ -4,22 +4,16 @@ import { useState, useRef } from 'react'
 export default function Toolbar({ map, children, position }) {
   const toolbar = useRef(null)
 
-  const [edge, setEdge] = useState(0)
-
   const styles = (() => {
     switch (position) {
       case 'left':
         return {
           guide: {
             left: 0,
-            bottom: `${edge}px`,
+            bottom: `0px`,
           },
           outer: {
-            borderTopWidth: 1,
-            borderRightWidth: 1,
-            borderBottomWidth: 0,
-            borderLeftWidth: 0,
-            borderTopRightRadius: 4,
+            px: '16px',
           },
           inner: {
             flexDirection: 'row',
@@ -37,15 +31,10 @@ export default function Toolbar({ map, children, position }) {
       case 'right':
         return {
           guide: {
-            right: `${edge}px`,
+            right: `0px`,
             bottom: 0,
           },
-          outer: {
-            borderBottomWidth: 0,
-            borderLeftWidth: 1,
-            borderRightWidth: 0,
-            borderTopLeftRadius: 4,
-          },
+          outer: {},
           inner: {
             flexDirection: 'row',
           },
@@ -74,14 +63,9 @@ export default function Toolbar({ map, children, position }) {
       <Box
         ref={toolbar}
         sx={{
-          backgroundColor: 'background',
-          borderTopWidth: 1,
-          borderRightWidth: 1,
-          borderStyle: 'solid',
-          borderColor: 'muted',
           cursor: 'default',
-          px: '16px',
-          py: '12px',
+          px: '11px',
+          py: '15px',
           ...styles.outer,
         }}
       >

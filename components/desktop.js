@@ -8,13 +8,13 @@ import Loading from './loading'
 import { filterTypes } from '@constants'
 import { getSelectedData } from './map/enhancers/filters/helpers'
 
-function Viewer() {
+function Desktop() {
   const initialOptions = {
     biomass: true,
     fire: true,
     drought: false,
     insects: false,
-    scenario: 'SSP2-4.5',
+    scenario: 'SSP3-7.0',
     year: '2020',
     displayYear: '2020',
   }
@@ -85,4 +85,4 @@ function Viewer() {
   )
 }
 
-export default Viewer
+export default Desktop

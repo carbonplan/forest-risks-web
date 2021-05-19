@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react'
-import * as d3 from 'd3'
+import { select } from 'd3-selection'
+import { axisBottom, axisLeft } from 'd3-axis'
+import { scaleOrdinal } from 'd3-scale'
+import { ticks } from 'd3-array'
 import { jsx, IconButton, useThemeUI } from 'theme-ui'
 
 // ruler modes
@@ -30,8 +33,7 @@ function useRuler(map, mode = AXES) {
       const numXTicks = width / TICK_SEPARATION
       const numYTicks = height / TICK_SEPARATION
 
-      rulerContainer = d3
-        .select(mapContainer)
+      rulerContainer = select(mapContainer)
         .append('svg')
         .classed('ruler', true)
         .attr('width', width)
@@ -51,8 +53,7 @@ function useRuler(map, mode = AXES) {
       const xAxis = (g, x) =>
         g
           .call(
-            d3
-              .axisBottom(x)
+            axisBottom(x)
               .tickValues(x.domain())
               .tickFormat((d) => `${d}°`)
               .tickSize(TICK_SIZE)
@@ -70,8 +71,7 @@ function useRuler(map, mode = AXES) {
       const yAxis = (g, y) =>
         g
           .call(
-            d3
-              .axisLeft(y)
+            axisLeft(y)
               .tickValues(y.domain())
               .tickFormat((d) => `${d}°`)
               .tickSize(TICK_SIZE)
@@ -139,13 +139,13 @@ function useRuler(map, mode = AXES) {
       setRulerTicks = () => {
         const b = map.getBounds()
 
-        const xDomain = d3.ticks(b.getWest(), b.getEast(), numXTicks)
+        const xDomain = ticks(b.getWest(), b.getEast(), numXTicks)
         const xRange = xDomain.map((lng) => map.project([lng, 0]).x)
-        const x = d3.scaleOrdinal().domain(xDomain).range(xRange)
+        const x = scaleOrdinal().domain(xDomain).range(xRange)
 
-        const yDomain = d3.ticks(b.getNorth(), b.getSouth(), numYTicks)
+        const yDomain = ticks(b.getNorth(), b.getSouth(), numYTicks)
         const yRange = yDomain.map((lat) => map.project([0, lat]).y)
-        const y = d3.scaleOrdinal().domain(yDomain).range(yRange)
+        const y = scaleOrdinal().domain(yDomain).range(yRange)
 
         gx.call(xAxis, x)
         gy.call(yAxis, y)

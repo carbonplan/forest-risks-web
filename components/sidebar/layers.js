@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import { useThemeUI, Box, Slider, Text } from 'theme-ui'
+import { useThemeUI, Box, Text } from 'theme-ui'
 import { alpha } from '@theme-ui/color'
-import { Tag } from '@carbonplan/components'
+import { Tag, Slider } from '@carbonplan/components'
 import Info from '../info'
 
 function Layers({ options, setOptions, children }) {
@@ -14,26 +14,15 @@ function Layers({ options, setOptions, children }) {
 
   const sx = {
     group: {
-      pt: [4],
-      pb: ['22px'],
-      pl: [3, 4, 5, 6],
-      pr: [3, 5, 5, 6],
+      pt: [0, 4, 4, 4],
+      pb: [5, '22px', '22px', '22px'],
+      pl: [0, 4, 5, 6],
+      pr: [0, 5, 5, 6],
       borderStyle: 'solid',
       borderColor: 'muted',
       borderWidth: '0px',
-      borderBottomWidth: '1px',
+      borderBottomWidth: [0, '1px', '1px', '1px'],
       width: '100%',
-    },
-    groupFinal: {
-      py: [4],
-      px: [5],
-      borderStyle: 'solid',
-      borderColor: 'muted',
-      borderWidth: '0px',
-      borderTopWidth: '1px',
-      width: '100%',
-      position: 'absolute',
-      bottom: 0,
     },
     label: {
       fontSize: [2, 2, 2, 3],
@@ -113,7 +102,7 @@ function Layers({ options, setOptions, children }) {
   }
 
   return (
-    <Box>
+    <>
       <Box sx={sx.group}>
         <Box sx={sx.label}>
           Forests
@@ -181,31 +170,19 @@ function Layers({ options, setOptions, children }) {
         <Box sx={{ mt: [3], mb: [3], mr: [0, 0, 0, 0] }}>
           <Slider
             type='range'
-            sx={{
-              width: '100%',
-              '&::-webkit-slider-thumb': {
-                height: [18, 18, 16],
-                width: [18, 18, 16],
-                transition: '0.15s',
-              },
-              ':focus-visible': {
-                outline: 'none !important',
-                background: `${colors.secondary} !important`,
-              },
-              ':focus': {
-                '&::-webkit-slider-thumb': {
-                  boxShadow: `0 0 0 4px ${colors.secondary}`,
-                },
-              },
-            }}
             value={parseFloat(displayYear)}
             onMouseUp={(e) => {
               setSlider('year', e.target.value)
               setDisplayYear(e.target.value)
               setSliderChanging(false)
             }}
+            onTouchEnd={(e) => {
+              setSlider('year', e.target.value)
+              setDisplayYear(e.target.value)
+              setSliderChanging(false)
+            }}
             onChange={(e) => setDisplayYear(e.target.value)}
-            onMouseDown={() => {
+            onTouchStart={() => {
               setSliderChanging(true)
             }}
             onKeyDown={(e) => {
@@ -269,7 +246,7 @@ function Layers({ options, setOptions, children }) {
         </Box>
       </Box>
       {children}
-    </Box>
+    </>
   )
 }
 

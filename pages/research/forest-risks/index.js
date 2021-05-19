@@ -1,23 +1,55 @@
+import { useState } from 'react'
 import { Box } from 'theme-ui'
-import { Layout, Guide } from '@carbonplan/components'
-import Viewer from '../../../components/viewer'
+import { useMedia } from 'react-use'
+import { Layout } from '@carbonplan/components'
+import Desktop from '../../../components/desktop'
+import Mobile from '../../../components/mobile'
 
 function Index() {
+  const isWide = useMedia('(min-width: 40em)')
+  const [expanded, setExpanded] = useState(false)
   return (
-    <Layout
-      description={
-        'Mapping climate risks to forest carbon from fire, drought, and insects.'
-      }
-      title='forest risks / research / carbonplan'
-      card='https://images.carbonplan.org/social/forest-risks.png'
-      header={false}
-      dimmer={false}
-      footer={false}
-      metadata={false}
-    >
-      <Guide color='teal' />
-      <Viewer />
-    </Layout>
+    <>
+      {isWide && (
+        <Layout
+          description={
+            'Mapping climate risks to forest carbon from fire, drought, and insects.'
+          }
+          title='forest risks / research / carbonplan'
+          card='https://images.carbonplan.org/social/forest-risks.png'
+          header={false}
+          dimmer={false}
+          footer={false}
+          metadata={false}
+          guide={'teal'}
+        >
+          <Desktop />
+        </Layout>
+      )}
+      {!isWide && (
+        <Box sx={{ display: ['initial', 'none', 'none', 'none'] }}>
+          <Layout
+            description={
+              'Mapping climate risks to forest carbon from fire, drought, and insects.'
+            }
+            title='forest risks / research / carbonplan'
+            card='https://images.carbonplan.org/social/forest-risks.png'
+            header={true}
+            nav={'researc'}
+            dimmer={true}
+            metadata={false}
+            footer={false}
+            guide={'teal'}
+            settings={{
+              value: expanded,
+              onClick: () => setExpanded(!expanded),
+            }}
+          >
+            <Mobile expanded={expanded} />
+          </Layout>
+        </Box>
+      )}
+    </>
   )
 }
 

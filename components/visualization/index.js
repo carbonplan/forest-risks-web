@@ -4,7 +4,6 @@ import Donut from './donut'
 import Histogram from './histogram'
 import Info from '../info'
 import { allOptions, optionKey, optionIndex } from '@constants'
-import * as d3 from 'd3'
 
 function getAverageForYear(points, key) {
   if (!points.length) return null
@@ -77,7 +76,8 @@ export default function Visualization({ data, options }) {
   const sx = {
     group: {
       py: [4],
-      px: [5],
+      pl: [0, 4, 5, 6],
+      pr: [0, 5, 5, 6],
       position: 'relative',
       borderStyle: 'solid',
       borderWidth: '0px',
@@ -94,20 +94,19 @@ export default function Visualization({ data, options }) {
     numberCenter: {
       fontFamily: 'mono',
       letterSpacing: 'mono',
-      fontSize: ['22px'],
+      fontSize: ['18px'],
       display: 'inline-block',
       position: 'absolute',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      top: '28px',
-      left: '-1px',
+      height: '90%',
       width: '100%',
     },
     numberLeft: {
       fontFamily: 'mono',
       letterSpacing: 'mono',
-      fontSize: ['22px'],
+      fontSize: ['18px'],
       display: 'inline-block',
       ml: [0],
     },
@@ -138,7 +137,7 @@ export default function Visualization({ data, options }) {
   }
 
   return (
-    <Box>
+    <>
       <Box sx={sx.group}>
         <Text sx={sx.label}>
           Risks
@@ -152,8 +151,15 @@ export default function Visualization({ data, options }) {
             loss in basal area.
           </Info>
         </Text>
-        <Grid sx={{ mt: ['14px'], mb: ['26px'] }} columns={[3]}>
-          <Box sx={{ mt: [2], position: 'relative' }}>
+        <Grid
+          columns={[3]}
+          gap={[0, 5, 5, 6]}
+          sx={{
+            mt: ['14px'],
+            mb: ['26px'],
+          }}
+        >
+          <Box sx={{ mt: [1], position: 'relative' }}>
             <Box sx={{ ...sx.numberCenter, color: 'orange' }}>
               {fireTotal ? fireTotal.toFixed(0) : 0}%
             </Box>
@@ -161,7 +167,8 @@ export default function Visualization({ data, options }) {
             <Box
               sx={{
                 ...sx.numberCenter,
-                top: '98px',
+                height: 'auto',
+                mt: [2],
                 fontSize: [1],
                 color: 'orange',
               }}
@@ -169,7 +176,7 @@ export default function Visualization({ data, options }) {
               FIRE
             </Box>
           </Box>
-          <Box sx={{ mt: [2], position: 'relative' }}>
+          <Box sx={{ mt: [1], position: 'relative' }}>
             <Box sx={{ ...sx.numberCenter, color: 'pink' }}>
               {Math.min(droughtTotal, 100).toFixed(0)}%
             </Box>
@@ -177,7 +184,8 @@ export default function Visualization({ data, options }) {
             <Box
               sx={{
                 ...sx.numberCenter,
-                top: '98px',
+                height: 'auto',
+                mt: [2],
                 fontSize: [1],
                 color: 'pink',
               }}
@@ -185,7 +193,7 @@ export default function Visualization({ data, options }) {
               DROUGHT
             </Box>
           </Box>
-          <Box sx={{ mt: [2], position: 'relative' }}>
+          <Box sx={{ mt: [1], position: 'relative' }}>
             <Box sx={{ ...sx.numberCenter, color: 'blue' }}>
               {Math.min(insectsTotal, 100).toFixed(0)}%
             </Box>
@@ -193,7 +201,8 @@ export default function Visualization({ data, options }) {
             <Box
               sx={{
                 ...sx.numberCenter,
-                top: '98px',
+                height: 'auto',
+                mt: [2],
                 fontSize: [1],
                 color: 'blue',
               }}
@@ -214,9 +223,9 @@ export default function Visualization({ data, options }) {
           </Info>
         </Box>
         <Box sx={{ ...sx.numberLeft, color: 'green' }}>
-          +{biomassDelta.toFixed(2)}
+          +{biomassDelta.toFixed(2) / 2}
         </Box>
-        <Box sx={{ ...sx.unit, mb: [3] }}>t / ha</Box>
+        <Box sx={{ ...sx.unit, mb: [3] }}>tC / ha</Box>
         <Box sx={{ mb: ['28px'] }}>
           <Histogram values={histogram} />
           <Text
@@ -245,6 +254,6 @@ export default function Visualization({ data, options }) {
           </Text>
         </Box>
       </Box>
-    </Box>
+    </>
   )
 }
