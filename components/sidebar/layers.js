@@ -185,6 +185,9 @@ function Layers({ options, setOptions, children }) {
             onTouchStart={() => {
               setSliderChanging(true)
             }}
+            onMouseDown={() => {
+              setSliderChanging(true)
+            }}
             onKeyDown={(e) => {
               if (tick) clearTimeout(tick)
               setSliderChanging(true)
