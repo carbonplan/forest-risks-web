@@ -39,7 +39,7 @@ const Loading = ({ map, mobile = false }) => {
             alignItems: 'center',
             textTransform: 'uppercase',
             letterSpacing: 'mono',
-            height: mobile ? 'calc(100vh - 120px)' : '100vh',
+            height: mobile ? 'calc(100vh - 300px)' : '100vh',
             width: '100%',
             color: 'secondary',
             fontSize: [2, 2, 2, 3],
