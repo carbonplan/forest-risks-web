@@ -32,7 +32,7 @@ const Info = ({ children }) => {
           cursor: 'pointer',
           display: 'inline-block',
           float: 'right',
-          mr: '-8px',
+          mr: '-10px',
           mt: '-6px',
           '@media (hover: hover) and (pointer: fine)': {
             '&:hover > #icon': {

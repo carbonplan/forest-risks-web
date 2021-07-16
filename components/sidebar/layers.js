@@ -241,7 +241,7 @@ function Layers({ options, setOptions, children }) {
               fontSize: [1, 1, 1, 2],
               float: 'right',
               display: 'inline-block',
-              mr: ['4px'],
+              mr: ['0px'],
             }}
           >
             2090
