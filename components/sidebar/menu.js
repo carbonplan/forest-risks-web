@@ -37,13 +37,13 @@ function Menu({ visible }) {
               0,
               'calc(3 * 100vw / 8 + 18px - 1px)',
               'calc(3 * 100vw / 12 + 24px - 1px)',
-              'min(calc(3 * 100vw / 12 + 35px), 515px)',
+              'calc(3 * 100vw / 12 + 35px)',
             ]
           : [
               0,
               'calc(2 * 100vw / 8 + 18px)',
               'calc(2 * 100vw / 12 + 24px)',
-              'min(calc(2 * 100vw / 12 + 35px), 515px)',
+              'calc(2 * 100vw / 12 + 35px)',
             ],
         height: '100%',
         backgroundColor: 'background',
