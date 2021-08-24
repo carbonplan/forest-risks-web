@@ -58,7 +58,7 @@ function Sidebar({
           0,
           'calc(3 * 100vw / 8 + 18px)',
           'calc(3 * 100vw / 12 + 24px)',
-          'min(calc(3 * 100vw / 12 + 36px), 516px)',
+          'calc(3 * 100vw / 12 + 36px)',
         ],
         height: '100%',
         flexBasis: '100%',
