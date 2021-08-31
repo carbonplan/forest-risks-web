@@ -1,8 +1,6 @@
 import { Box } from 'theme-ui'
-import { Buttons, Links } from '@carbonplan/components'
-
-const { InternalLink } = Links
-const { ArrowButton } = Buttons
+import { Button } from '@carbonplan/components'
+import { RotatingArrow } from '@carbonplan/icons'
 
 function Index() {
   return (
@@ -14,16 +12,13 @@ function Index() {
         height: '100vh',
       }}
     >
-      <InternalLink
-        sx={{
-          display: 'block',
-          textDecoration: 'none',
-          mt: [-1, -2, -3, -4],
-        }}
+      <Button
+        size='xl'
         href='/research/forest-risks'
+        suffix={<RotatingArrow sx={{ color: 'orange' }} />}
       >
-        <ArrowButton size='xl' fill='orange' label='Go to map' />
-      </InternalLink>
+        Go to map
+      </Button>
     </Box>
   )
 }

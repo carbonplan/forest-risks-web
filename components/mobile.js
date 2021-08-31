@@ -1,13 +1,11 @@
 import { useState, useEffect } from 'react'
 import { Box, Flex, Grid, Container } from 'theme-ui'
 import { alpha } from '@theme-ui/color'
-import { Buttons, Tray, FadeIn } from '@carbonplan/components'
+import { Button, Tray, FadeIn } from '@carbonplan/components'
 import Map from './map'
 import Layers from './sidebar/layers'
 import MethodsContent from './methods/content'
 import Loading from './loading'
-
-const { BackButton } = Buttons
 
 function Mobile({ expanded }) {
   const initialOptions = {
@@ -59,10 +57,16 @@ function Mobile({ expanded }) {
       {section === 'methods' && (
         <FadeIn>
           <Box sx={{ mt: [3] }} />
-          <BackButton
+          <Button
+            size='xs'
+            inverted
+            prefix={<Left />}
             onClick={() => setSection('map')}
-            sx={{ cursor: 'pointer' }}
-          />
+            sx={{ mt: [1], cursor: 'pointer' }}
+          >
+            Back
+          </Button>
+
           <MethodsContent />
           <Box sx={{ height: '72px' }} />
         </FadeIn>
