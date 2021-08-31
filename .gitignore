@@ -6,4 +6,3 @@ tiles/raw
 tiles/glyphs
 tiles/util.py
 out/
-.env*.local
