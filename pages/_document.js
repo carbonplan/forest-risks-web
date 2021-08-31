@@ -7,7 +7,7 @@ export default class MyDocument extends Document {
     return (
       <Html lang='en' className='no-focus-outline'>
         <Head>
-          <Tracking />
+          <Tracking id='UA-165985850-1' />
         </Head>
         <body>
           <InitializeColorMode />
