@@ -1,4 +1,5 @@
-const isDev = process.env.NODE_ENV === 'development'
+const isDev =
+  process.env.NODE_ENV === 'development' || process.env.AZURE_ENV === 'preview'
 
 const path = require('path')
 
