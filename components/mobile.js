@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Box, Flex, Grid, Container } from 'theme-ui'
 import { alpha } from '@theme-ui/color'
+import { Left } from '@carbonplan/icons'
 import { Button, Tray, FadeIn } from '@carbonplan/components'
 import Map from './map'
 import Layers from './sidebar/layers'
