@@ -81,10 +81,10 @@ function Menu({ visible }) {
           </Link>
           <Link
             sx={{ textDecoration: 'none' }}
-            href='https://carbonplan.org/team'
+            href='https://carbonplan.org/blog'
             sx={link}
           >
-            Team
+            Blog
           </Link>
           <Link
             sx={{ textDecoration: 'none' }}
