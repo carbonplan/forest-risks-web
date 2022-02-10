@@ -15,7 +15,7 @@ function Index() {
           description={
             'Mapping climate risks to forest carbon from fire, drought, and insects.'
           }
-          title='forest risks / research / carbonplan'
+          title='Forest risks – CarbonPlan'
           card='https://images.carbonplan.org/social/forest-risks.png'
           header={false}
           dimmer={false}
@@ -32,7 +32,7 @@ function Index() {
             description={
               'Mapping climate risks to forest carbon from fire, drought, and insects.'
             }
-            title='forest risks / research / carbonplan'
+            title='Forest risks – CarbonPlan'
             card='https://images.carbonplan.org/social/forest-risks.png'
             header={true}
             nav={'researc'}
