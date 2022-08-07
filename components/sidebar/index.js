@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { Box, Badge, Text, Flex, Link } from 'theme-ui'
-import { alpha } from '@theme-ui/color'
+import { Box, Text, Link } from 'theme-ui'
+import { useScrollbarClass } from '@carbonplan/components'
 import Header from './header'
 import Menu from './menu'
 import Layers from './layers'
@@ -14,6 +14,7 @@ function Sidebar({
   scrollSidebar,
 }) {
   const [showMenu, setShowMenu] = useState(false)
+  const className = useScrollbarClass()
 
   useEffect(() => {
     if (scrollSidebar) {
@@ -75,6 +76,7 @@ function Sidebar({
       <Header showMenu={showMenu} toggleMenu={() => setShowMenu(!showMenu)} />
       <Box
         id='sidebar'
+        className={className}
         sx={{
           position: 'relative',
           flex: 1,
