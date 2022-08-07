@@ -19,7 +19,7 @@ module.exports = withMDX({
   pageExtensions: ['jsx', 'js', 'md', 'mdx'],
   assetPrefix: isDev
     ? ''
-    : 'https://victorious-sky-0813bc21e.azurestaticapps.net',
+    : 'https://forest-risks.carbonplan.org',
   webpack: (config, options) => {
     config.resolve.alias = {
       ...config.resolve.alias,
