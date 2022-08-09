@@ -17,9 +17,7 @@ const withMDX = require('@next/mdx')({
 
 module.exports = withMDX({
   pageExtensions: ['jsx', 'js', 'md', 'mdx'],
-  assetPrefix: isDev
-    ? ''
-    : 'https://forest-risks.carbonplan.org',
+  assetPrefix: isDev ? '' : 'https://forest-risks.carbonplan.org',
   webpack: (config, options) => {
     config.resolve.alias = {
       ...config.resolve.alias,
