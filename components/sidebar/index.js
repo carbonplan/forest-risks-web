@@ -121,10 +121,7 @@ function Sidebar({
             <Link href='https://carbonplan.org/research/forest-risks-explainer'>
               explainer
             </Link>{' '}
-            or our{' '}
-            <Link href='https://www.biorxiv.org/content/10.1101/2021.05.11.443688v1'>
-              preprint
-            </Link>{' '}
+            or the <Link href='https://doi.org/10.1111/ele.14018'>paper</Link>{' '}
             for more details.
           </Box>
         </Box>
