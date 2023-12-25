@@ -32,7 +32,7 @@ function Desktop() {
     const data = getSelectedData(
       map,
       ['biomass', 'fire', 'drought', 'insects'],
-      region
+      region,
     )
     setSelectedData(data)
   }, [map, options, region, bounds])
