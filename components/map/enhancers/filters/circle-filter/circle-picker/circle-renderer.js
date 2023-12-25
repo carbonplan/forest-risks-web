@@ -47,7 +47,7 @@ export default function CircleRenderer({
       const r = distance(
         map.unproject(e.point).toArray(),
         [center.lng, center.lat],
-        { units: 'miles' }
+        { units: 'miles' },
       )
       setRadius(r)
       onDrag(circle)
@@ -193,7 +193,7 @@ export default function CircleRenderer({
       const lineEnd = rhumbDestination(
         [center.lng, center.lat],
         radius * 2,
-        guidelineAngle
+        guidelineAngle,
       )
 
       const line = lineString([
@@ -222,7 +222,7 @@ export default function CircleRenderer({
       .text(radius.toFixed(0) + 'mi')
       .attr(
         'transform',
-        `rotate(${-1 * guidelineAngle + 90}) ` + `translate(0, ${translateY})`
+        `rotate(${-1 * guidelineAngle + 90}) ` + `translate(0, ${translateY})`,
       )
 
     const translateX = (() => {
@@ -234,7 +234,7 @@ export default function CircleRenderer({
     svgRadiusTextContainer.attr(
       'transform',
       `rotate(${guidelineAngle - 90}, ${handleXY.x}, ${handleXY.y}) ` +
-        `translate(${handleXY.x + translateX}, ${handleXY.y})`
+        `translate(${handleXY.x + translateX}, ${handleXY.y})`,
     )
   }
 

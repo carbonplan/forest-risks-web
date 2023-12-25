@@ -56,7 +56,7 @@ function useRuler(map, mode = AXES) {
             axisBottom(x)
               .tickValues(x.domain())
               .tickFormat((d) => `${d}°`)
-              .tickSize(TICK_SIZE)
+              .tickSize(TICK_SIZE),
           )
           .call((g) => g.select('.domain').remove())
 
@@ -74,7 +74,7 @@ function useRuler(map, mode = AXES) {
             axisLeft(y)
               .tickValues(y.domain())
               .tickFormat((d) => `${d}°`)
-              .tickSize(TICK_SIZE)
+              .tickSize(TICK_SIZE),
           )
           .call((g) => g.select('.domain').remove())
 
@@ -105,10 +105,10 @@ function useRuler(map, mode = AXES) {
                             .attr('y1', xTickHeight + TICK_MARGIN)
                             .attr('y2', height),
                         (update) => update,
-                        (exit) => exit.remove()
+                        (exit) => exit.remove(),
                       )
                       .attr('x1', (d) => 0.5 + x(d))
-                      .attr('x2', (d) => 0.5 + x(d))
+                      .attr('x2', (d) => 0.5 + x(d)),
                   )
                   .call((g) =>
                     g
@@ -117,7 +117,7 @@ function useRuler(map, mode = AXES) {
                       .join(
                         (enter) => enter.append('line').classed('y', true),
                         (update) => update,
-                        (exit) => exit.remove()
+                        (exit) => exit.remove(),
                       )
                       .attr('y1', (d) => 0.5 + y(d))
                       .attr('y2', (d) => 0.5 + y(d))
@@ -126,7 +126,7 @@ function useRuler(map, mode = AXES) {
                           ? yTickNodes[i].getBoundingClientRect().width
                           : 0
                         return width - yTickWidth - TICK_MARGIN
-                      })
+                      }),
                   )
               },
             }
