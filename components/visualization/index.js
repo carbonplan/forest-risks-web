@@ -37,7 +37,7 @@ export default function Visualization({ data, options }) {
   const counts = binEdges
     .map((b, i) => {
       return biomassDeltas.filter(
-        (d) => (d >= binEdges[i]) & (d < binEdges[i + 1])
+        (d) => (d >= binEdges[i]) & (d < binEdges[i + 1]),
       ).length
     })
     .slice(0, nBins)

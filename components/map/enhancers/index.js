@@ -25,7 +25,7 @@ export default function Enhancers({
       if (region) region.properties.type = activeFilter
       onChangeRegion(region)
     },
-    [activeFilter]
+    [activeFilter],
   )
 
   useEffect(() => {
