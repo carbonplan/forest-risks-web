@@ -1,5 +1,5 @@
 const isDev =
-  process.env.NODE_ENV === 'development' || process.env.AZURE_ENV === 'preview'
+  process.env.NODE_ENV === 'development' || process.env.VERCEL_ENV === 'preview'
 
 const path = require('path')
 
