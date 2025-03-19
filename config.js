@@ -1,5 +1,5 @@
 const prefix =
-  'https://carbonplan.blob.core.windows.net/carbonplan-forests/risks/tiles'
+  'https://carbonplan-forests.s3.us-west-2.amazonaws.com/risks/tiles'
 //'http://localhost:8080'
 
 export default {
