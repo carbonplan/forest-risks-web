@@ -15,16 +15,16 @@ Raster data underlying all primary map layers in the web UI are available in the
 
 ```
 FIRE:
-https://carbonplan.blob.core.windows.net/carbonplan-forests/risks/results/web/fire.zarr
+https://carbonplan-forests.s3.us-west-2.amazonaws.com/risks/results/web/fire.zarr
 
 BIOMASS:
-https://carbonplan.blob.core.windows.net/carbonplan-forests/risks/results/web/biomass.zarr
+https://carbonplan-forests.s3.us-west-2.amazonaws.com/risks/results/web/biomass.zarr
 
 DROUGHT:
-https://carbonplan.blob.core.windows.net/carbonplan-forests/risks/results/web/drought.zarr
+https://carbonplan-forests.s3.us-west-2.amazonaws.com/risks/results/web/drought.zarr
 
 INSECTS:
-https://carbonplan.blob.core.windows.net/carbonplan-forests/risks/results/web/insects.zarr
+https://carbonplan-forests.s3.us-west-2.amazonaws.com/risks/results/web/insects.zarr
 ```
 
 Below is a code example demonstrating how these datasets can be accessed using Python.
