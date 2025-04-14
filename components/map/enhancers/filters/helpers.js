@@ -9,7 +9,7 @@ function dedupedPoints(points) {
     const duplicatePoint = deduped.find(
       (d) =>
         d.properties.lat === point.properties.lat &&
-        d.properties.lon === point.properties.lon
+        d.properties.lon === point.properties.lon,
     )
 
     if (duplicatePoint) console.log('duplicate point!')
@@ -52,7 +52,8 @@ function turfPointsInCircle(points, circle) {
   const { lng, lat } = circle.properties.center
   return points.filter(
     (p) =>
-      distance(p.geometry.coordinates, [lng, lat], { units: 'miles' }) <= radius
+      distance(p.geometry.coordinates, [lng, lat], { units: 'miles' }) <=
+      radius,
   )
 }
 

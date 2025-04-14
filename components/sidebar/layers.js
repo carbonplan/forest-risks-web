@@ -194,7 +194,7 @@ function Layers({ options, setOptions, children }) {
               setTick(
                 setTimeout(() => {
                   setSliderChanging(false)
-                }, 250)
+                }, 250),
               )
             }}
             onKeyUp={(e) => setSlider('year', e.target.value)}
